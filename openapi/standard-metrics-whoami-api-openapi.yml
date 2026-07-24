@@ -1,0 +1,93 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets whoami API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: whoami
+paths:
+  /whoami/:
+    get:
+      tags:
+      - whoami
+      summary: Get current user information
+      description: 'Returns information about the currently authenticated user.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.'
+      operationId: whoami_read
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WhoamiUser'
+components:
+  schemas:
+    WhoamiUser:
+      required:
+      - email
+      - firm
+      - first_name
+      - id
+      - last_name
+      - role
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        first_name:
+          title: First name
+          maxLength: 150
+          type: string
+        last_name:
+          title: Last name
+          maxLength: 150
+          type: string
+        email:
+          title: Email
+          maxLength: 255
+          minLength: 1
+          type: string
+          format: email
+        role:
+          title: Role
+          minLength: 1
+          type: string
+          readOnly: true
+        firm:
+          $ref: '#/components/schemas/WhoamiFirm'
+    WhoamiFirm:
+      required:
+      - id
+      - name
+      - slug
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          maxLength: 255
+          minLength: 1
+          type: string
+        slug:
+          title: Slug
+          minLength: 1
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+          format: slug
+          readOnly: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

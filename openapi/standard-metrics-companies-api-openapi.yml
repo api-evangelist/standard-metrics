@@ -1,0 +1,443 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets companies API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: companies
+paths:
+  /companies/:
+    get:
+      tags:
+      - companies
+      summary: Get companies
+      description: 'Retrieve a list of all companies associated with the firm. Each company includes identifiers and metadata.
+
+
+        **Filtering:**
+
+        - Use `ids[]` parameter to filter by specific company IDs
+
+        - Use `name` parameter to filter by company name (case-insensitive partial matching)
+
+
+        **Notes:**
+
+        - If no filters are specified, returns all companies associated with the firm.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.'
+      operationId: companies_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: ids[]
+        in: query
+        description: Filter companies by ID. Can be specified multiple times to filter by multiple IDs (e.g., ?ids[]=123&ids[]=456&ids[]=789).
+        style: form
+        explode: true
+        schema:
+          type: array
+          items:
+            type: string
+      - name: name
+        in: query
+        description: Filter companies by name. Performs case-insensitive partial matching on company names. .
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Company'
+    post:
+      tags:
+      - companies
+      summary: Create company
+      description: "Create a new company. Creates an offline company that can later be onboarded.\n\n**Notes:**\n- Name is the only required field.\n- Non-required fields and their defaults:\n  - `description`: defaults to empty string\n  - `city`: defaults to empty string\n  - `sector`: defaults to \"Other\" if not provided or invalid\n  - `fiscal_year_end`: defaults to \"12/31\"\n  - `website`: defaults to empty string\n\nYou may update the company later using the `Update Company` endpoint. Reference this endpoint to understand what fields can be modified.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have ADMIN or EDITOR role."
+      operationId: companies_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              required:
+              - name
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: Name of the company
+                description:
+                  type: string
+                  description: Description of the company. Defaults to empty string if not provided.
+                city:
+                  type: string
+                  description: City of the company. Defaults to empty string if not provided.
+                  example: San Francisco
+                sector:
+                  type: string
+                  description: Sector of the company. Defaults to 'Other' if not provided or invalid.
+                  enum:
+                  - B2B Software
+                  - Direct-to-consumer
+                  - Consumer Internet/Mobile
+                  - AR/VR
+                  - Life Sciences
+                  - Health Technology
+                  - Hardware
+                  - Edtech
+                  - Media
+                  - Fintech
+                  - Govtech
+                  - Crypto/blockchain
+                  - Other
+                  - Logistics
+                  - Insurtech
+                  - Software Infrastructure
+                  - Security
+                  - Artificial Intelligence
+                  - AG-Tech
+                  - Sustainability
+                  - Gaming
+                fiscal_year_end:
+                  type: string
+                  description: Fiscal year end date in MM/DD format. Defaults to '12/31' if not provided.
+                  example: 12/31
+                website:
+                  type: string
+                  description: Website URL of the company. Defaults to empty string if not provided.
+                  example: https://www.example.com
+              description: List of role IDs and actions
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - name
+                type: object
+                properties:
+                  name:
+                    type: string
+                    description: Name of the company
+                  description:
+                    type: string
+                    description: Description of the company. Defaults to empty string if not provided.
+                  city:
+                    type: string
+                    description: City of the company. Defaults to empty string if not provided.
+                    example: San Francisco
+                  sector:
+                    type: string
+                    description: Sector of the company. Defaults to 'Other' if not provided or invalid.
+                    enum:
+                    - B2B Software
+                    - Direct-to-consumer
+                    - Consumer Internet/Mobile
+                    - AR/VR
+                    - Life Sciences
+                    - Health Technology
+                    - Hardware
+                    - Edtech
+                    - Media
+                    - Fintech
+                    - Govtech
+                    - Crypto/blockchain
+                    - Other
+                    - Logistics
+                    - Insurtech
+                    - Software Infrastructure
+                    - Security
+                    - Artificial Intelligence
+                    - AG-Tech
+                    - Sustainability
+                    - Gaming
+                  fiscal_year_end:
+                    type: string
+                    description: Fiscal year end date in MM/DD format. Defaults to '12/31' if not provided.
+                    example: 12/31
+                  website:
+                    type: string
+                    description: Website URL of the company. Defaults to empty string if not provided.
+                    example: https://www.example.com
+                  slug:
+                    type: string
+                    description: Slug of the company
+                description: List of role IDs and actions
+      x-codegen-request-body-name: data
+  /companies/{company_id}/:
+    patch:
+      tags:
+      - companies
+      summary: Update company
+      description: 'Partially update company fields. Different fields are editable based on company onboarding status.
+
+
+        **Online companies** (already onboarded):
+
+        Only the following fields can be updated:
+
+        1. `firm_sector` (the name of the Firm Sector for this company)
+
+        2. `investment_lead_id` (the user ID of the investment lead)
+
+
+        **Offline or Pending companies** (not onboarded; Pending means there''s an active invite):
+
+        The following fields can be updated:
+
+        1. `firm_sector`
+
+        2. `investment_lead_id`
+
+        3. `city` (the city where the company is based)
+
+        4. `description` (a description of the company)
+
+        5. `fiscal_year_end` (formatted as ''MM/DD'')
+
+        6. `name` (the company name)
+
+        7. `sector` (the company''s standard sector from the supported list)
+
+        8. `website` (the company''s website)
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the companies.
+
+        - User must have ADMIN or EDITOR role.'
+      operationId: companies_partial_update
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firm_sector:
+                  type: string
+                  description: Firm Sector (always update-able)
+                investment_lead_id:
+                  type: string
+                  description: Investment lead user ID (always update-able)
+                city:
+                  type: string
+                  description: City where the company is based (Offline or Pending companies)
+                description:
+                  type: string
+                  description: Company description (Offline or Pending companies)
+                fiscal_year_end:
+                  type: string
+                  description: Fiscal year end, formatted as 'MM/DD' (Offline or Pending companies)
+                name:
+                  type: string
+                  description: Company name (Offline or Pending companies)
+                sector:
+                  type: string
+                  description: Company standard sector (Offline or Pending companies)
+                  enum:
+                  - B2B Software
+                  - Direct-to-consumer
+                  - Consumer Internet/Mobile
+                  - AR/VR
+                  - Life Sciences
+                  - Health Technology
+                  - Hardware
+                  - Edtech
+                  - Media
+                  - Fintech
+                  - Govtech
+                  - Crypto/blockchain
+                  - Other
+                  - Logistics
+                  - Insurtech
+                  - Software Infrastructure
+                  - Security
+                  - Artificial Intelligence
+                  - AG-Tech
+                  - Sustainability
+                  - Gaming
+                website:
+                  type: string
+                  description: Company website (Offline or Pending companies)
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Company'
+      x-codegen-request-body-name: data
+  /companies/{company_id}/logo/:
+    post:
+      tags:
+      - companies
+      summary: Upload company logo
+      description: "Upload a new logo for an offline company. Replaces any existing logo.\n\n**Notes:**\n- File size limit: 5 MB maximum.\n- Logo is owned by the firm since this action is only available for offline companies.\n- Accepted file types:\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - GIF images (.gif)\n    - WEBP images (.webp)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role."
+      operationId: companies_logo_create
+      parameters:
+      - name: company_id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: 'The logo file to upload. Must be sent as part of a multipart/form-data POST request. File size limit: 5 MB maximum. Accepted file types: .jpg, .jpeg, .png, .gif, .webp'
+                  format: binary
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - file
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: 'The logo file to upload. Must be sent as part of a multipart/form-data POST request. File size limit: 5 MB maximum. Accepted file types: .jpg, .jpeg, .png, .gif, .webp'
+                  format: binary
+        required: true
+      responses:
+        '201':
+          description: Logo successfully uploaded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+components:
+  schemas:
+    Company:
+      required:
+      - description
+      - firm_sector
+      - investment_lead_id
+      - logo_url
+      - name
+      - sector
+      type: object
+      properties:
+        city:
+          title: City
+          maxLength: 255
+          type: string
+        description:
+          title: Description
+          type: string
+        firm_sector:
+          title: Firm sector
+          type: string
+        fiscal_year_end:
+          title: Fiscal year end
+          maxLength: 10
+          minLength: 1
+          type: string
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        invested_fund_ids:
+          type: array
+          readOnly: true
+          items:
+            minLength: 1
+            type: string
+        investment_lead_id:
+          title: Investment lead id
+          type: string
+          nullable: true
+        logo_url:
+          title: Logo url
+          minLength: 1
+          type: string
+        name:
+          title: Name
+          maxLength: 255
+          minLength: 1
+          type: string
+        reporting_currency:
+          title: Reporting currency
+          minLength: 1
+          type: string
+          readOnly: true
+        sector:
+          title: Sector
+          type: string
+        slug:
+          title: Slug
+          minLength: 1
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+          format: slug
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        unique_ref:
+          title: Unique ref
+          type: string
+          readOnly: true
+        website:
+          title: Website
+          maxLength: 255
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

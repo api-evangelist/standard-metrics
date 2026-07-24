@@ -1,0 +1,91 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets funds API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: funds
+paths:
+  /funds/:
+    get:
+      tags:
+      - funds
+      summary: Get funds
+      description: 'Retrieve all funds associated with the firm. Provides fund details and status information.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.'
+      operationId: funds_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Fund'
+components:
+  schemas:
+    Fund:
+      required:
+      - currency
+      - id
+      - name
+      - size
+      - vintage
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        size:
+          title: Size
+          type: string
+          format: decimal
+        vintage:
+          title: Vintage
+          type: integer
+        currency:
+          title: Currency
+          minLength: 1
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

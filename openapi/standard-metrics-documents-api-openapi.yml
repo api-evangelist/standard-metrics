@@ -1,0 +1,229 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets documents API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: documents
+paths:
+  /documents/:
+    get:
+      tags:
+      - documents
+      summary: Get documents
+      description: 'Retrieve all documents associated with the firm. Includes parsed and unparsed documents from various sources.
+
+
+        **Notes:**
+
+        - If no company is specified, returns documents for all companies.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the documents.'
+      operationId: documents_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: company_id
+        in: query
+        description: The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint.
+        schema:
+          type: string
+      - name: parse_state
+        in: query
+        description: The parse state of the documents to request. One of "not-started", "in-progress", "completed", "needs-input", "not-parseable".
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: The from date (inclusive) from which to query uploaded_at as an ISO 8601 formatted date
+        schema:
+          type: string
+          format: date-time
+      - name: to
+        in: query
+        description: The to date (inclusive) from which to query uploaded_at as an ISO 8601 formatted date
+        schema:
+          type: string
+          format: date-time
+      - name: source
+        in: query
+        description: The source of the documents to request. One of "information-request", "implementation", "upload", "email".
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/LibraryDocument'
+    post:
+      tags:
+      - documents
+      summary: Create document
+      description: "Creates a new document in the library for a company.\n\n**Notes:**\n- File size limit: 32 MB maximum.\n- Accepted file types:\n    - PDF files (.pdf)\n    - Microsoft Word documents (.docx)\n    - Microsoft Excel spreadsheets (.xlsx)\n    - Microsoft PowerPoint presentations (.pptx)\n    - OpenDocument spreadsheets (.ods)\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - WebP images (.webp)\n    - GIF images (.gif)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have access to the company's document data."
+      operationId: documents_create
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              required:
+              - company_id
+              - file
+              type: object
+              properties:
+                company_id:
+                  type: string
+                  description: The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint.
+                file:
+                  type: string
+                  description: 'The file to add. Must be sent as part of a multipart/form-data POST request. File size limit: 32 MB maximum. Accepted file types: .pdf, .docx, .xlsx, .pptx, .ods, .jpg, .jpeg, .png, .webp, .gif'
+                  format: binary
+          application/x-www-form-urlencoded:
+            schema:
+              required:
+              - company_id
+              - file
+              type: object
+              properties:
+                company_id:
+                  type: string
+                  description: The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint.
+                file:
+                  type: string
+                  description: 'The file to add. Must be sent as part of a multipart/form-data POST request. File size limit: 32 MB maximum. Accepted file types: .pdf, .docx, .xlsx, .pptx, .ods, .jpg, .jpeg, .png, .webp, .gif'
+                  format: binary
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - message
+                - success
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the operation was successful
+                  message:
+                    type: string
+                    description: A message describing the operation result
+  /documents/{document_id}/download/:
+    get:
+      tags:
+      - documents
+      summary: Download document
+      description: 'Download a specific document by redirecting to signed URL. Provides temporary access to securely stored documents.
+
+
+        The signed URL expires after 1 hour. After expiration, a new request must be made to obtain a fresh download link.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the document.'
+      operationId: documents_download_list
+      parameters:
+      - name: document_id
+        in: path
+        description: The hashed ID of the document to download
+        required: true
+        schema:
+          type: string
+      responses:
+        '302':
+          description: Redirect to signed URL
+          content: {}
+components:
+  schemas:
+    LibraryDocument:
+      required:
+      - submitted_date
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          minLength: 1
+          type: string
+          readOnly: true
+        link:
+          title: Link
+          type: string
+          readOnly: true
+        company_id:
+          title: Company id
+          type: string
+          readOnly: true
+        information_request_id:
+          title: Information request id
+          type: string
+          readOnly: true
+        parse_state:
+          title: Parse state
+          type: string
+          readOnly: true
+        parsed_at:
+          title: Parsed at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        uploaded_at:
+          title: Uploaded at
+          type: string
+          format: date-time
+          readOnly: true
+        source:
+          title: Source
+          type: string
+          readOnly: true
+        submitted_date:
+          title: Submitted date
+          minLength: 1
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

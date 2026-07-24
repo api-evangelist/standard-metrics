@@ -1,0 +1,172 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets notes API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: notes
+paths:
+  /notes/:
+    get:
+      tags:
+      - notes
+      summary: Get notes
+      description: 'Retrieve all notes for a specific company. Notes are returned in markdown format.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the company.'
+      operationId: notes_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: company_slug
+        in: query
+        description: 'The slug that uniquely identifies the company whose metrics'' to request. You can find the slug for a company by going to that company''s portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm''s companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.'
+        schema:
+          type: string
+      - name: company_id
+        in: query
+        description: The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        description: The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `"sort_by=-created_at"` and to sort by created_at in descending order use `"sort_by=+created_at"` or just `"sort_by=created_at"`.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PortfolioCompanyNoteAPI'
+    post:
+      tags:
+      - notes
+      summary: Create notes
+      description: 'Create new notes for a company. Supports creating multiple notes in a single request.
+
+
+        **Notes:**:
+
+        - All notes created must be for the same company.
+
+        - `note` and `author_id` fields are required.
+
+        - Either `company_id` or `company_slug` is required.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the company.
+
+        - User must have ADMIN or EDITOR role.'
+      operationId: notes_create
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  note:
+                    type: string
+                    description: The note content
+                    example: Note content
+                  company_id:
+                    type: string
+                    description: Company ID (either company_id or company_slug must be provided)
+                    example: a7Rt
+                  company_slug:
+                    type: string
+                    description: Company slug (either company_id or company_slug must be provided)
+                    example: company-name
+                  author_id:
+                    type: string
+                    description: Author ID
+                    example: a7Rt
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioCompanyNoteAPI'
+      x-codegen-request-body-name: data
+components:
+  schemas:
+    PortfolioCompanyNoteAPI:
+      required:
+      - author_id
+      - note
+      type: object
+      properties:
+        note:
+          title: Note
+          type: string
+        author:
+          title: Author
+          minLength: 1
+          type: string
+          readOnly: true
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+          readOnly: true
+        email:
+          title: Email
+          minLength: 1
+          type: string
+          readOnly: true
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        author_id:
+          title: Author id
+          type: string
+        company_id:
+          title: Company id
+          type: string
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

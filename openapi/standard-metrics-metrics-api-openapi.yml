@@ -1,0 +1,729 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets metrics API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: metrics
+paths:
+  /metrics/:
+    get:
+      tags:
+      - metrics
+      summary: Get metrics
+      description: 'Retrieve metrics for a specific company. Supports extensive filtering by category, date range, and cadence.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the company.'
+      operationId: metrics_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: company_slug
+        in: query
+        description: 'The slug that uniquely identifies the company whose metrics'' to request. You can find the slug for a company by going to that company''s portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm''s companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.'
+        schema:
+          type: string
+      - name: company_id
+        in: query
+        description: The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.
+        schema:
+          type: string
+      - name: from
+        in: query
+        description: The from date (inclusive) from which to query metrics for as an ISO 8601 formatted date
+        schema:
+          type: string
+      - name: to
+        in: query
+        description: The to date (inclusive) from which to query metrics until as an ISO 8601 formatted date
+        schema:
+          type: string
+      - name: category
+        in: query
+        description: "The category of metrics to request. If not specified, all metrics are returned. This parameter can be passed multiple times to filter by multiple categories. Custom metrics can be queried by using their display name (e.g., \"Total Number of Customers\"). To return only custom metrics, set category to \"custom\". \n\n Available standard metric categories include: `accounts_payable`, `accounts_receivable`, `arr`, `assets`, `burn_per_fte`, `cash_flow_from_financing_activities`, `cash_flow_from_investing_activities`, `cash_flow_from_operating_activities`, `cash_in_bank`, `churned_arr`, `contraction_arr`, `cost_of_goods_sold`, `current_assets`, `current_liabilities`, `custom`, `ebitda`, `equity`, `expansion_arr`, `fair_value`, `fully_diluted_shares`, `gross_irr`, `gross_margin`, `gross_profit`, `headcount`, `investment_amount`, `latest_price_per_share`, `liabilities`, `long_term_liabilities`, `moic`, `net_assets`, `net_burn`, `net_income`, `net_new_arr`, `net_operating_profit`, `net_other_income`, `net_profit`, `new_logo_arr`, `non_current_assets`, `operating_margin`, `other_non_current_assets`, `ownership`, `post_money_valuation`, `pre_money_valuation`, `property_plants_and_equipment`, `reactivation_arr`, `realized_value`, `revenue`, `revenue_growth`, `revenue_per_fte`, `runway`, `short_term_investments`, `total_change_in_cash`, `total_operating_expenses`, `total_shares_owned`"
+        schema:
+          type: string
+      - name: budget_id
+        in: query
+        description: A budget id for requesting budget metrics. See the `/budgets` endpoint for more information about how to get budget ids
+        schema:
+          type: string
+      - name: updated_at_from
+        in: query
+        description: The from date (inclusive) from which to query updated_at as an ISO 8601 formatted date
+        schema:
+          type: string
+          format: date-time
+      - name: updated_at_to
+        in: query
+        description: The to date (inclusive) from which to query updated_at as an ISO 8601 formatted date
+        schema:
+          type: string
+          format: date-time
+      - name: include_deleted
+        in: query
+        description: Set to '1' if you want to include deleted metrics.
+        schema:
+          type: string
+          enum:
+          - '1'
+      - name: include_budgets
+        in: query
+        description: Set to "1" if you want budget metrics to be returned as well.
+        schema:
+          type: string
+          enum:
+          - '1'
+      - name: include_archived
+        in: query
+        description: Set to '0' to exclude archived metrics. Defaults to '1' (include archived).
+        schema:
+          type: string
+          default: '1'
+          enum:
+          - '0'
+          - '1'
+      - name: include_non_fye_aligned
+        in: query
+        description: Set to 'true' to include metrics whose dates do not align with the company's fiscal year end. These are hidden in the app by default.
+        schema:
+          type: boolean
+          default: false
+      - name: cadence
+        in: query
+        description: 'The cadence type of the metrics to request. Cadence options include: `"point_in_time"`, `"month"`, `"quarter"`, `"year"`. The later three should only be set for cumulative categories.'
+        schema:
+          type: string
+      - name: custom_metric
+        in: query
+        description: The name of the custom metric to query. This field is only populated for metrics in the "custom" category. When filtering for specific metrics, using the `category` field is preferred.
+        schema:
+          type: string
+      - name: sort_by
+        in: query
+        description: The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `"sort_by=-created_at"` and to sort by created_at in descending order use `"sort_by=+created_at"` or just `"sort_by=created_at"`.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Datum'
+    post:
+      tags:
+      - metrics
+      summary: Create metrics
+      description: "Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.\n\n**Notes:**\n- Each request can only be for one company.\n- Supports both standard and custom metrics.\n- Can write to budgets by specifying `budget_id` and `is_budget_metric`.\n- Each request can only target a single budget: all metrics in a request must have the same `budget_id` and `is_budget_metric` values. Budget and non-budget metrics cannot be mixed in one request.\n- Required fields:\n  - `value`\n  - `company_id`\n  - `category`\n  - `metric_cadence`\n  - `date`\n- Optional fields:\n  - `currency` (only for money-type metrics)\n  - `is_budget_metric` (defaults to False)\n- Query parameters:\n  - `on_conflict` ('overwrite' | 'skip', default: 'overwrite')\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role."
+      operationId: metrics_create
+      parameters:
+      - name: on_conflict
+        in: query
+        description: Conflict resolution strategy when a metric already exists for the same company, category, and date. 'overwrite' (default) updates the existing row. 'skip' leaves the existing row unchanged.
+        schema:
+          type: string
+          default: overwrite
+          enum:
+          - overwrite
+          - skip
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  value:
+                    type: string
+                    description: Metric value
+                    example: '1000'
+                  company_id:
+                    type: string
+                    description: Company ID
+                    example: RjX8
+                  category:
+                    type: string
+                    description: Metric category (can also be the name of a custom metric using its display name (e.g., "Total Number of Customers"))
+                    example: cash_in_bank
+                    enum:
+                    - accounts_payable
+                    - accounts_receivable
+                    - arr
+                    - assets
+                    - burn_per_fte
+                    - cash_flow_from_financing_activities
+                    - cash_flow_from_investing_activities
+                    - cash_flow_from_operating_activities
+                    - cash_in_bank
+                    - churned_arr
+                    - contraction_arr
+                    - cost_of_goods_sold
+                    - current_assets
+                    - current_liabilities
+                    - custom
+                    - ebitda
+                    - equity
+                    - expansion_arr
+                    - fair_value
+                    - fully_diluted_shares
+                    - gross_irr
+                    - gross_margin
+                    - gross_profit
+                    - headcount
+                    - investment_amount
+                    - latest_price_per_share
+                    - liabilities
+                    - long_term_liabilities
+                    - moic
+                    - net_assets
+                    - net_burn
+                    - net_income
+                    - net_new_arr
+                    - net_operating_profit
+                    - net_other_income
+                    - net_profit
+                    - new_logo_arr
+                    - non_current_assets
+                    - operating_margin
+                    - other_non_current_assets
+                    - ownership
+                    - post_money_valuation
+                    - pre_money_valuation
+                    - property_plants_and_equipment
+                    - reactivation_arr
+                    - realized_value
+                    - revenue
+                    - revenue_growth
+                    - revenue_per_fte
+                    - runway
+                    - short_term_investments
+                    - total_change_in_cash
+                    - total_operating_expenses
+                    - total_shares_owned
+                  date:
+                    type: string
+                    description: Date
+                    example: '2023-07-31'
+                  metric_cadence:
+                    type: string
+                    description: Metric cadence
+                    example: point_in_time
+                    enum:
+                    - point_in_time
+                    - day
+                    - week
+                    - month
+                    - quarter
+                    - half_year
+                    - year
+                  currency:
+                    type: string
+                    description: Currency. Only required for money-type metrics.
+                    example: USD
+                    enum:
+                    - AED
+                    - AUD
+                    - BDT
+                    - BRL
+                    - CAD
+                    - CHF
+                    - CNY
+                    - COP
+                    - CZK
+                    - DKK
+                    - EUR
+                    - GBP
+                    - GHS
+                    - HKD
+                    - IDR
+                    - ILS
+                    - INR
+                    - ISK
+                    - JOD
+                    - JPY
+                    - KES
+                    - KRW
+                    - MXN
+                    - NGN
+                    - NOK
+                    - NZD
+                    - PEN
+                    - PHP
+                    - PKR
+                    - SAR
+                    - SEK
+                    - SGD
+                    - THB
+                    - TRY
+                    - TWD
+                    - TZS
+                    - USD
+                    - VND
+                    - ZAR
+                  is_budget_metric:
+                    type: boolean
+                    description: Is budget metric. Defaults to False if not provided.
+                    example: true
+                  budget_id:
+                    type: string
+                    description: Budget ID
+                    example: yzJm
+        required: true
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    value:
+                      type: string
+                      description: Metric value
+                      example: '1000'
+                    company_id:
+                      type: string
+                      description: Company ID
+                      example: RjX8
+                    category:
+                      type: string
+                      description: Metric category (can also be the name of a custom metric using its display name (e.g., "Total Number of Customers"))
+                      example: cash_in_bank
+                      enum:
+                      - accounts_payable
+                      - accounts_receivable
+                      - arr
+                      - assets
+                      - burn_per_fte
+                      - cash_flow_from_financing_activities
+                      - cash_flow_from_investing_activities
+                      - cash_flow_from_operating_activities
+                      - cash_in_bank
+                      - churned_arr
+                      - contraction_arr
+                      - cost_of_goods_sold
+                      - current_assets
+                      - current_liabilities
+                      - custom
+                      - ebitda
+                      - equity
+                      - expansion_arr
+                      - fair_value
+                      - fully_diluted_shares
+                      - gross_irr
+                      - gross_margin
+                      - gross_profit
+                      - headcount
+                      - investment_amount
+                      - latest_price_per_share
+                      - liabilities
+                      - long_term_liabilities
+                      - moic
+                      - net_assets
+                      - net_burn
+                      - net_income
+                      - net_new_arr
+                      - net_operating_profit
+                      - net_other_income
+                      - net_profit
+                      - new_logo_arr
+                      - non_current_assets
+                      - operating_margin
+                      - other_non_current_assets
+                      - ownership
+                      - post_money_valuation
+                      - pre_money_valuation
+                      - property_plants_and_equipment
+                      - reactivation_arr
+                      - realized_value
+                      - revenue
+                      - revenue_growth
+                      - revenue_per_fte
+                      - runway
+                      - short_term_investments
+                      - total_change_in_cash
+                      - total_operating_expenses
+                      - total_shares_owned
+                    date:
+                      type: string
+                      description: Date
+                      example: '2023-07-31'
+                    metric_cadence:
+                      type: string
+                      description: Metric cadence
+                      example: point_in_time
+                      enum:
+                      - point_in_time
+                      - day
+                      - week
+                      - month
+                      - quarter
+                      - half_year
+                      - year
+                    currency:
+                      type: string
+                      description: Currency. Only required for money-type metrics.
+                      example: USD
+                      enum:
+                      - AED
+                      - AUD
+                      - BDT
+                      - BRL
+                      - CAD
+                      - CHF
+                      - CNY
+                      - COP
+                      - CZK
+                      - DKK
+                      - EUR
+                      - GBP
+                      - GHS
+                      - HKD
+                      - IDR
+                      - ILS
+                      - INR
+                      - ISK
+                      - JOD
+                      - JPY
+                      - KES
+                      - KRW
+                      - MXN
+                      - NGN
+                      - NOK
+                      - NZD
+                      - PEN
+                      - PHP
+                      - PKR
+                      - SAR
+                      - SEK
+                      - SGD
+                      - THB
+                      - TRY
+                      - TWD
+                      - TZS
+                      - USD
+                      - VND
+                      - ZAR
+                    is_budget_metric:
+                      type: boolean
+                      description: Is budget metric. Defaults to False if not provided.
+                      example: true
+                    budget_id:
+                      type: string
+                      description: Budget ID
+                      example: yzJm
+      x-codegen-request-body-name: data
+  /metrics/options/:
+    get:
+      tags:
+      - metrics
+      summary: Get metrics options
+      description: 'Retrieve information about all available metrics for a firm. Includes category names, types, and configuration details.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.'
+      operationId: metrics_options_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: category_name
+        in: query
+        description: Name of the category
+        schema:
+          type: string
+      - name: category_id
+        in: query
+        description: ID of the category
+        schema:
+          type: string
+      - name: is_standard
+        in: query
+        description: Is category standard
+        schema:
+          type: boolean
+      - name: type
+        in: query
+        description: Type of the category
+        schema:
+          type: string
+          enum:
+          - Integer
+          - Decimal
+          - String
+          - Money
+          - Percentage
+          - Select
+      - name: is_point_in_time
+        in: query
+        description: Is category point in time
+        schema:
+          type: boolean
+      - name: is_archived
+        in: query
+        description: Is category archived
+        schema:
+          type: boolean
+      - name: choices
+        in: query
+        description: Choice options for the category
+        style: form
+        explode: false
+        schema:
+          type: array
+          items:
+            type: string
+      - name: is_multiple
+        in: query
+        description: Is the category multiple choice
+        schema:
+          type: boolean
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/MetricsOptions'
+  /metrics/{datum_id}/:
+    delete:
+      tags:
+      - metrics
+      summary: Delete a specific metric.
+      description: '**Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the company that owns the datum.
+
+        - User must have ADMIN or EDITOR role.'
+      operationId: metrics_delete
+      parameters:
+      - name: datum_id
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - message
+                - success
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    description: Indicates whether the operation was successful
+                  message:
+                    type: string
+                    description: A message describing the operation result
+components:
+  schemas:
+    Datum:
+      required:
+      - budget_id
+      - category_id
+      - company_id
+      - created_at
+      - currency
+      - date
+      - id
+      - updated_at
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        value:
+          title: Value
+          type: string
+          readOnly: true
+        currency:
+          title: Currency
+          minLength: 1
+          type: string
+          nullable: true
+        converted_value:
+          title: Converted value
+          type: string
+          readOnly: true
+        preferred_currency:
+          title: Preferred currency
+          type: string
+          readOnly: true
+        date:
+          title: Date
+          type: string
+          format: date
+        category:
+          title: Category
+          type: string
+          readOnly: true
+        category_type:
+          title: Category type
+          type: string
+          readOnly: true
+        category_id:
+          title: Category id
+          type: string
+        cadence:
+          title: Cadence
+          type: string
+          readOnly: true
+        is_budget_metric:
+          title: Is budget metric
+          type: boolean
+          readOnly: true
+        budget_id:
+          title: Budget id
+          type: string
+          nullable: true
+        custom_metric:
+          title: Custom metric
+          minLength: 1
+          type: string
+          nullable: true
+          readOnly: true
+        fx_rate:
+          title: Fx rate
+          type: number
+          nullable: true
+          readOnly: true
+        detailed_source:
+          title: Detailed source
+          type: string
+          readOnly: true
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+        company_id:
+          title: Company id
+          type: string
+        deleted_at:
+          title: Deleted at
+          type: string
+          format: date-time
+          nullable: true
+          readOnly: true
+        archived:
+          title: Archived
+          type: boolean
+          readOnly: true
+    MetricsOptions:
+      required:
+      - category_id
+      - category_name
+      - is_standard
+      type: object
+      properties:
+        category_name:
+          title: Category name
+          minLength: 1
+          type: string
+        category_id:
+          title: Category id
+          type: string
+        is_standard:
+          title: Is standard
+          type: boolean
+        is_archived:
+          title: Is archived
+          type: boolean
+        type:
+          title: Type
+          type: string
+          readOnly: true
+        is_point_in_time:
+          title: Is point in time
+          type: boolean
+        description:
+          title: Description
+          type: string
+        choices:
+          type: array
+          description: Choices for categories with a select type
+          items:
+            title: Choices
+            maxLength: 255
+            minLength: 1
+            type: string
+        is_multiple:
+          title: Is multiple
+          type: boolean
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

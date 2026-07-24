@@ -1,0 +1,175 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets information-requests API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: information-requests
+paths:
+  /information-requests/:
+    get:
+      tags:
+      - information-requests
+      summary: Get information requests
+      description: 'Retrieve all information requests associated with the firm. Includes company associations and submission status.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the information requests.'
+      operationId: information-requests_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: name
+        in: query
+        description: An optional name of the information request to filter by.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InformationRequest'
+components:
+  schemas:
+    InformationRequest:
+      required:
+      - due_date
+      - id
+      - name
+      - period_end_date
+      - period_start_date
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        due_date:
+          title: Due date
+          type: string
+          format: date
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        completed_count:
+          title: Completed count
+          type: integer
+          readOnly: true
+        in_progress_count:
+          title: In progress count
+          type: integer
+          nullable: true
+          readOnly: true
+        not_started_count:
+          title: Not started count
+          type: integer
+          nullable: true
+          readOnly: true
+        partially_complete_count:
+          title: Partially complete count
+          type: integer
+          nullable: true
+          readOnly: true
+        past_due_count:
+          title: Past due count
+          type: integer
+          nullable: true
+          readOnly: true
+        period:
+          title: Period
+          type: string
+          readOnly: true
+        period_start_date:
+          title: Period start date
+          type: string
+          format: date
+        period_end_date:
+          title: Period end date
+          type: string
+          format: date
+        requested_documents:
+          type: array
+          readOnly: true
+          items:
+            required:
+            - description
+            type: object
+            properties:
+              id:
+                title: Id
+                type: string
+                readOnly: true
+              name:
+                title: Name
+                type: string
+                readOnly: true
+              description:
+                title: Description
+                minLength: 1
+                type: string
+              optional:
+                title: Optional
+                type: boolean
+        requested_metrics:
+          type: array
+          readOnly: true
+          items:
+            type: object
+            properties:
+              id:
+                title: Id
+                type: string
+                readOnly: true
+              name:
+                title: Name
+                type: string
+                readOnly: true
+              description:
+                title: Description
+                type: string
+                readOnly: true
+              optional:
+                title: Optional
+                type: boolean
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

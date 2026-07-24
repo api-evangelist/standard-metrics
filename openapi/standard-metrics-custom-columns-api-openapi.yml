@@ -1,0 +1,419 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets custom-columns API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: custom-columns
+paths:
+  /custom-columns/:
+    get:
+      tags:
+      - custom-columns
+      summary: Get custom column values
+      description: 'Retrieve custom column values for companies. Includes column metadata, values, and company associations.
+
+
+        **Notes:**
+
+        - If no company is specified, returns custom column data for all companies.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the metrics data.'
+      operationId: custom-columns_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: company_slug
+        in: query
+        description: 'The slug that uniquely identifies the company whose metrics'' to request. You can find the slug for a company by going to that company''s portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm''s companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.'
+        schema:
+          type: string
+      - name: company_id
+        in: query
+        description: The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/EntityProperty'
+  /custom-columns/options/:
+    get:
+      tags:
+      - custom-columns
+      summary: Get custom column options
+      description: 'Retrieve all custom columns and their available options. Includes selectable options for select and multi-select columns.
+
+
+        **Notes:**
+
+        - Particularly helpful for retrieving available options for `select` and `multi_select` custom columns.
+
+        - Text columns will have empty options arrays.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.'
+      operationId: custom-columns_options_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Property'
+  /custom-columns/values/:
+    put:
+      tags:
+      - custom-columns
+      summary: Update custom column values
+      description: 'Update custom column values for companies. Fully replaces existing data for the specified company and column.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the companies.
+
+        - User must have ADMIN or EDITOR role.'
+      operationId: custom-columns_values_update
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                type: object
+                properties:
+                  company_slug:
+                    type: string
+                    description: Company Slug
+                  company_id:
+                    type: string
+                    description: Company ID
+                  custom_column_id:
+                    type: string
+                    description: Custom Column ID
+                  value:
+                    type: string
+                    description: Value
+                  selected_options:
+                    type: array
+                    description: Selected Options
+                    items:
+                      type: object
+                      properties:
+                        option_id:
+                          type: string
+                          description: Custom Column Option ID
+                        value:
+                          type: string
+                          description: Value
+                        color:
+                          type: string
+                          description: Color Code
+        required: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    company_slug:
+                      type: string
+                      description: Company Slug
+                    company_id:
+                      type: string
+                      description: Company ID
+                    custom_column_id:
+                      type: string
+                      description: Custom Column ID
+                    value:
+                      type: string
+                      description: Value
+                    selected_options:
+                      type: array
+                      description: Selected Options
+                      items:
+                        type: object
+                        properties:
+                          option_id:
+                            type: string
+                            description: Custom Column Option ID
+                          value:
+                            type: string
+                            description: Value
+                          color:
+                            type: string
+                            description: Color Code
+      x-codegen-request-body-name: data
+components:
+  schemas:
+    TextEntityProperty:
+      type: object
+      required:
+      - company
+      - id
+      - name
+      - type
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        company:
+          required:
+          - id
+          type: object
+          properties:
+            id:
+              title: Id
+              type: string
+            name:
+              title: Name
+              minLength: 1
+              type: string
+              readOnly: true
+            slug:
+              title: Slug
+              minLength: 1
+              pattern: ^[-a-zA-Z0-9_]+$
+              type: string
+              format: slug
+              readOnly: true
+        type:
+          type: string
+          enum:
+          - text
+        value:
+          type: string
+          nullable: true
+    EntityProperty:
+      oneOf:
+      - $ref: '#/components/schemas/TextEntityProperty'
+      - $ref: '#/components/schemas/SingleSelectEntityProperty'
+      - $ref: '#/components/schemas/MultiSelectEntityProperty'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextEntityProperty'
+          select: '#/components/schemas/SingleSelectEntityProperty'
+          multi_select: '#/components/schemas/MultiSelectEntityProperty'
+    EntityPropertyOption:
+      type: object
+      required:
+      - id
+      - value
+      - color
+      properties:
+        id:
+          type: string
+        value:
+          type: string
+        color:
+          type: string
+    MultiSelectEntityProperty:
+      type: object
+      required:
+      - company
+      - id
+      - name
+      - type
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        company:
+          required:
+          - id
+          type: object
+          properties:
+            id:
+              title: Id
+              type: string
+            name:
+              title: Name
+              minLength: 1
+              type: string
+              readOnly: true
+            slug:
+              title: Slug
+              minLength: 1
+              pattern: ^[-a-zA-Z0-9_]+$
+              type: string
+              format: slug
+              readOnly: true
+        type:
+          type: string
+          enum:
+          - multi_select
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityPropertyOption'
+    PropertyOption:
+      required:
+      - color
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        value:
+          title: Value
+          minLength: 1
+          type: string
+        color:
+          title: Color
+          minLength: 1
+          type: string
+    SingleSelectEntityProperty:
+      type: object
+      required:
+      - company
+      - id
+      - name
+      - type
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        company:
+          required:
+          - id
+          type: object
+          properties:
+            id:
+              title: Id
+              type: string
+            name:
+              title: Name
+              minLength: 1
+              type: string
+              readOnly: true
+            slug:
+              title: Slug
+              minLength: 1
+              pattern: ^[-a-zA-Z0-9_]+$
+              type: string
+              format: slug
+              readOnly: true
+        type:
+          type: string
+          enum:
+          - select
+        value:
+          nullable: true
+          allOf:
+          - $ref: '#/components/schemas/EntityPropertyOption'
+    Property:
+      required:
+      - id
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        type:
+          title: Type
+          type: string
+        options:
+          type: array
+          nullable: true
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/PropertyOption'
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

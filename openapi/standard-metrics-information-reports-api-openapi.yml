@@ -1,0 +1,165 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets information-reports API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: information-reports
+paths:
+  /information-reports/:
+    get:
+      tags:
+      - information-reports
+      summary: Get information reports
+      description: 'Retrieve all information reports associated with the firm. Includes submitted documents, metrics, and outstanding requirements.
+
+
+        **Permissions:**
+
+        - User must have VIEWER, ADMIN, or EDITOR role.'
+      operationId: information-reports_list
+      parameters:
+      - name: page
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: page_size
+        in: query
+        description: Number of results to return per page.
+        schema:
+          type: integer
+      - name: company_id
+        in: query
+        description: ID of a company to filter
+        schema:
+          type: string
+      - name: information_request_id
+        in: query
+        description: ID of an Information Request to filter
+        schema:
+          type: string
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                required:
+                - count
+                - results
+                type: object
+                properties:
+                  count:
+                    type: integer
+                  next:
+                    type: string
+                    format: uri
+                    nullable: true
+                  previous:
+                    type: string
+                    format: uri
+                    nullable: true
+                  results:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/InformationReport'
+components:
+  schemas:
+    Document:
+      required:
+      - requested_document
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        requested_document:
+          title: Requested document
+          minLength: 1
+          type: string
+    Metric:
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        date:
+          title: Date
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        time_period:
+          title: Time period
+          type: string
+          readOnly: true
+    InformationReport:
+      required:
+      - company_id
+      - id
+      - information_request_id
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        company_id:
+          title: Company id
+          type: string
+        submitted_at:
+          title: Submitted at
+          type: string
+          format: date-time
+          nullable: true
+        information_request_id:
+          title: Information request id
+          type: string
+        documents:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Document'
+        documents_completed:
+          title: Documents completed
+          type: integer
+          readOnly: true
+        documents_missing:
+          title: Documents missing
+          type: integer
+          readOnly: true
+        metrics:
+          type: array
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/Metric'
+        metrics_completed:
+          title: Metrics completed
+          type: integer
+          readOnly: true
+        metrics_missing:
+          title: Metrics missing
+          type: integer
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic

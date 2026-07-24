@@ -1,0 +1,72 @@
+openapi: 3.0.3
+info:
+  title: OAuth Token budgets firm-details API
+  version: 1.0.0
+  description: Token endpoint using client credentials flow.
+servers:
+- url: https://api.standardmetrics.io
+tags:
+- name: firm-details
+paths:
+  /firm-details/:
+    get:
+      tags:
+      - firm-details
+      summary: Get current user information
+      description: 'Returns information about the currently authenticated user.
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.'
+      operationId: firm-details_read
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FirmDetails'
+components:
+  schemas:
+    FirmDetails:
+      required:
+      - name
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          maxLength: 255
+          minLength: 1
+          type: string
+        slug:
+          title: Slug
+          minLength: 1
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+          format: slug
+          readOnly: true
+        country:
+          title: Country
+          type: string
+          readOnly: true
+        city:
+          title: City
+          maxLength: 255
+          type: string
+        preferred_currency:
+          title: Preferred currency
+          type: string
+          readOnly: true
+        enabled_feature_flags:
+          title: Enabled feature flags
+          type: string
+          readOnly: true
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
