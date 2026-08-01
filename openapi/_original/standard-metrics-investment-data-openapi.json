@@ -1,0 +1,4305 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Standard Metrics Investment Data API",
+    "version": "beta",
+    "description": "Standard Metrics' investment data API."
+  },
+  "paths": {
+    "/beta/investment/financing-events/get/": {
+      "post": {
+        "operationId": "get_financing_events",
+        "summary": "Get financing events",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FinancingOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Retrieve financing events for companies in the portfolio. Returns all financing rounds if no filters are applied. Can be filtered by company ID or financing ID to get specific rounds. Each financing event includes stage, pre-money valuation, round size, fully diluted shares, closing date, and co-investor information.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/FinancingFilters"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "required": false
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/share-classes/get/": {
+      "post": {
+        "operationId": "get_share_classes",
+        "summary": "Get share classes",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ShareClassOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Retrieve share classes for a firm or a specific company. If no filters are provided, the endpoint returns all share classes across the firm. If company IDs or share class IDs are provided, it returns share classes specific to those companies or share classes.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/ShareClassFilters"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "required": false
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/transactions/get/": {
+      "post": {
+        "operationId": "get_transactions",
+        "summary": "Get transactions",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Retrieve transactions for a firm or a specific company. If no filters are provided, the endpoint returns all transactions across the firm. If company IDs or transaction IDs are provided, it returns transactions specific to those companies or transactions.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/TransactionFilters"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "required": false
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/securities/get/": {
+      "post": {
+        "operationId": "get_securities",
+        "summary": "Get securities",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "discriminator": {
+                      "mapping": {
+                        "certificate": "#/components/schemas/CertificateOut",
+                        "convertible": "#/components/schemas/ConvertibleOut",
+                        "public_equity": "#/components/schemas/PublicEquityOut",
+                        "token_convertible": "#/components/schemas/TokenConvertibleOut",
+                        "token_investment": "#/components/schemas/TokenInvestmentOut",
+                        "token_warrant": "#/components/schemas/TokenWarrantOut",
+                        "warrant": "#/components/schemas/WarrantOut"
+                      },
+                      "propertyName": "type"
+                    },
+                    "oneOf": [
+                      {
+                        "$ref": "#/components/schemas/CertificateOut"
+                      },
+                      {
+                        "$ref": "#/components/schemas/WarrantOut"
+                      },
+                      {
+                        "$ref": "#/components/schemas/PublicEquityOut"
+                      },
+                      {
+                        "$ref": "#/components/schemas/TokenInvestmentOut"
+                      },
+                      {
+                        "$ref": "#/components/schemas/TokenWarrantOut"
+                      },
+                      {
+                        "$ref": "#/components/schemas/TokenConvertibleOut"
+                      },
+                      {
+                        "$ref": "#/components/schemas/ConvertibleOut"
+                      }
+                    ]
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Retrieve securities for a firm or a specific company. If no filters are provided, the endpoint returns all securities across the firm. If company IDs or holding IDs are provided, it returns securities specific to those companies or holdings.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "anyOf": [
+                  {
+                    "$ref": "#/components/schemas/SecuritiesFilters"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ]
+              }
+            }
+          },
+          "required": false
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/share-classes/add/": {
+      "post": {
+        "operationId": "add_share_classes",
+        "summary": "Add share classes",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/ShareClassOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Add share classes to a company's cap table. Creates new share classes with specified pricing, type, and purchase information.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddShareClasses"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/financing-rounds/add/": {
+      "post": {
+        "operationId": "add_financing_rounds",
+        "summary": "Add financing rounds",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/FinancingOut"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Add financing rounds across your cap tables. Creates new financing events with stage information, valuations, and co-investor details.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n        - User must have permission to add data to the cap tables.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddFinancingRounds"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/overrides/upsert/": {
+      "put": {
+        "operationId": "upsert_overrides",
+        "summary": "Upsert overrides",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagesResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Upsert overrides for ownership percentages, post-money valuations, and fair values. Creates or updates override data for companies and funds.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies and funds.\n        - User must have permission to modify data in the portco.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OverridesToUpsert"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/transactions/add/": {
+      "post": {
+        "operationId": "add_transactions",
+        "summary": "Add transactions",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "items": {
+                    "$ref": "#/components/schemas/Transaction"
+                  },
+                  "title": "Response",
+                  "type": "array"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Add a list of transactions to a company's cap table. Supports sales, conversions, and exercises of securities.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddTransactions"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/securities/add/": {
+      "post": {
+        "operationId": "add_securities",
+        "summary": "Add securities",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MessagesResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        Add a list of securities, across different types, to a company's cap table. Supports certificates, warrants, convertibles, and token-based securities.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AddSecurities"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    },
+    "/beta/investment/metrics/get/": {
+      "post": {
+        "operationId": "get_metrics",
+        "summary": "Get investment performance metrics (Alpha)",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MetricsResponse"
+                }
+              }
+            }
+          }
+        },
+        "description": "\n        **Unstable:** This endpoint is in alpha and may change without notice.\n\n        Retrieve investment metrics for portfolio companies.\n\n        If `fund_ids` is omitted, metrics are aggregated across all funds.\n        If `fund_ids` is provided, metrics reflect only those funds' positions.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+        "tags": [
+          "cap_table"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MetricsFilters"
+              }
+            }
+          },
+          "required": true
+        },
+        "security": [
+          {
+            "BearerAuth": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "CoInvestor": {
+        "description": "A co-investor in a financing round.",
+        "properties": {
+          "name": {
+            "description": "The name of the co-investor.",
+            "examples": [
+              "SM Capital"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "is_lead": {
+            "default": false,
+            "description": "Whether this co-investor is the lead investor.",
+            "examples": [
+              true
+            ],
+            "title": "Is Lead",
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "CoInvestor",
+        "type": "object"
+      },
+      "CurrencyCode": {
+        "description": "Supported currency codes.",
+        "enum": [
+          "AED",
+          "AUD",
+          "BDT",
+          "BRL",
+          "CAD",
+          "CHF",
+          "CNY",
+          "COP",
+          "CZK",
+          "DKK",
+          "EUR",
+          "GBP",
+          "GHS",
+          "HKD",
+          "IDR",
+          "ILS",
+          "INR",
+          "JPY",
+          "JOD",
+          "KES",
+          "KRW",
+          "MXN",
+          "NGN",
+          "NOK",
+          "NZD",
+          "PEN",
+          "PHP",
+          "SAR",
+          "SGD",
+          "USD",
+          "PKR",
+          "THB",
+          "TRY",
+          "TWD",
+          "TZS",
+          "VND",
+          "SEK",
+          "ISK",
+          "ZAR"
+        ],
+        "title": "CurrencyCode",
+        "type": "string"
+      },
+      "FinancingOut": {
+        "description": "A financing event being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the financing.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "company_id": {
+            "description": "The ID of the company this financing event belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the financing round.",
+            "examples": [
+              "Series A"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "pre_money_valuation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The pre-money valuation of the company at the time of the financing round.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "20000000"
+              }
+            ]
+          },
+          "round_size": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The total size of the financing round.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "5000000"
+              }
+            ]
+          },
+          "fully_diluted_shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The fully diluted share count at the time of the financing round.",
+            "examples": [
+              "1000000"
+            ],
+            "title": "Fully Diluted Shares"
+          },
+          "closing_date": {
+            "description": "The closing date of the financing round.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Closing Date",
+            "type": "string"
+          },
+          "co_investors": {
+            "description": "The list of co-investors in the financing round.",
+            "examples": [
+              {
+                "is_lead": true,
+                "name": "Investor 1"
+              },
+              {
+                "is_lead": false,
+                "name": "Investor 2"
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/CoInvestor"
+            },
+            "title": "Co Investors",
+            "type": "array"
+          },
+          "is_crypto": {
+            "default": false,
+            "description": "Whether this is a crypto financing event.",
+            "examples": [
+              false
+            ],
+            "title": "Is Crypto",
+            "type": "boolean"
+          },
+          "liquidation_multiple": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The liquidation multiple (e.g., 1.00, 1.50, 2.00).",
+            "examples": [
+              "1.50"
+            ],
+            "title": "Liquidation Multiple"
+          },
+          "cap_multiple": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The cap multiple for capped participating preferences.",
+            "examples": [
+              "3.00"
+            ],
+            "title": "Cap Multiple"
+          },
+          "seniority_position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SeniorityPosition"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The seniority position: SENIOR_TO_ALL or PARI_PASSU.",
+            "examples": [
+              "SENIOR_TO_ALL"
+            ]
+          },
+          "participation_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ParticipationType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The participation type: NON_PARTICIPATING, FULLY_PARTICIPATING, or CAPPED_PARTICIPATING.",
+            "examples": [
+              "NON_PARTICIPATING"
+            ]
+          },
+          "pari_passu_rounds": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/PariPassuRound"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Financing rounds that share equal seniority in the same pari passu group.",
+            "examples": [
+              [
+                {
+                  "id": "a2Ne",
+                  "name": "Series A"
+                }
+              ]
+            ],
+            "title": "Pari Passu Rounds"
+          },
+          "company_name": {
+            "description": "The name of the company this financing event belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_id",
+          "name",
+          "pre_money_valuation",
+          "round_size",
+          "fully_diluted_shares",
+          "closing_date",
+          "co_investors",
+          "company_name"
+        ],
+        "title": "FinancingOut",
+        "type": "object"
+      },
+      "MoneyAmount": {
+        "description": "A monetary amount.",
+        "properties": {
+          "value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The value of the amount for the source currency.",
+            "examples": [
+              "1000000"
+            ],
+            "title": "Value"
+          },
+          "converted_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The value of the amount converted to your firm's preferred currency.",
+            "examples": [
+              "1000000"
+            ],
+            "readOnly": true,
+            "title": "Converted Value"
+          },
+          "currency": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CurrencyCode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The currency of the amount.",
+            "examples": [
+              "USD"
+            ]
+          },
+          "converted_currency": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/CurrencyCode"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The currency of the converted amount. Your firm's preferred currency.",
+            "examples": [
+              "USD"
+            ],
+            "readOnly": true
+          },
+          "fx_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The FX rate between the source currency and the converted currency.",
+            "examples": [
+              "1.0"
+            ],
+            "title": "Fx Rate"
+          },
+          "is_custom_rate": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Whether the FX rate is a custom rate.",
+            "examples": [
+              false
+            ],
+            "readOnly": true,
+            "title": "Is Custom Rate"
+          }
+        },
+        "required": [
+          "value",
+          "currency"
+        ],
+        "title": "MoneyAmount",
+        "type": "object"
+      },
+      "PariPassuRound": {
+        "description": "A financing round in a pari passu group.",
+        "properties": {
+          "id": {
+            "description": "The ID of the financing round.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the financing round.",
+            "examples": [
+              "Series A"
+            ],
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "PariPassuRound",
+        "type": "object"
+      },
+      "ParticipationType": {
+        "enum": [
+          "NON_PARTICIPATING",
+          "FULLY_PARTICIPATING",
+          "CAPPED_PARTICIPATING"
+        ],
+        "title": "ParticipationType",
+        "type": "string",
+        "x-enumDescriptions": [
+          "Non Participating",
+          "Fully Participating",
+          "Capped Participating"
+        ],
+        "x-enumNames": [
+          "NON_PARTICIPATING",
+          "FULLY_PARTICIPATING",
+          "CAPPED_PARTICIPATING"
+        ]
+      },
+      "SeniorityPosition": {
+        "enum": [
+          "SENIOR_TO_ALL",
+          "PARI_PASSU",
+          "PARI_PASSU_ALL_PREVIOUS"
+        ],
+        "title": "SeniorityPosition",
+        "type": "string",
+        "x-enumDescriptions": [
+          "Senior To All",
+          "Pari Passu",
+          "Pari Passu All Previous"
+        ],
+        "x-enumNames": [
+          "SENIOR_TO_ALL",
+          "PARI_PASSU",
+          "PARI_PASSU_ALL_PREVIOUS"
+        ]
+      },
+      "CoInvestorFilter": {
+        "description": "Filter for matching a co-investor by name and role.",
+        "properties": {
+          "name": {
+            "description": "Substring match against co-investor names.",
+            "examples": [
+              "SM Capital"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "role": {
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/CoInvestorRole"
+              }
+            ],
+            "default": "any",
+            "description": "Filter co-investors by their role: 'lead', 'co', or 'any'.",
+            "examples": [
+              "lead"
+            ]
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "CoInvestorFilter",
+        "type": "object"
+      },
+      "CoInvestorRole": {
+        "description": "Role filter for co-investor matching.",
+        "enum": [
+          "lead",
+          "co",
+          "any"
+        ],
+        "title": "CoInvestorRole",
+        "type": "string"
+      },
+      "FinancingFilters": {
+        "additionalProperties": false,
+        "description": "Options for fetching financing events.",
+        "properties": {
+          "company_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by company IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Company Ids"
+          },
+          "financing_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by financing event IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Financing Ids"
+          },
+          "sort_by": {
+            "anyOf": [
+              {
+                "enum": [
+                  "closing_date",
+                  "+closing_date",
+                  "-closing_date",
+                  "round_size",
+                  "+round_size",
+                  "-round_size"
+                ],
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Sort results by a field. Prefix with '-' for descending order, '+' or no prefix for ascending.",
+            "examples": [
+              "-closing_date"
+            ],
+            "title": "Sort By"
+          },
+          "is_crypto": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by whether the financing event is a crypto financing event.",
+            "examples": [
+              false
+            ],
+            "title": "Is Crypto"
+          },
+          "co_investors": {
+            "anyOf": [
+              {
+                "items": {
+                  "$ref": "#/components/schemas/CoInvestorFilter"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter financing events by co-investor name and role.",
+            "title": "Co Investors"
+          }
+        },
+        "title": "FinancingFilters",
+        "type": "object"
+      },
+      "ShareClassOut": {
+        "description": "A share class being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the share class.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "company_id": {
+            "description": "The ID of the company this share class belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this share class belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          },
+          "purchase_type": {
+            "description": "Whether the purchase is a primary or secondary transaction.",
+            "enum": [
+              "primary",
+              "secondary"
+            ],
+            "examples": [
+              "primary"
+            ],
+            "title": "Purchase Type",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of shares in this share class.",
+            "enum": [
+              "common",
+              "preferred"
+            ],
+            "examples": [
+              "preferred"
+            ],
+            "title": "Type",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the share class.",
+            "examples": [
+              "Series A"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "price_per_share": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The price per share for this share class.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "10.00"
+              }
+            ]
+          },
+          "include_in_fair_value": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Whether the share class is included in the fair value calculation. Defaults to `True` when the `purchase_type` is `primary`, otherwise `False`.",
+            "examples": [
+              true
+            ],
+            "title": "Include In Fair Value"
+          },
+          "company_name": {
+            "description": "The name of the company this share class belongs to. Output only.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_id",
+          "financing_id",
+          "purchase_type",
+          "type",
+          "name",
+          "price_per_share",
+          "company_name"
+        ],
+        "title": "ShareClassOut",
+        "type": "object"
+      },
+      "ShareClassFilters": {
+        "additionalProperties": false,
+        "description": "Options for fetching share classes.",
+        "properties": {
+          "company_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by company IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Company Ids"
+          },
+          "share_class_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by share class IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Share Class Ids"
+          },
+          "purchase_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ShareClassPurchaseType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by purchase type: 'primary' or 'secondary'.",
+            "examples": [
+              "primary"
+            ]
+          }
+        },
+        "title": "ShareClassFilters",
+        "type": "object"
+      },
+      "ShareClassPurchaseType": {
+        "description": "String enum for share class purchase types.",
+        "enum": [
+          "primary",
+          "secondary"
+        ],
+        "title": "ShareClassPurchaseType",
+        "type": "string"
+      },
+      "Transaction": {
+        "description": "A transaction from one holding to another.",
+        "properties": {
+          "id": {
+            "description": "The ID of the transaction.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company related to the transaction.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company related to the record.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "input_security_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID for the security that was being transacted.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Input Security Id"
+          },
+          "output_security_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID for the security that was created as a result of the transaction.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Output Security Id"
+          },
+          "date": {
+            "description": "The date of the transaction.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "event": {
+            "$ref": "#/components/schemas/TransactionEvent",
+            "description": "The type of transaction that occurred.",
+            "examples": [
+              "Sale"
+            ]
+          },
+          "shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The number of shares that were transferred or sold as a result of the transaction.",
+            "examples": [
+              "1000000"
+            ],
+            "title": "Shares"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The amount of money that was invested in the transaction.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "1000000"
+              }
+            ]
+          },
+          "proceeds": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The amount of money that was received from the transaction.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "1000000"
+              }
+            ]
+          }
+        },
+        "required": [
+          "id",
+          "company_id",
+          "company_name",
+          "input_security_id",
+          "output_security_id",
+          "date",
+          "event",
+          "shares",
+          "investment_amount",
+          "proceeds"
+        ],
+        "title": "Transaction",
+        "type": "object"
+      },
+      "TransactionEvent": {
+        "description": "A transaction event.",
+        "enum": [
+          "exercise",
+          "conversion",
+          "sale"
+        ],
+        "title": "TransactionEvent",
+        "type": "string"
+      },
+      "TransactionFilters": {
+        "additionalProperties": false,
+        "description": "Options for fetching transactions.",
+        "properties": {
+          "company_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by company IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Company Ids"
+          },
+          "transaction_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by transaction IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Transaction Ids"
+          },
+          "event": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/TransactionEvent"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by transaction event type.",
+            "examples": [
+              "sale"
+            ]
+          },
+          "input_security_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by the input security ID of the transaction.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Input Security Id"
+          },
+          "output_security_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by the output security ID of the transaction.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Output Security Id"
+          }
+        },
+        "title": "TransactionFilters",
+        "type": "object"
+      },
+      "CertificateOut": {
+        "description": "A certificate being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "certificate",
+            "default": "certificate",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total investment amount for this certificate.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "1000000"
+              }
+            ]
+          },
+          "shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of shares held.",
+            "examples": [
+              "50000"
+            ],
+            "title": "Shares"
+          },
+          "share_class_id": {
+            "description": "The ID of the share class for this certificate.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Share Class Id",
+            "type": "string"
+          },
+          "financing_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the financing round this certificate belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id"
+          },
+          "share_class_name": {
+            "description": "The name of the share class for this certificate.",
+            "examples": [
+              "Series A"
+            ],
+            "title": "Share Class Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "investment_amount",
+          "shares",
+          "share_class_id",
+          "financing_id",
+          "share_class_name"
+        ],
+        "title": "CertificateOut",
+        "type": "object"
+      },
+      "ConvertibleOut": {
+        "description": "A convertible note being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "convertible",
+            "default": "convertible",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "convertible_type": {
+            "$ref": "#/components/schemas/ConvertibleType",
+            "description": "The type of convertible instrument.",
+            "examples": [
+              "safe"
+            ]
+          },
+          "discount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The discount rate applied upon conversion.",
+            "examples": [
+              "0.20"
+            ],
+            "title": "Discount"
+          },
+          "valuation_cap": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The valuation cap for the convertible instrument.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "10000000"
+              }
+            ]
+          },
+          "maturity_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The maturity date of the convertible instrument.",
+            "examples": [
+              "2025-01-01"
+            ],
+            "title": "Maturity Date"
+          },
+          "interest_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The annual interest rate of the convertible instrument.",
+            "examples": [
+              "0.05"
+            ],
+            "title": "Interest Rate"
+          },
+          "days_convention": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  365
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The day-count convention used for interest calculation.",
+            "examples": [
+              365
+            ],
+            "title": "Days Convention"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The principal investment amount.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "500000"
+              }
+            ]
+          },
+          "financing_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the financing round this convertible belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id"
+          },
+          "accrued_interest": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The accrued interest on the convertible instrument.",
+            "examples": [
+              "5000"
+            ],
+            "title": "Accrued Interest"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "convertible_type",
+          "investment_amount",
+          "financing_id"
+        ],
+        "title": "ConvertibleOut",
+        "type": "object"
+      },
+      "ConvertibleType": {
+        "enum": [
+          "convertible_note",
+          "basic_note",
+          "safe",
+          "kiss"
+        ],
+        "type": "string"
+      },
+      "PublicEquityOut": {
+        "description": "A public equity holding being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "public_equity",
+            "default": "public_equity",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "price_per_share": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The price per share at purchase.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "25.00"
+              }
+            ]
+          },
+          "shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of shares held.",
+            "examples": [
+              "50000"
+            ],
+            "title": "Shares"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total investment amount.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "1250000"
+              }
+            ]
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "price_per_share",
+          "shares",
+          "investment_amount"
+        ],
+        "title": "PublicEquityOut",
+        "type": "object"
+      },
+      "TokenConvertibleOut": {
+        "description": "A token convertible being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "token_convertible",
+            "default": "token_convertible",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The token symbol or name.",
+            "examples": [
+              "SMX"
+            ],
+            "title": "Token"
+          },
+          "purchase_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The purchase amount of the token convertible.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "250000"
+              }
+            ]
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this token convertible belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "token",
+          "purchase_amount",
+          "financing_id"
+        ],
+        "title": "TokenConvertibleOut",
+        "type": "object"
+      },
+      "TokenInvestmentOut": {
+        "description": "A token investment being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "token_investment",
+            "default": "token_investment",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The token symbol or name.",
+            "examples": [
+              "SMX"
+            ],
+            "title": "Token"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total investment amount.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "500000"
+              }
+            ]
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of tokens held.",
+            "examples": [
+              "1000"
+            ],
+            "title": "Quantity"
+          },
+          "price_per_token": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The price per token at purchase.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "500"
+              }
+            ]
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this token investment belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "token",
+          "investment_amount",
+          "quantity",
+          "price_per_token",
+          "financing_id"
+        ],
+        "title": "TokenInvestmentOut",
+        "type": "object"
+      },
+      "TokenWarrantOut": {
+        "description": "A token warrant being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "token_warrant",
+            "default": "token_warrant",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The token symbol or name.",
+            "examples": [
+              "SMX"
+            ],
+            "title": "Token"
+          },
+          "due_date": {
+            "description": "The expiration date of the token warrant.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "total_cost": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total cost of the token warrant.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "100000"
+              }
+            ]
+          },
+          "exercise_price": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The exercise price per token.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "100"
+              }
+            ]
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of tokens the warrant can be exercised for.",
+            "examples": [
+              "1000"
+            ],
+            "title": "Quantity"
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this token warrant belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "token",
+          "due_date",
+          "total_cost",
+          "exercise_price",
+          "quantity",
+          "financing_id"
+        ],
+        "title": "TokenWarrantOut",
+        "type": "object"
+      },
+      "WarrantOut": {
+        "description": "A warrant being returned from our API.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "warrant",
+            "default": "warrant",
+            "title": "Type",
+            "type": "string"
+          },
+          "fund_name": {
+            "description": "The name of the fund that holds this security.",
+            "examples": [
+              "Fund I"
+            ],
+            "title": "Fund Name",
+            "type": "string"
+          },
+          "company_name": {
+            "description": "The name of the company this security belongs to.",
+            "examples": [
+              "Acme Corp"
+            ],
+            "title": "Company Name",
+            "type": "string"
+          },
+          "due_date": {
+            "description": "The expiration date of the warrant.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "exercise_price": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The exercise price per share of the warrant.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "10.50"
+              }
+            ]
+          },
+          "shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of shares the warrant can be exercised for.",
+            "examples": [
+              "10000"
+            ],
+            "title": "Shares"
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this warrant belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          },
+          "total_cost": {
+            "description": "The total cost of the warrant.",
+            "format": "decimal",
+            "readOnly": true,
+            "title": "Total Cost",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "fund_name",
+          "company_name",
+          "due_date",
+          "exercise_price",
+          "shares",
+          "financing_id"
+        ],
+        "title": "WarrantOut",
+        "type": "object"
+      },
+      "SecuritiesFilters": {
+        "additionalProperties": false,
+        "description": "Options for fetching securities.",
+        "properties": {
+          "company_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by company IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Company Ids"
+          },
+          "security_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by security IDs.",
+            "examples": [
+              [
+                "pvYe",
+                "a2Ne"
+              ]
+            ],
+            "title": "Security Ids"
+          },
+          "fund_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Filter by fund ID.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Fund Id"
+          }
+        },
+        "title": "SecuritiesFilters",
+        "type": "object"
+      },
+      "AddShareClasses": {
+        "description": "A list of share classes to add to a company's cap table.",
+        "properties": {
+          "share_classes": {
+            "items": {
+              "$ref": "#/components/schemas/ShareClass"
+            },
+            "title": "Share Classes",
+            "type": "array"
+          }
+        },
+        "required": [
+          "share_classes"
+        ],
+        "title": "AddShareClasses",
+        "type": "object"
+      },
+      "ShareClass": {
+        "description": "A share class within a financing round.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the share class.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "company_id": {
+            "description": "The ID of the company this share class belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this share class belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          },
+          "purchase_type": {
+            "description": "Whether the purchase is a primary or secondary transaction.",
+            "enum": [
+              "primary",
+              "secondary"
+            ],
+            "examples": [
+              "primary"
+            ],
+            "title": "Purchase Type",
+            "type": "string"
+          },
+          "type": {
+            "description": "The type of shares in this share class.",
+            "enum": [
+              "common",
+              "preferred"
+            ],
+            "examples": [
+              "preferred"
+            ],
+            "title": "Type",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the share class.",
+            "examples": [
+              "Series A"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "price_per_share": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The price per share for this share class.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "10.00"
+              }
+            ]
+          },
+          "include_in_fair_value": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "Whether the share class is included in the fair value calculation. Defaults to `True` when the `purchase_type` is `primary`, otherwise `False`.",
+            "examples": [
+              true
+            ],
+            "title": "Include In Fair Value"
+          }
+        },
+        "required": [
+          "company_id",
+          "financing_id",
+          "purchase_type",
+          "type",
+          "name",
+          "price_per_share"
+        ],
+        "title": "ShareClass",
+        "type": "object"
+      },
+      "AddFinancingRounds": {
+        "description": "A list of financing rounds to add.",
+        "properties": {
+          "financing_rounds": {
+            "items": {
+              "$ref": "#/components/schemas/Financing"
+            },
+            "title": "Financing Rounds",
+            "type": "array"
+          }
+        },
+        "required": [
+          "financing_rounds"
+        ],
+        "title": "AddFinancingRounds",
+        "type": "object"
+      },
+      "Financing": {
+        "description": "A financing event in a given cap table, this could be a financing round or a crypto financing event.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the financing.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "company_id": {
+            "description": "The ID of the company this financing event belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "name": {
+            "description": "The name of the financing round.",
+            "examples": [
+              "Series A"
+            ],
+            "title": "Name",
+            "type": "string"
+          },
+          "pre_money_valuation": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The pre-money valuation of the company at the time of the financing round.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "20000000"
+              }
+            ]
+          },
+          "round_size": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The total size of the financing round.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "5000000"
+              }
+            ]
+          },
+          "fully_diluted_shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The fully diluted share count at the time of the financing round.",
+            "examples": [
+              "1000000"
+            ],
+            "title": "Fully Diluted Shares"
+          },
+          "closing_date": {
+            "description": "The closing date of the financing round.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Closing Date",
+            "type": "string"
+          },
+          "co_investors": {
+            "description": "The list of co-investors in the financing round.",
+            "examples": [
+              {
+                "is_lead": true,
+                "name": "Investor 1"
+              },
+              {
+                "is_lead": false,
+                "name": "Investor 2"
+              }
+            ],
+            "items": {
+              "$ref": "#/components/schemas/CoInvestor"
+            },
+            "title": "Co Investors",
+            "type": "array"
+          },
+          "is_crypto": {
+            "default": false,
+            "description": "Whether this is a crypto financing event.",
+            "examples": [
+              false
+            ],
+            "title": "Is Crypto",
+            "type": "boolean"
+          },
+          "liquidation_multiple": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The liquidation multiple (e.g., 1.00, 1.50, 2.00).",
+            "examples": [
+              "1.50"
+            ],
+            "title": "Liquidation Multiple"
+          },
+          "cap_multiple": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The cap multiple for capped participating preferences.",
+            "examples": [
+              "3.00"
+            ],
+            "title": "Cap Multiple"
+          },
+          "seniority_position": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/SeniorityPosition"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The seniority position: SENIOR_TO_ALL or PARI_PASSU.",
+            "examples": [
+              "SENIOR_TO_ALL"
+            ]
+          },
+          "participation_type": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ParticipationType"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The participation type: NON_PARTICIPATING, FULLY_PARTICIPATING, or CAPPED_PARTICIPATING.",
+            "examples": [
+              "NON_PARTICIPATING"
+            ]
+          },
+          "pari_passu_rounds": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "IDs of financing rounds that share equal seniority in the same pari passu group.",
+            "examples": [
+              [
+                "a2Ne",
+                "b3Nf"
+              ]
+            ],
+            "title": "Pari Passu Rounds"
+          }
+        },
+        "required": [
+          "company_id",
+          "name",
+          "pre_money_valuation",
+          "round_size",
+          "fully_diluted_shares",
+          "closing_date",
+          "co_investors"
+        ],
+        "title": "Financing",
+        "type": "object"
+      },
+      "MessagesResponse": {
+        "description": "A response with messages.",
+        "properties": {
+          "message": {
+            "title": "Message",
+            "type": "string"
+          }
+        },
+        "required": [
+          "message"
+        ],
+        "title": "MessagesResponse",
+        "type": "object"
+      },
+      "FairValue": {
+        "description": "A fair value override to add to a company's cap table.",
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "fair_value": {
+            "$ref": "#/components/schemas/MoneyAmount"
+          },
+          "fund_id": {
+            "title": "Fund Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "company_id",
+          "fair_value",
+          "fund_id"
+        ],
+        "title": "FairValue",
+        "type": "object"
+      },
+      "OverridesToUpsert": {
+        "description": "Overrides to add.",
+        "properties": {
+          "ownerships": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Ownership"
+            },
+            "title": "Ownerships",
+            "type": "array"
+          },
+          "post_money_valuations": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/PostMoneyValuation"
+            },
+            "title": "Post Money Valuations",
+            "type": "array"
+          },
+          "fair_values": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/FairValue"
+            },
+            "title": "Fair Values",
+            "type": "array"
+          }
+        },
+        "title": "OverridesToUpsert",
+        "type": "object"
+      },
+      "Ownership": {
+        "description": "An ownership override to add to a company's cap table.",
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "ownership_percentage": {
+            "anyOf": [
+              {
+                "maximum": 1,
+                "minimum": 0,
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The ownership percentage",
+            "examples": [
+              "0.1",
+              "0.5",
+              "1"
+            ],
+            "title": "Ownership Percentage"
+          },
+          "fund_id": {
+            "title": "Fund Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "date",
+          "company_id",
+          "ownership_percentage",
+          "fund_id"
+        ],
+        "title": "Ownership",
+        "type": "object"
+      },
+      "PostMoneyValuation": {
+        "description": "A post-money valuation to add to a company's cap table.",
+        "properties": {
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "post_money_valuation": {
+            "$ref": "#/components/schemas/MoneyAmount"
+          }
+        },
+        "required": [
+          "date",
+          "company_id",
+          "post_money_valuation"
+        ],
+        "title": "PostMoneyValuation",
+        "type": "object"
+      },
+      "AddTransactions": {
+        "description": "A list of transactions to add to a company's cap table.",
+        "properties": {
+          "sales": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Sale"
+            },
+            "title": "Sales",
+            "type": "array"
+          },
+          "conversions": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Conversion"
+            },
+            "title": "Conversions",
+            "type": "array"
+          },
+          "exercises": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Exercise"
+            },
+            "title": "Exercises",
+            "type": "array"
+          }
+        },
+        "title": "AddTransactions",
+        "type": "object"
+      },
+      "Conversion": {
+        "description": "A conversion transaction.",
+        "properties": {
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "security_id": {
+            "title": "Security Id",
+            "type": "string"
+          },
+          "converted_to_share_class_id": {
+            "title": "Converted To Share Class Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_id",
+          "date",
+          "security_id",
+          "converted_to_share_class_id"
+        ],
+        "title": "Conversion",
+        "type": "object"
+      },
+      "Exercise": {
+        "description": "An exercise transaction.",
+        "properties": {
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "security_id": {
+            "title": "Security Id",
+            "type": "string"
+          },
+          "converted_to_share_class_id": {
+            "title": "Converted To Share Class Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_id",
+          "date",
+          "security_id",
+          "converted_to_share_class_id"
+        ],
+        "title": "Exercise",
+        "type": "object"
+      },
+      "Sale": {
+        "description": "A sale transaction.",
+        "properties": {
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "date": {
+            "format": "date",
+            "title": "Date",
+            "type": "string"
+          },
+          "security_id": {
+            "title": "Security Id",
+            "type": "string"
+          },
+          "cash_received": {
+            "$ref": "#/components/schemas/MoneyAmount"
+          },
+          "shares_sold": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "title": "Shares Sold"
+          }
+        },
+        "required": [
+          "company_id",
+          "date",
+          "security_id",
+          "cash_received",
+          "shares_sold"
+        ],
+        "title": "Sale",
+        "type": "object"
+      },
+      "AddSecurities": {
+        "description": "A list of securities, across different types, to add.",
+        "properties": {
+          "certificates": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Certificate"
+            },
+            "title": "Certificates",
+            "type": "array"
+          },
+          "warrants": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Warrant"
+            },
+            "title": "Warrants",
+            "type": "array"
+          },
+          "convertibles": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/Convertible"
+            },
+            "title": "Convertibles",
+            "type": "array"
+          },
+          "token_investments": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/TokenInvestment"
+            },
+            "title": "Token Investments",
+            "type": "array"
+          },
+          "token_warrants": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/TokenWarrant"
+            },
+            "title": "Token Warrants",
+            "type": "array"
+          },
+          "token_convertibles": {
+            "default": [],
+            "items": {
+              "$ref": "#/components/schemas/TokenConvertible"
+            },
+            "title": "Token Convertibles",
+            "type": "array"
+          }
+        },
+        "title": "AddSecurities",
+        "type": "object"
+      },
+      "Certificate": {
+        "description": "A private equity investment in a company.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "certificate",
+            "default": "certificate",
+            "title": "Type",
+            "type": "string"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total investment amount for this certificate.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "1000000"
+              }
+            ]
+          },
+          "shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of shares held.",
+            "examples": [
+              "50000"
+            ],
+            "title": "Shares"
+          },
+          "share_class_id": {
+            "description": "The ID of the share class for this certificate.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Share Class Id",
+            "type": "string"
+          },
+          "financing_id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the financing round this certificate belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "investment_amount",
+          "shares",
+          "share_class_id",
+          "financing_id"
+        ],
+        "title": "Certificate",
+        "type": "object"
+      },
+      "Convertible": {
+        "description": "A convertible note.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "convertible",
+            "default": "convertible",
+            "title": "Type",
+            "type": "string"
+          },
+          "convertible_type": {
+            "$ref": "#/components/schemas/ConvertibleType",
+            "description": "The type of convertible instrument.",
+            "examples": [
+              "safe"
+            ]
+          },
+          "discount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The discount rate applied upon conversion.",
+            "examples": [
+              "0.20"
+            ],
+            "title": "Discount"
+          },
+          "valuation_cap": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/MoneyAmount"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The valuation cap for the convertible instrument.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "10000000"
+              }
+            ]
+          },
+          "maturity_date": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The maturity date of the convertible instrument.",
+            "examples": [
+              "2025-01-01"
+            ],
+            "title": "Maturity Date"
+          },
+          "interest_rate": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The annual interest rate of the convertible instrument.",
+            "examples": [
+              "0.05"
+            ],
+            "title": "Interest Rate"
+          },
+          "days_convention": {
+            "anyOf": [
+              {
+                "enum": [
+                  360,
+                  365
+                ],
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The day-count convention used for interest calculation.",
+            "examples": [
+              365
+            ],
+            "title": "Days Convention"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The principal investment amount.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "500000"
+              }
+            ]
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this convertible belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "convertible_type",
+          "investment_amount",
+          "financing_id"
+        ],
+        "title": "Convertible",
+        "type": "object"
+      },
+      "TokenConvertible": {
+        "description": "A token convertible for a company.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "token_convertible",
+            "default": "token_convertible",
+            "title": "Type",
+            "type": "string"
+          },
+          "token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The token symbol or name.",
+            "examples": [
+              "SMX"
+            ],
+            "title": "Token"
+          },
+          "purchase_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The purchase amount of the token convertible.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "250000"
+              }
+            ]
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this token convertible belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "token",
+          "purchase_amount",
+          "financing_id"
+        ],
+        "title": "TokenConvertible",
+        "type": "object"
+      },
+      "TokenInvestment": {
+        "description": "A token investment for a company.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "token_investment",
+            "default": "token_investment",
+            "title": "Type",
+            "type": "string"
+          },
+          "token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The token symbol or name.",
+            "examples": [
+              "SMX"
+            ],
+            "title": "Token"
+          },
+          "investment_amount": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total investment amount.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "500000"
+              }
+            ]
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of tokens held.",
+            "examples": [
+              "1000"
+            ],
+            "title": "Quantity"
+          },
+          "price_per_token": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The price per token at purchase.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "500"
+              }
+            ]
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this token investment belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "token",
+          "investment_amount",
+          "quantity",
+          "price_per_token",
+          "financing_id"
+        ],
+        "title": "TokenInvestment",
+        "type": "object"
+      },
+      "TokenWarrant": {
+        "description": "A token warrant for a company.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "token_warrant",
+            "default": "token_warrant",
+            "title": "Type",
+            "type": "string"
+          },
+          "token": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The token symbol or name.",
+            "examples": [
+              "SMX"
+            ],
+            "title": "Token"
+          },
+          "due_date": {
+            "description": "The expiration date of the token warrant.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "total_cost": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The total cost of the token warrant.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "100000"
+              }
+            ]
+          },
+          "exercise_price": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The exercise price per token.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "100"
+              }
+            ]
+          },
+          "quantity": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of tokens the warrant can be exercised for.",
+            "examples": [
+              "1000"
+            ],
+            "title": "Quantity"
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this token warrant belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "token",
+          "due_date",
+          "total_cost",
+          "exercise_price",
+          "quantity",
+          "financing_id"
+        ],
+        "title": "TokenWarrant",
+        "type": "object"
+      },
+      "Warrant": {
+        "description": "A warrant for a company.",
+        "properties": {
+          "id": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "description": "The ID of the security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "readOnly": true,
+            "title": "Id"
+          },
+          "issue_date": {
+            "description": "The date the security was issued.",
+            "examples": [
+              "2020-01-01"
+            ],
+            "format": "date",
+            "title": "Issue Date",
+            "type": "string"
+          },
+          "fund_id": {
+            "description": "The ID of the fund that holds this security.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Fund Id",
+            "type": "string"
+          },
+          "company_id": {
+            "description": "The ID of the company this security belongs to.",
+            "examples": [
+              "pvYe"
+            ],
+            "title": "Company Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "warrant",
+            "default": "warrant",
+            "title": "Type",
+            "type": "string"
+          },
+          "due_date": {
+            "description": "The expiration date of the warrant.",
+            "examples": [
+              "2030-01-01"
+            ],
+            "format": "date",
+            "title": "Due Date",
+            "type": "string"
+          },
+          "exercise_price": {
+            "$ref": "#/components/schemas/MoneyAmount",
+            "description": "The exercise price per share of the warrant.",
+            "examples": [
+              {
+                "currency": "USD",
+                "value": "10.50"
+              }
+            ]
+          },
+          "shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ],
+            "description": "The number of shares the warrant can be exercised for.",
+            "examples": [
+              "10000"
+            ],
+            "title": "Shares"
+          },
+          "financing_id": {
+            "description": "The ID of the financing round this warrant belongs to.",
+            "examples": [
+              "a2Ne"
+            ],
+            "title": "Financing Id",
+            "type": "string"
+          },
+          "total_cost": {
+            "description": "The total cost of the warrant.",
+            "format": "decimal",
+            "readOnly": true,
+            "title": "Total Cost",
+            "type": "string"
+          }
+        },
+        "required": [
+          "issue_date",
+          "fund_id",
+          "company_id",
+          "due_date",
+          "exercise_price",
+          "shares",
+          "financing_id"
+        ],
+        "title": "Warrant",
+        "type": "object"
+      },
+      "CompanyMetrics": {
+        "description": "Investment metrics for a single company.",
+        "properties": {
+          "company_id": {
+            "title": "Company Id",
+            "type": "string"
+          },
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          },
+          "currency": {
+            "$ref": "#/components/schemas/CurrencyCode"
+          },
+          "irr": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Irr"
+          },
+          "moic": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Moic"
+          },
+          "fair_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fair Value"
+          },
+          "investment_amount": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Investment Amount"
+          },
+          "realized_value": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Realized Value"
+          },
+          "ownership": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Ownership"
+          },
+          "total_shares_owned": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Total Shares Owned"
+          },
+          "pre_money_valuation": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Pre Money Valuation"
+          },
+          "post_money_valuation": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Post Money Valuation"
+          },
+          "fully_diluted_shares": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fully Diluted Shares"
+          },
+          "latest_price_per_share": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Latest Price Per Share"
+          }
+        },
+        "required": [
+          "company_id",
+          "as_of_date",
+          "currency",
+          "irr",
+          "moic",
+          "fair_value",
+          "investment_amount",
+          "realized_value",
+          "ownership",
+          "total_shares_owned",
+          "pre_money_valuation",
+          "post_money_valuation",
+          "fully_diluted_shares",
+          "latest_price_per_share"
+        ],
+        "title": "CompanyMetrics",
+        "type": "object"
+      },
+      "MetricsResponse": {
+        "description": "Metrics response.",
+        "properties": {
+          "metrics": {
+            "items": {
+              "$ref": "#/components/schemas/CompanyMetrics"
+            },
+            "title": "Metrics",
+            "type": "array"
+          },
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "metrics",
+          "as_of_date"
+        ],
+        "title": "MetricsResponse",
+        "type": "object"
+      },
+      "MetricsFilters": {
+        "description": "Filters for metrics endpoint.",
+        "properties": {
+          "company_ids": {
+            "items": {
+              "type": "string"
+            },
+            "title": "Company Ids",
+            "type": "array"
+          },
+          "fund_ids": {
+            "anyOf": [
+              {
+                "items": {
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Fund Ids"
+          },
+          "as_of_date": {
+            "format": "date",
+            "title": "As Of Date",
+            "type": "string"
+          }
+        },
+        "required": [
+          "company_ids"
+        ],
+        "title": "MetricsFilters",
+        "type": "object"
+      }
+    },
+    "securitySchemes": {
+      "BearerAuth": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "servers": [
+    {
+      "url": "https://app.standardmetrics.io"
+    }
+  ]
+}

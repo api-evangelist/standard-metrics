@@ -1,0 +1,71 @@
+generated: '2026-07-21'
+method: searched
+status: published
+source: https://docs.standardmetrics.io/guides/mcp-setup
+description: >-
+  Standard Metrics publishes two official remote MCP servers. The primary data server
+  connects MCP-compatible clients (Claude, ChatGPT) directly to a firm's portfolio data
+  via Streamable HTTP; the API-docs server exposes the API reference for AI-assisted
+  development. Authentication is a browser login with the same Standard Metrics account
+  used for the web app; logins persist ~30 days.
+servers:
+- name: standard-metrics
+  role: portfolio-data
+  transport: http
+  url: https://mcp.standardmetrics.io/mcp
+  auth: standard-metrics-login
+  docs: https://docs.standardmetrics.io/guides/mcp-setup
+- name: standard-metrics-api-docs
+  role: api-documentation
+  transport: http
+  url: https://docs.standardmetrics.io/mcp
+  docs: https://docs.standardmetrics.io/guides/api-docs-mcp
+tools:
+- name: list_companies
+  description: List all companies associated with your firm.
+- name: get_company
+  description: Get a specific company by ID.
+- name: search_companies
+  description: Search companies by name, sector, or city.
+- name: get_company_metrics
+  description: Get metrics for one or many companies, filterable by date range, category, and cadence.
+- name: get_metrics_options
+  description: Get available metric categories and options.
+- name: get_company_recent_metrics
+  description: Get the most recent metrics for a company.
+- name: get_company_performance
+  description: Get comprehensive performance data for a specific company.
+- name: get_company_financial_summary
+  description: Get a financial summary for a company including key metrics over time.
+- name: list_budgets
+  description: List all budgets associated with your firm.
+- name: get_custom_columns
+  description: Get custom column data for companies.
+- name: get_custom_column_options
+  description: Get all custom columns and their available options.
+- name: list_documents
+  description: List all documents associated with your firm.
+- name: list_funds
+  description: List all funds associated with the firm.
+- name: list_information_requests
+  description: List all information requests associated with the firm.
+- name: list_information_reports
+  description: List all information reports associated with the firm.
+- name: list_notes
+  description: List all notes associated with a specific company.
+- name: get_company_notes_summary
+  description: Get a summary of notes for a company.
+- name: list_users
+  description: List all users associated with your firm.
+- name: get_share_classes
+  description: Get share classes including pricing and company context.
+- name: get_financing_events
+  description: Get financing events (rounds) including valuation, round size, and investors.
+- name: get_transactions
+  description: Get investment transactions including type, shares, amounts, and proceeds.
+- name: get_securities
+  description: Get securities including investment amounts, shares, and classifications.
+- name: get_excel_plugin_guide
+  description: Returns an instruction guide for an LLM to use the Standard Metrics Excel plugin.
+- name: whoami
+  description: Get information about the current user — name, role, and authenticated firm.

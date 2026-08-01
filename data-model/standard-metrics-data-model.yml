@@ -1,0 +1,64 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/standard-metrics-main-openapi.json
+description: >-
+  Entity-relationship graph derived from the Standard Metrics main OpenAPI schemas and
+  their id-reference fields. Company is the hub entity; funds, metrics (Datum), notes,
+  documents, information reports/requests, and cap-table objects reference it.
+entities:
+- name: Firm
+  key: id
+  notes: Top-level tenant (FirmDetails / WhoamiFirm). All other entities belong to a firm.
+- name: Company
+  key: id
+  relationships:
+  - {type: has_many, target: Fund, via: invested_fund_ids}
+  - {type: belongs_to, target: User, via: investment_lead_id}
+- name: Fund
+  key: id
+  relationships:
+  - {type: belongs_to, target: Firm, via: firm}
+- name: User
+  key: id
+  relationships:
+  - {type: belongs_to, target: Firm, via: firm}
+- name: Datum
+  key: id
+  notes: A single metric datapoint.
+  relationships:
+  - {type: belongs_to, target: Company, via: company_id}
+  - {type: belongs_to, target: MetricCategory, via: category_id}
+  - {type: belongs_to, target: Budget, via: budget_id}
+- name: PortfolioCompanyNote
+  key: id
+  relationships:
+  - {type: belongs_to, target: Company, via: company_id}
+  - {type: belongs_to, target: User, via: author_id}
+- name: LibraryDocument
+  key: id
+  relationships:
+  - {type: belongs_to, target: Company, via: company_id}
+  - {type: belongs_to, target: InformationRequest, via: information_request_id}
+- name: InformationReport
+  key: id
+  relationships:
+  - {type: belongs_to, target: Company, via: company_id}
+  - {type: belongs_to, target: InformationRequest, via: information_request_id}
+- name: InformationRequest
+  key: id
+- name: Scenario
+  key: id
+  relationships:
+  - {type: belongs_to, target: Company, via: company}
+- name: EntityProperty
+  key: id
+  notes: Custom column value (Text / SingleSelect / MultiSelect variants).
+  relationships:
+  - {type: belongs_to, target: Company, via: company}
+investment_data:
+  source: openapi/standard-metrics-investment-data-openapi.json
+  entities:
+  - {name: FinancingEvent, references: [company_id], co_investors: true}
+  - {name: ShareClass, references: [company_id]}
+  - {name: Security, references: [company_id, fund_id, share_class_id], variants: [Certificate, Convertible, Warrant, Token*]}
+  - {name: Transaction, references: [company_id, input_security_id, output_security_id], events: [sale, conversion, exercise]}

@@ -1,0 +1,59 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.standardmetrics.io/changelog
+description: Product updates and announcements for the Standard Metrics API. Recent window captured verbatim from the dated changelog.
+scheme: dated (labeled entries, tagged API Enhancements / MCP Enhancements / Deprecations)
+current_version: v1 (Investment Data API in beta)
+entries:
+- date: '2026-07-09'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Get Information Requests now returns requested_documents and requested_metrics arrays.
+- date: '2026-06-24'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Get Metrics now filters out non-FYE-aligned quarterly/yearly metrics by default; set include_non_fye_aligned=true to restore.
+- date: '2026-04-17'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Create Company normalizes fiscal_year_end to zero-padded MM/DD.
+- date: '2026-04-15'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Duplicate metric validation on Create Metrics; stricter validation for PUT Custom Column Values.
+- date: '2026-04-09'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Create Metrics supports select-style custom metrics with predefined options.
+- date: '2026-04-07'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Create Metrics can skip pre-existing conflicting metrics via on_conflict query parameter.
+- date: '2026-03-20'
+  tags: [MCP Enhancements]
+  breaking: false
+  highlight: Standard Metrics MCP adds an Excel-plugin tool teaching Claude the SM.GET formula syntax.
+- date: '2026-03-13'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Create Document file uploads limited to 32MB.
+- date: '2026-03-04'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: reporting_currency added to Get Companies response.
+- date: '2026-02-13'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: Denormalized entity names (company_name, fund_name, share_class_name) on investment-detail responses.
+- date: '2026-02-09'
+  tags: [API Enhancements]
+  breaking: false
+  highlight: New filter parameters across the Investment Details API (financing sort_by/is_crypto/co_investors, share-class purchase_type, transaction event/security IDs, security fund_id).
+- date: '2026-01-20'
+  tags: [Deprecations]
+  breaking: true
+  highlight: Removed the deprecated /custom-metrics endpoint; use Get Metrics Options instead.
+- date: '2025-09-16'
+  tags: [API Enhancements, Deprecations]
+  breaking: false
+  highlight: archived field added to Metrics response; cadence options day/week/half_year deprecated on Create Metrics.

@@ -1,0 +1,3360 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Standard Metrics API Documentation",
+    "description": "Welcome to Standard Metric's API docs!\n\nTo use our API you will need to make an OAuth appliction (or use an existing one) in the developer settings tab on your settings page and then exchange your client id and secret for an access token (via the `/o/token/` endpoint. This token can then be sent in the `Authorization` header to authenticate your requests to our api. See below for an example.\n\nAll endpoints are paginated and will return a maximum of 100 results per page. See the endpoints below and example responses for more details on pagination parameters. A maximum of 120 requests per minute can be made to our API.\n\nAuthentication example (with python):\n```>>> import base64\n>>> import base64\n>>> client_id = \"YOUR_CLIENT_ID\"\n>>> client_secret = \"YOUR_CLIENT_SECRET\"\n>>> credential = f\"{client_id}:{client_secret}\"\n>>> base64.b64encode(credential.encode(\"utf-8\"))\nb'ENCODED_CREDENTIAL'\n\nYou can now exchange this credential for an access token, eg:\n\ncurl -X POST \\\n    -H \"Authorization: Basic ENCODED_CREDENTIAL\" \\\n    -H \"Cache-Control: no-cache\" \\\n    -H \"Content-Type: application/x-www-form-urlencoded\" \\\n    \"https://api.standardmetrics.io/o/token/\" \\\n    -d \"grant_type=client_credentials\"\n\nYou will receive the following response:\n\n{\n    \"access_token\": \"YOUR_ACCESS_TOKEN\",\n    \"expires_in\": 36000,\n    \"token_type\": \"Bearer\",\n    \"scope\": \"read write\"\n}\n\nMake sure not to forget to prepend \"Bearer \" to your access token in the Authorization header while making requests.",
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://api.standardmetrics.io/v1"
+    }
+  ],
+  "security": [
+    {
+      "Bearer": []
+    }
+  ],
+  "paths": {
+    "/budgets/": {
+      "get": {
+        "tags": [
+          "budgets"
+        ],
+        "summary": "Get budgets",
+        "description": "Retrieve all budgets associated with the firm. Each budget is associated with a company.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies.",
+        "operationId": "budgets_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company_slug",
+            "in": "query",
+            "description": "The slug of the company to fetch budgets for. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `\"example-slug\"` would the the slug. This endpoint will return all budget data for your firm if a company slug isn't included. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "description": "The id for the company to fetch budget data for. You can get a company's id by making a request to the `/companies` endpoint. This endpoint will return all budget data for your firm if a company id isn't included. You can get a company's id by making a request to the `/companies` endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Scenario"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/companies/": {
+      "get": {
+        "tags": [
+          "companies"
+        ],
+        "summary": "Get companies",
+        "description": "Retrieve a list of all companies associated with the firm. Each company includes identifiers and metadata.\n\n**Filtering:**\n- Use `ids[]` parameter to filter by specific company IDs\n- Use `name` parameter to filter by company name (case-insensitive partial matching)\n\n**Notes:**\n- If no filters are specified, returns all companies associated with the firm.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "companies_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "ids[]",
+            "in": "query",
+            "description": "Filter companies by ID. Can be specified multiple times to filter by multiple IDs (e.g., ?ids[]=123&ids[]=456&ids[]=789).",
+            "style": "form",
+            "explode": true,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Filter companies by name. Performs case-insensitive partial matching on company names. .",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Company"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "companies"
+        ],
+        "summary": "Create company",
+        "description": "Create a new company. Creates an offline company that can later be onboarded.\n\n**Notes:**\n- Name is the only required field.\n- Non-required fields and their defaults:\n  - `description`: defaults to empty string\n  - `city`: defaults to empty string\n  - `sector`: defaults to \"Other\" if not provided or invalid\n  - `fiscal_year_end`: defaults to \"12/31\"\n  - `website`: defaults to empty string\n\nYou may update the company later using the `Update Company` endpoint. Reference this endpoint to understand what fields can be modified.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "companies_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "required": [
+                  "name"
+                ],
+                "type": "object",
+                "properties": {
+                  "name": {
+                    "type": "string",
+                    "description": "Name of the company"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Description of the company. Defaults to empty string if not provided."
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "City of the company. Defaults to empty string if not provided.",
+                    "example": "San Francisco"
+                  },
+                  "sector": {
+                    "type": "string",
+                    "description": "Sector of the company. Defaults to 'Other' if not provided or invalid.",
+                    "enum": [
+                      "B2B Software",
+                      "Direct-to-consumer",
+                      "Consumer Internet/Mobile",
+                      "AR/VR",
+                      "Life Sciences",
+                      "Health Technology",
+                      "Hardware",
+                      "Edtech",
+                      "Media",
+                      "Fintech",
+                      "Govtech",
+                      "Crypto/blockchain",
+                      "Other",
+                      "Logistics",
+                      "Insurtech",
+                      "Software Infrastructure",
+                      "Security",
+                      "Artificial Intelligence",
+                      "AG-Tech",
+                      "Sustainability",
+                      "Gaming"
+                    ]
+                  },
+                  "fiscal_year_end": {
+                    "type": "string",
+                    "description": "Fiscal year end date in MM/DD format. Defaults to '12/31' if not provided.",
+                    "example": "12/31"
+                  },
+                  "website": {
+                    "type": "string",
+                    "description": "Website URL of the company. Defaults to empty string if not provided.",
+                    "example": "https://www.example.com"
+                  }
+                },
+                "description": "List of role IDs and actions"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "name"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "name": {
+                      "type": "string",
+                      "description": "Name of the company"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "Description of the company. Defaults to empty string if not provided."
+                    },
+                    "city": {
+                      "type": "string",
+                      "description": "City of the company. Defaults to empty string if not provided.",
+                      "example": "San Francisco"
+                    },
+                    "sector": {
+                      "type": "string",
+                      "description": "Sector of the company. Defaults to 'Other' if not provided or invalid.",
+                      "enum": [
+                        "B2B Software",
+                        "Direct-to-consumer",
+                        "Consumer Internet/Mobile",
+                        "AR/VR",
+                        "Life Sciences",
+                        "Health Technology",
+                        "Hardware",
+                        "Edtech",
+                        "Media",
+                        "Fintech",
+                        "Govtech",
+                        "Crypto/blockchain",
+                        "Other",
+                        "Logistics",
+                        "Insurtech",
+                        "Software Infrastructure",
+                        "Security",
+                        "Artificial Intelligence",
+                        "AG-Tech",
+                        "Sustainability",
+                        "Gaming"
+                      ]
+                    },
+                    "fiscal_year_end": {
+                      "type": "string",
+                      "description": "Fiscal year end date in MM/DD format. Defaults to '12/31' if not provided.",
+                      "example": "12/31"
+                    },
+                    "website": {
+                      "type": "string",
+                      "description": "Website URL of the company. Defaults to empty string if not provided.",
+                      "example": "https://www.example.com"
+                    },
+                    "slug": {
+                      "type": "string",
+                      "description": "Slug of the company"
+                    }
+                  },
+                  "description": "List of role IDs and actions"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "data"
+      }
+    },
+    "/companies/{company_id}/": {
+      "patch": {
+        "tags": [
+          "companies"
+        ],
+        "summary": "Update company",
+        "description": "Partially update company fields. Different fields are editable based on company onboarding status.\n\n**Online companies** (already onboarded):\nOnly the following fields can be updated:\n1. `firm_sector` (the name of the Firm Sector for this company)\n2. `investment_lead_id` (the user ID of the investment lead)\n\n**Offline or Pending companies** (not onboarded; Pending means there's an active invite):\nThe following fields can be updated:\n1. `firm_sector`\n2. `investment_lead_id`\n3. `city` (the city where the company is based)\n4. `description` (a description of the company)\n5. `fiscal_year_end` (formatted as 'MM/DD')\n6. `name` (the company name)\n7. `sector` (the company's standard sector from the supported list)\n8. `website` (the company's website)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "companies_partial_update",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "firm_sector": {
+                    "type": "string",
+                    "description": "Firm Sector (always update-able)"
+                  },
+                  "investment_lead_id": {
+                    "type": "string",
+                    "description": "Investment lead user ID (always update-able)"
+                  },
+                  "city": {
+                    "type": "string",
+                    "description": "City where the company is based (Offline or Pending companies)"
+                  },
+                  "description": {
+                    "type": "string",
+                    "description": "Company description (Offline or Pending companies)"
+                  },
+                  "fiscal_year_end": {
+                    "type": "string",
+                    "description": "Fiscal year end, formatted as 'MM/DD' (Offline or Pending companies)"
+                  },
+                  "name": {
+                    "type": "string",
+                    "description": "Company name (Offline or Pending companies)"
+                  },
+                  "sector": {
+                    "type": "string",
+                    "description": "Company standard sector (Offline or Pending companies)",
+                    "enum": [
+                      "B2B Software",
+                      "Direct-to-consumer",
+                      "Consumer Internet/Mobile",
+                      "AR/VR",
+                      "Life Sciences",
+                      "Health Technology",
+                      "Hardware",
+                      "Edtech",
+                      "Media",
+                      "Fintech",
+                      "Govtech",
+                      "Crypto/blockchain",
+                      "Other",
+                      "Logistics",
+                      "Insurtech",
+                      "Software Infrastructure",
+                      "Security",
+                      "Artificial Intelligence",
+                      "AG-Tech",
+                      "Sustainability",
+                      "Gaming"
+                    ]
+                  },
+                  "website": {
+                    "type": "string",
+                    "description": "Company website (Offline or Pending companies)"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "data"
+      }
+    },
+    "/companies/{company_id}/logo/": {
+      "post": {
+        "tags": [
+          "companies"
+        ],
+        "summary": "Upload company logo",
+        "description": "Upload a new logo for an offline company. Replaces any existing logo.\n\n**Notes:**\n- File size limit: 5 MB maximum.\n- Logo is owned by the firm since this action is only available for offline companies.\n- Accepted file types:\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - GIF images (.gif)\n    - WEBP images (.webp)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "companies_logo_create",
+        "parameters": [
+          {
+            "name": "company_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "The logo file to upload. Must be sent as part of a multipart/form-data POST request. File size limit: 5 MB maximum. Accepted file types: .jpg, .jpeg, .png, .gif, .webp",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "description": "The logo file to upload. Must be sent as part of a multipart/form-data POST request. File size limit: 5 MB maximum. Accepted file types: .jpg, .jpeg, .png, .gif, .webp",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Logo successfully uploaded",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean"
+                    },
+                    "message": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/custom-columns/": {
+      "get": {
+        "tags": [
+          "custom-columns"
+        ],
+        "summary": "Get custom column values",
+        "description": "Retrieve custom column values for companies. Includes column metadata, values, and company associations.\n\n**Notes:**\n- If no company is specified, returns custom column data for all companies.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the metrics data.",
+        "operationId": "custom-columns_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company_slug",
+            "in": "query",
+            "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/EntityProperty"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/custom-columns/options/": {
+      "get": {
+        "tags": [
+          "custom-columns"
+        ],
+        "summary": "Get custom column options",
+        "description": "Retrieve all custom columns and their available options. Includes selectable options for select and multi-select columns.\n\n**Notes:**\n- Particularly helpful for retrieving available options for `select` and `multi_select` custom columns.\n- Text columns will have empty options arrays.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "custom-columns_options_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Property"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/custom-columns/values/": {
+      "put": {
+        "tags": [
+          "custom-columns"
+        ],
+        "summary": "Update custom column values",
+        "description": "Update custom column values for companies. Fully replaces existing data for the specified company and column.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "custom-columns_values_update",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "company_slug": {
+                      "type": "string",
+                      "description": "Company Slug"
+                    },
+                    "company_id": {
+                      "type": "string",
+                      "description": "Company ID"
+                    },
+                    "custom_column_id": {
+                      "type": "string",
+                      "description": "Custom Column ID"
+                    },
+                    "value": {
+                      "type": "string",
+                      "description": "Value"
+                    },
+                    "selected_options": {
+                      "type": "array",
+                      "description": "Selected Options",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "option_id": {
+                            "type": "string",
+                            "description": "Custom Column Option ID"
+                          },
+                          "value": {
+                            "type": "string",
+                            "description": "Value"
+                          },
+                          "color": {
+                            "type": "string",
+                            "description": "Color Code"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "company_slug": {
+                        "type": "string",
+                        "description": "Company Slug"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "description": "Company ID"
+                      },
+                      "custom_column_id": {
+                        "type": "string",
+                        "description": "Custom Column ID"
+                      },
+                      "value": {
+                        "type": "string",
+                        "description": "Value"
+                      },
+                      "selected_options": {
+                        "type": "array",
+                        "description": "Selected Options",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "option_id": {
+                              "type": "string",
+                              "description": "Custom Column Option ID"
+                            },
+                            "value": {
+                              "type": "string",
+                              "description": "Value"
+                            },
+                            "color": {
+                              "type": "string",
+                              "description": "Color Code"
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "data"
+      }
+    },
+    "/documents/": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Get documents",
+        "description": "Retrieve all documents associated with the firm. Includes parsed and unparsed documents from various sources.\n\n**Notes:**\n- If no company is specified, returns documents for all companies.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the documents.",
+        "operationId": "documents_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "description": "The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "parse_state",
+            "in": "query",
+            "description": "The parse state of the documents to request. One of \"not-started\", \"in-progress\", \"completed\", \"needs-input\", \"not-parseable\".",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "The from date (inclusive) from which to query uploaded_at as an ISO 8601 formatted date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "The to date (inclusive) from which to query uploaded_at as an ISO 8601 formatted date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "source",
+            "in": "query",
+            "description": "The source of the documents to request. One of \"information-request\", \"implementation\", \"upload\", \"email\".",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/LibraryDocument"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Create document",
+        "description": "Creates a new document in the library for a company.\n\n**Notes:**\n- File size limit: 32 MB maximum.\n- Accepted file types:\n    - PDF files (.pdf)\n    - Microsoft Word documents (.docx)\n    - Microsoft Excel spreadsheets (.xlsx)\n    - Microsoft PowerPoint presentations (.pptx)\n    - OpenDocument spreadsheets (.ods)\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - WebP images (.webp)\n    - GIF images (.gif)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have access to the company's document data.",
+        "operationId": "documents_create",
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "required": [
+                  "company_id",
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "string",
+                    "description": "The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint."
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "The file to add. Must be sent as part of a multipart/form-data POST request. File size limit: 32 MB maximum. Accepted file types: .pdf, .docx, .xlsx, .pptx, .ods, .jpg, .jpeg, .png, .webp, .gif",
+                    "format": "binary"
+                  }
+                }
+              }
+            },
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "required": [
+                  "company_id",
+                  "file"
+                ],
+                "type": "object",
+                "properties": {
+                  "company_id": {
+                    "type": "string",
+                    "description": "The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint."
+                  },
+                  "file": {
+                    "type": "string",
+                    "description": "The file to add. Must be sent as part of a multipart/form-data POST request. File size limit: 32 MB maximum. Accepted file types: .pdf, .docx, .xlsx, .pptx, .ods, .jpg, .jpeg, .png, .webp, .gif",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "message",
+                    "success"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the operation was successful"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message describing the operation result"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/documents/{document_id}/download/": {
+      "get": {
+        "tags": [
+          "documents"
+        ],
+        "summary": "Download document",
+        "description": "Download a specific document by redirecting to signed URL. Provides temporary access to securely stored documents.\n\nThe signed URL expires after 1 hour. After expiration, a new request must be made to obtain a fresh download link.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the document.",
+        "operationId": "documents_download_list",
+        "parameters": [
+          {
+            "name": "document_id",
+            "in": "path",
+            "description": "The hashed ID of the document to download",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "302": {
+            "description": "Redirect to signed URL",
+            "content": {}
+          }
+        }
+      }
+    },
+    "/firm-details/": {
+      "get": {
+        "tags": [
+          "firm-details"
+        ],
+        "summary": "Get current user information",
+        "description": "Returns information about the currently authenticated user.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "firm-details_read",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FirmDetails"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/funds/": {
+      "get": {
+        "tags": [
+          "funds"
+        ],
+        "summary": "Get funds",
+        "description": "Retrieve all funds associated with the firm. Provides fund details and status information.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "funds_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Fund"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/information-reports/": {
+      "get": {
+        "tags": [
+          "information-reports"
+        ],
+        "summary": "Get information reports",
+        "description": "Retrieve all information reports associated with the firm. Includes submitted documents, metrics, and outstanding requirements.\n\n**Permissions:**\n- User must have VIEWER, ADMIN, or EDITOR role.",
+        "operationId": "information-reports_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "description": "ID of a company to filter",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "information_request_id",
+            "in": "query",
+            "description": "ID of an Information Request to filter",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/InformationReport"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/information-requests/": {
+      "get": {
+        "tags": [
+          "information-requests"
+        ],
+        "summary": "Get information requests",
+        "description": "Retrieve all information requests associated with the firm. Includes company associations and submission status.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the information requests.",
+        "operationId": "information-requests_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "description": "An optional name of the information request to filter by.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/InformationRequest"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get metrics",
+        "description": "Retrieve metrics for a specific company. Supports extensive filtering by category, date range, and cadence.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.",
+        "operationId": "metrics_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company_slug",
+            "in": "query",
+            "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "The from date (inclusive) from which to query metrics for as an ISO 8601 formatted date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "The to date (inclusive) from which to query metrics until as an ISO 8601 formatted date",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "description": "The category of metrics to request. If not specified, all metrics are returned. This parameter can be passed multiple times to filter by multiple categories. Custom metrics can be queried by using their display name (e.g., \"Total Number of Customers\"). To return only custom metrics, set category to \"custom\". \n\n Available standard metric categories include: `accounts_payable`, `accounts_receivable`, `arr`, `assets`, `burn_per_fte`, `cash_flow_from_financing_activities`, `cash_flow_from_investing_activities`, `cash_flow_from_operating_activities`, `cash_in_bank`, `churned_arr`, `contraction_arr`, `cost_of_goods_sold`, `current_assets`, `current_liabilities`, `custom`, `ebitda`, `equity`, `expansion_arr`, `fair_value`, `fully_diluted_shares`, `gross_irr`, `gross_margin`, `gross_profit`, `headcount`, `investment_amount`, `latest_price_per_share`, `liabilities`, `long_term_liabilities`, `moic`, `net_assets`, `net_burn`, `net_income`, `net_new_arr`, `net_operating_profit`, `net_other_income`, `net_profit`, `new_logo_arr`, `non_current_assets`, `operating_margin`, `other_non_current_assets`, `ownership`, `post_money_valuation`, `pre_money_valuation`, `property_plants_and_equipment`, `reactivation_arr`, `realized_value`, `revenue`, `revenue_growth`, `revenue_per_fte`, `runway`, `short_term_investments`, `total_change_in_cash`, `total_operating_expenses`, `total_shares_owned`",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "budget_id",
+            "in": "query",
+            "description": "A budget id for requesting budget metrics. See the `/budgets` endpoint for more information about how to get budget ids",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "updated_at_from",
+            "in": "query",
+            "description": "The from date (inclusive) from which to query updated_at as an ISO 8601 formatted date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "updated_at_to",
+            "in": "query",
+            "description": "The to date (inclusive) from which to query updated_at as an ISO 8601 formatted date",
+            "schema": {
+              "type": "string",
+              "format": "date-time"
+            }
+          },
+          {
+            "name": "include_deleted",
+            "in": "query",
+            "description": "Set to '1' if you want to include deleted metrics.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "include_budgets",
+            "in": "query",
+            "description": "Set to \"1\" if you want budget metrics to be returned as well.",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "include_archived",
+            "in": "query",
+            "description": "Set to '0' to exclude archived metrics. Defaults to '1' (include archived).",
+            "schema": {
+              "type": "string",
+              "default": "1",
+              "enum": [
+                "0",
+                "1"
+              ]
+            }
+          },
+          {
+            "name": "include_non_fye_aligned",
+            "in": "query",
+            "description": "Set to 'true' to include metrics whose dates do not align with the company's fiscal year end. These are hidden in the app by default.",
+            "schema": {
+              "type": "boolean",
+              "default": false
+            }
+          },
+          {
+            "name": "cadence",
+            "in": "query",
+            "description": "The cadence type of the metrics to request. Cadence options include: `\"point_in_time\"`, `\"month\"`, `\"quarter\"`, `\"year\"`. The later three should only be set for cumulative categories.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "custom_metric",
+            "in": "query",
+            "description": "The name of the custom metric to query. This field is only populated for metrics in the \"custom\" category. When filtering for specific metrics, using the `category` field is preferred.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Datum"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Create metrics",
+        "description": "Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.\n\n**Notes:**\n- Each request can only be for one company.\n- Supports both standard and custom metrics.\n- Can write to budgets by specifying `budget_id` and `is_budget_metric`.\n- Each request can only target a single budget: all metrics in a request must have the same `budget_id` and `is_budget_metric` values. Budget and non-budget metrics cannot be mixed in one request.\n- Required fields:\n  - `value`\n  - `company_id`\n  - `category`\n  - `metric_cadence`\n  - `date`\n- Optional fields:\n  - `currency` (only for money-type metrics)\n  - `is_budget_metric` (defaults to False)\n- Query parameters:\n  - `on_conflict` ('overwrite' | 'skip', default: 'overwrite')\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "metrics_create",
+        "parameters": [
+          {
+            "name": "on_conflict",
+            "in": "query",
+            "description": "Conflict resolution strategy when a metric already exists for the same company, category, and date. 'overwrite' (default) updates the existing row. 'skip' leaves the existing row unchanged.",
+            "schema": {
+              "type": "string",
+              "default": "overwrite",
+              "enum": [
+                "overwrite",
+                "skip"
+              ]
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "string",
+                      "description": "Metric value",
+                      "example": "1000"
+                    },
+                    "company_id": {
+                      "type": "string",
+                      "description": "Company ID",
+                      "example": "RjX8"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "Metric category (can also be the name of a custom metric using its display name (e.g., \"Total Number of Customers\"))",
+                      "example": "cash_in_bank",
+                      "enum": [
+                        "accounts_payable",
+                        "accounts_receivable",
+                        "arr",
+                        "assets",
+                        "burn_per_fte",
+                        "cash_flow_from_financing_activities",
+                        "cash_flow_from_investing_activities",
+                        "cash_flow_from_operating_activities",
+                        "cash_in_bank",
+                        "churned_arr",
+                        "contraction_arr",
+                        "cost_of_goods_sold",
+                        "current_assets",
+                        "current_liabilities",
+                        "custom",
+                        "ebitda",
+                        "equity",
+                        "expansion_arr",
+                        "fair_value",
+                        "fully_diluted_shares",
+                        "gross_irr",
+                        "gross_margin",
+                        "gross_profit",
+                        "headcount",
+                        "investment_amount",
+                        "latest_price_per_share",
+                        "liabilities",
+                        "long_term_liabilities",
+                        "moic",
+                        "net_assets",
+                        "net_burn",
+                        "net_income",
+                        "net_new_arr",
+                        "net_operating_profit",
+                        "net_other_income",
+                        "net_profit",
+                        "new_logo_arr",
+                        "non_current_assets",
+                        "operating_margin",
+                        "other_non_current_assets",
+                        "ownership",
+                        "post_money_valuation",
+                        "pre_money_valuation",
+                        "property_plants_and_equipment",
+                        "reactivation_arr",
+                        "realized_value",
+                        "revenue",
+                        "revenue_growth",
+                        "revenue_per_fte",
+                        "runway",
+                        "short_term_investments",
+                        "total_change_in_cash",
+                        "total_operating_expenses",
+                        "total_shares_owned"
+                      ]
+                    },
+                    "date": {
+                      "type": "string",
+                      "description": "Date",
+                      "example": "2023-07-31"
+                    },
+                    "metric_cadence": {
+                      "type": "string",
+                      "description": "Metric cadence",
+                      "example": "point_in_time",
+                      "enum": [
+                        "point_in_time",
+                        "day",
+                        "week",
+                        "month",
+                        "quarter",
+                        "half_year",
+                        "year"
+                      ]
+                    },
+                    "currency": {
+                      "type": "string",
+                      "description": "Currency. Only required for money-type metrics.",
+                      "example": "USD",
+                      "enum": [
+                        "AED",
+                        "AUD",
+                        "BDT",
+                        "BRL",
+                        "CAD",
+                        "CHF",
+                        "CNY",
+                        "COP",
+                        "CZK",
+                        "DKK",
+                        "EUR",
+                        "GBP",
+                        "GHS",
+                        "HKD",
+                        "IDR",
+                        "ILS",
+                        "INR",
+                        "ISK",
+                        "JOD",
+                        "JPY",
+                        "KES",
+                        "KRW",
+                        "MXN",
+                        "NGN",
+                        "NOK",
+                        "NZD",
+                        "PEN",
+                        "PHP",
+                        "PKR",
+                        "SAR",
+                        "SEK",
+                        "SGD",
+                        "THB",
+                        "TRY",
+                        "TWD",
+                        "TZS",
+                        "USD",
+                        "VND",
+                        "ZAR"
+                      ]
+                    },
+                    "is_budget_metric": {
+                      "type": "boolean",
+                      "description": "Is budget metric. Defaults to False if not provided.",
+                      "example": true
+                    },
+                    "budget_id": {
+                      "type": "string",
+                      "description": "Budget ID",
+                      "example": "yzJm"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "value": {
+                        "type": "string",
+                        "description": "Metric value",
+                        "example": "1000"
+                      },
+                      "company_id": {
+                        "type": "string",
+                        "description": "Company ID",
+                        "example": "RjX8"
+                      },
+                      "category": {
+                        "type": "string",
+                        "description": "Metric category (can also be the name of a custom metric using its display name (e.g., \"Total Number of Customers\"))",
+                        "example": "cash_in_bank",
+                        "enum": [
+                          "accounts_payable",
+                          "accounts_receivable",
+                          "arr",
+                          "assets",
+                          "burn_per_fte",
+                          "cash_flow_from_financing_activities",
+                          "cash_flow_from_investing_activities",
+                          "cash_flow_from_operating_activities",
+                          "cash_in_bank",
+                          "churned_arr",
+                          "contraction_arr",
+                          "cost_of_goods_sold",
+                          "current_assets",
+                          "current_liabilities",
+                          "custom",
+                          "ebitda",
+                          "equity",
+                          "expansion_arr",
+                          "fair_value",
+                          "fully_diluted_shares",
+                          "gross_irr",
+                          "gross_margin",
+                          "gross_profit",
+                          "headcount",
+                          "investment_amount",
+                          "latest_price_per_share",
+                          "liabilities",
+                          "long_term_liabilities",
+                          "moic",
+                          "net_assets",
+                          "net_burn",
+                          "net_income",
+                          "net_new_arr",
+                          "net_operating_profit",
+                          "net_other_income",
+                          "net_profit",
+                          "new_logo_arr",
+                          "non_current_assets",
+                          "operating_margin",
+                          "other_non_current_assets",
+                          "ownership",
+                          "post_money_valuation",
+                          "pre_money_valuation",
+                          "property_plants_and_equipment",
+                          "reactivation_arr",
+                          "realized_value",
+                          "revenue",
+                          "revenue_growth",
+                          "revenue_per_fte",
+                          "runway",
+                          "short_term_investments",
+                          "total_change_in_cash",
+                          "total_operating_expenses",
+                          "total_shares_owned"
+                        ]
+                      },
+                      "date": {
+                        "type": "string",
+                        "description": "Date",
+                        "example": "2023-07-31"
+                      },
+                      "metric_cadence": {
+                        "type": "string",
+                        "description": "Metric cadence",
+                        "example": "point_in_time",
+                        "enum": [
+                          "point_in_time",
+                          "day",
+                          "week",
+                          "month",
+                          "quarter",
+                          "half_year",
+                          "year"
+                        ]
+                      },
+                      "currency": {
+                        "type": "string",
+                        "description": "Currency. Only required for money-type metrics.",
+                        "example": "USD",
+                        "enum": [
+                          "AED",
+                          "AUD",
+                          "BDT",
+                          "BRL",
+                          "CAD",
+                          "CHF",
+                          "CNY",
+                          "COP",
+                          "CZK",
+                          "DKK",
+                          "EUR",
+                          "GBP",
+                          "GHS",
+                          "HKD",
+                          "IDR",
+                          "ILS",
+                          "INR",
+                          "ISK",
+                          "JOD",
+                          "JPY",
+                          "KES",
+                          "KRW",
+                          "MXN",
+                          "NGN",
+                          "NOK",
+                          "NZD",
+                          "PEN",
+                          "PHP",
+                          "PKR",
+                          "SAR",
+                          "SEK",
+                          "SGD",
+                          "THB",
+                          "TRY",
+                          "TWD",
+                          "TZS",
+                          "USD",
+                          "VND",
+                          "ZAR"
+                        ]
+                      },
+                      "is_budget_metric": {
+                        "type": "boolean",
+                        "description": "Is budget metric. Defaults to False if not provided.",
+                        "example": true
+                      },
+                      "budget_id": {
+                        "type": "string",
+                        "description": "Budget ID",
+                        "example": "yzJm"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "data"
+      }
+    },
+    "/metrics/options/": {
+      "get": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Get metrics options",
+        "description": "Retrieve information about all available metrics for a firm. Includes category names, types, and configuration details.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "metrics_options_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "category_name",
+            "in": "query",
+            "description": "Name of the category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category_id",
+            "in": "query",
+            "description": "ID of the category",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "is_standard",
+            "in": "query",
+            "description": "Is category standard",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "description": "Type of the category",
+            "schema": {
+              "type": "string",
+              "enum": [
+                "Integer",
+                "Decimal",
+                "String",
+                "Money",
+                "Percentage",
+                "Select"
+              ]
+            }
+          },
+          {
+            "name": "is_point_in_time",
+            "in": "query",
+            "description": "Is category point in time",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "is_archived",
+            "in": "query",
+            "description": "Is category archived",
+            "schema": {
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "choices",
+            "in": "query",
+            "description": "Choice options for the category",
+            "style": "form",
+            "explode": false,
+            "schema": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          {
+            "name": "is_multiple",
+            "in": "query",
+            "description": "Is the category multiple choice",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MetricsOptions"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/metrics/{datum_id}/": {
+      "delete": {
+        "tags": [
+          "metrics"
+        ],
+        "summary": "Delete a specific metric.",
+        "description": "**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company that owns the datum.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "metrics_delete",
+        "parameters": [
+          {
+            "name": "datum_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "message",
+                    "success"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "success": {
+                      "type": "boolean",
+                      "description": "Indicates whether the operation was successful"
+                    },
+                    "message": {
+                      "type": "string",
+                      "description": "A message describing the operation result"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/notes/": {
+      "get": {
+        "tags": [
+          "notes"
+        ],
+        "summary": "Get notes",
+        "description": "Retrieve all notes for a specific company. Notes are returned in markdown format.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.",
+        "operationId": "notes_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "company_slug",
+            "in": "query",
+            "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "company_id",
+            "in": "query",
+            "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint.",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sort_by",
+            "in": "query",
+            "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/PortfolioCompanyNoteAPI"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "notes"
+        ],
+        "summary": "Create notes",
+        "description": "Create new notes for a company. Supports creating multiple notes in a single request.\n\n**Notes:**:\n- All notes created must be for the same company.\n- `note` and `author_id` fields are required.\n- Either `company_id` or `company_slug` is required.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role.",
+        "operationId": "notes_create",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "array",
+                "items": {
+                  "type": "object",
+                  "properties": {
+                    "note": {
+                      "type": "string",
+                      "description": "The note content",
+                      "example": "Note content"
+                    },
+                    "company_id": {
+                      "type": "string",
+                      "description": "Company ID (either company_id or company_slug must be provided)",
+                      "example": "a7Rt"
+                    },
+                    "company_slug": {
+                      "type": "string",
+                      "description": "Company slug (either company_id or company_slug must be provided)",
+                      "example": "company-name"
+                    },
+                    "author_id": {
+                      "type": "string",
+                      "description": "Author ID",
+                      "example": "a7Rt"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PortfolioCompanyNoteAPI"
+                }
+              }
+            }
+          }
+        },
+        "x-codegen-request-body-name": "data"
+      }
+    },
+    "/users/": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "Get users",
+        "description": "Retrieve all users associated with the firm. Includes user details and information about their membership within the firm.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "users_list",
+        "parameters": [
+          {
+            "name": "page",
+            "in": "query",
+            "description": "A page number within the paginated result set.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "description": "Number of results to return per page.",
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "email",
+            "in": "query",
+            "description": "An optional email address to filter the users. Must be an exact match.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "required": [
+                    "count",
+                    "results"
+                  ],
+                  "type": "object",
+                  "properties": {
+                    "count": {
+                      "type": "integer"
+                    },
+                    "next": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "previous": {
+                      "type": "string",
+                      "format": "uri",
+                      "nullable": true
+                    },
+                    "results": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/APIUser"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/whoami/": {
+      "get": {
+        "tags": [
+          "whoami"
+        ],
+        "summary": "Get current user information",
+        "description": "Returns information about the currently authenticated user.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+        "operationId": "whoami_read",
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WhoamiUser"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Company": {
+        "required": [
+          "description",
+          "firm_sector",
+          "investment_lead_id",
+          "logo_url",
+          "name",
+          "sector"
+        ],
+        "type": "object",
+        "properties": {
+          "city": {
+            "title": "City",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "firm_sector": {
+            "title": "Firm sector",
+            "type": "string"
+          },
+          "fiscal_year_end": {
+            "title": "Fiscal year end",
+            "maxLength": 10,
+            "minLength": 1,
+            "type": "string"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "invested_fund_ids": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "investment_lead_id": {
+            "title": "Investment lead id",
+            "type": "string",
+            "nullable": true
+          },
+          "logo_url": {
+            "title": "Logo url",
+            "minLength": 1,
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "reporting_currency": {
+            "title": "Reporting currency",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          },
+          "sector": {
+            "title": "Sector",
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "minLength": 1,
+            "pattern": "^[-a-zA-Z0-9_]+$",
+            "type": "string",
+            "format": "slug",
+            "readOnly": true
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "readOnly": true
+          },
+          "unique_ref": {
+            "title": "Unique ref",
+            "type": "string",
+            "readOnly": true
+          },
+          "website": {
+            "title": "Website",
+            "maxLength": 255,
+            "type": "string"
+          }
+        }
+      },
+      "PropertyOption": {
+        "required": [
+          "color",
+          "id",
+          "value"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "minLength": 1,
+            "type": "string"
+          },
+          "color": {
+            "title": "Color",
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "Property": {
+        "required": [
+          "id",
+          "name",
+          "type"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string"
+          },
+          "options": {
+            "type": "array",
+            "nullable": true,
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/PropertyOption"
+            }
+          }
+        }
+      },
+      "FirmDetails": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "title": "Name",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "minLength": 1,
+            "pattern": "^[-a-zA-Z0-9_]+$",
+            "type": "string",
+            "format": "slug",
+            "readOnly": true
+          },
+          "country": {
+            "title": "Country",
+            "type": "string",
+            "readOnly": true
+          },
+          "city": {
+            "title": "City",
+            "maxLength": 255,
+            "type": "string"
+          },
+          "preferred_currency": {
+            "title": "Preferred currency",
+            "type": "string",
+            "readOnly": true
+          },
+          "enabled_feature_flags": {
+            "title": "Enabled feature flags",
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "Fund": {
+        "required": [
+          "currency",
+          "id",
+          "name",
+          "size",
+          "vintage"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "size": {
+            "title": "Size",
+            "type": "string",
+            "format": "decimal"
+          },
+          "vintage": {
+            "title": "Vintage",
+            "type": "integer"
+          },
+          "currency": {
+            "title": "Currency",
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "Document": {
+        "required": [
+          "requested_document"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "readOnly": true
+          },
+          "requested_document": {
+            "title": "Requested document",
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "Metric": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "date": {
+            "title": "Date",
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "title": "Name",
+            "type": "string",
+            "readOnly": true
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "readOnly": true
+          },
+          "time_period": {
+            "title": "Time period",
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "InformationReport": {
+        "required": [
+          "company_id",
+          "id",
+          "information_request_id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "company_id": {
+            "title": "Company id",
+            "type": "string"
+          },
+          "submitted_at": {
+            "title": "Submitted at",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "information_request_id": {
+            "title": "Information request id",
+            "type": "string"
+          },
+          "documents": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/Document"
+            }
+          },
+          "documents_completed": {
+            "title": "Documents completed",
+            "type": "integer",
+            "readOnly": true
+          },
+          "documents_missing": {
+            "title": "Documents missing",
+            "type": "integer",
+            "readOnly": true
+          },
+          "metrics": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "$ref": "#/components/schemas/Metric"
+            }
+          },
+          "metrics_completed": {
+            "title": "Metrics completed",
+            "type": "integer",
+            "readOnly": true
+          },
+          "metrics_missing": {
+            "title": "Metrics missing",
+            "type": "integer",
+            "readOnly": true
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "MetricsOptions": {
+        "required": [
+          "category_id",
+          "category_name",
+          "is_standard"
+        ],
+        "type": "object",
+        "properties": {
+          "category_name": {
+            "title": "Category name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "category_id": {
+            "title": "Category id",
+            "type": "string"
+          },
+          "is_standard": {
+            "title": "Is standard",
+            "type": "boolean"
+          },
+          "is_archived": {
+            "title": "Is archived",
+            "type": "boolean"
+          },
+          "type": {
+            "title": "Type",
+            "type": "string",
+            "readOnly": true
+          },
+          "is_point_in_time": {
+            "title": "Is point in time",
+            "type": "boolean"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string"
+          },
+          "choices": {
+            "type": "array",
+            "description": "Choices for categories with a select type",
+            "items": {
+              "title": "Choices",
+              "maxLength": 255,
+              "minLength": 1,
+              "type": "string"
+            }
+          },
+          "is_multiple": {
+            "title": "Is multiple",
+            "type": "boolean"
+          }
+        }
+      },
+      "PortfolioCompanyNoteAPI": {
+        "required": [
+          "author_id",
+          "note"
+        ],
+        "type": "object",
+        "properties": {
+          "note": {
+            "title": "Note",
+            "type": "string"
+          },
+          "author": {
+            "title": "Author",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          },
+          "created_at": {
+            "title": "Created at",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "email": {
+            "title": "Email",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          },
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "author_id": {
+            "title": "Author id",
+            "type": "string"
+          },
+          "company_id": {
+            "title": "Company id",
+            "type": "string"
+          }
+        }
+      },
+      "WhoamiFirm": {
+        "required": [
+          "id",
+          "name",
+          "slug"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "title": "Name",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string"
+          },
+          "slug": {
+            "title": "Slug",
+            "minLength": 1,
+            "pattern": "^[-a-zA-Z0-9_]+$",
+            "type": "string",
+            "format": "slug",
+            "readOnly": true
+          }
+        }
+      },
+      "WhoamiUser": {
+        "required": [
+          "email",
+          "firm",
+          "first_name",
+          "id",
+          "last_name",
+          "role"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "first_name": {
+            "title": "First name",
+            "maxLength": 150,
+            "type": "string"
+          },
+          "last_name": {
+            "title": "Last name",
+            "maxLength": 150,
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "role": {
+            "title": "Role",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          },
+          "firm": {
+            "$ref": "#/components/schemas/WhoamiFirm"
+          }
+        }
+      },
+      "Scenario": {
+        "required": [
+          "company",
+          "company_slug",
+          "date",
+          "id"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          },
+          "color": {
+            "title": "Color",
+            "minLength": 1,
+            "type": "string",
+            "default": "#ffffff"
+          },
+          "description": {
+            "title": "Description",
+            "type": "string",
+            "description": "A longer, free-text description for the scenario.",
+            "nullable": true
+          },
+          "date": {
+            "title": "Date",
+            "type": "string",
+            "format": "date"
+          },
+          "company": {
+            "title": "Company",
+            "minLength": 1,
+            "type": "string",
+            "nullable": true
+          },
+          "company_slug": {
+            "title": "Company slug",
+            "minLength": 1,
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "InformationRequest": {
+        "required": [
+          "due_date",
+          "id",
+          "name",
+          "period_end_date",
+          "period_start_date"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "due_date": {
+            "title": "Due date",
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "title": "Status",
+            "type": "string",
+            "readOnly": true
+          },
+          "completed_count": {
+            "title": "Completed count",
+            "type": "integer",
+            "readOnly": true
+          },
+          "in_progress_count": {
+            "title": "In progress count",
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true
+          },
+          "not_started_count": {
+            "title": "Not started count",
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true
+          },
+          "partially_complete_count": {
+            "title": "Partially complete count",
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true
+          },
+          "past_due_count": {
+            "title": "Past due count",
+            "type": "integer",
+            "nullable": true,
+            "readOnly": true
+          },
+          "period": {
+            "title": "Period",
+            "type": "string",
+            "readOnly": true
+          },
+          "period_start_date": {
+            "title": "Period start date",
+            "type": "string",
+            "format": "date"
+          },
+          "period_end_date": {
+            "title": "Period end date",
+            "type": "string",
+            "format": "date"
+          },
+          "requested_documents": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "required": [
+                "description"
+              ],
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "type": "string",
+                  "readOnly": true
+                },
+                "name": {
+                  "title": "Name",
+                  "type": "string",
+                  "readOnly": true
+                },
+                "description": {
+                  "title": "Description",
+                  "minLength": 1,
+                  "type": "string"
+                },
+                "optional": {
+                  "title": "Optional",
+                  "type": "boolean"
+                }
+              }
+            }
+          },
+          "requested_metrics": {
+            "type": "array",
+            "readOnly": true,
+            "items": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "title": "Id",
+                  "type": "string",
+                  "readOnly": true
+                },
+                "name": {
+                  "title": "Name",
+                  "type": "string",
+                  "readOnly": true
+                },
+                "description": {
+                  "title": "Description",
+                  "type": "string",
+                  "readOnly": true
+                },
+                "optional": {
+                  "title": "Optional",
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      },
+      "Datum": {
+        "required": [
+          "budget_id",
+          "category_id",
+          "company_id",
+          "created_at",
+          "currency",
+          "date",
+          "id",
+          "updated_at"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "value": {
+            "title": "Value",
+            "type": "string",
+            "readOnly": true
+          },
+          "currency": {
+            "title": "Currency",
+            "minLength": 1,
+            "type": "string",
+            "nullable": true
+          },
+          "converted_value": {
+            "title": "Converted value",
+            "type": "string",
+            "readOnly": true
+          },
+          "preferred_currency": {
+            "title": "Preferred currency",
+            "type": "string",
+            "readOnly": true
+          },
+          "date": {
+            "title": "Date",
+            "type": "string",
+            "format": "date"
+          },
+          "category": {
+            "title": "Category",
+            "type": "string",
+            "readOnly": true
+          },
+          "category_type": {
+            "title": "Category type",
+            "type": "string",
+            "readOnly": true
+          },
+          "category_id": {
+            "title": "Category id",
+            "type": "string"
+          },
+          "cadence": {
+            "title": "Cadence",
+            "type": "string",
+            "readOnly": true
+          },
+          "is_budget_metric": {
+            "title": "Is budget metric",
+            "type": "boolean",
+            "readOnly": true
+          },
+          "budget_id": {
+            "title": "Budget id",
+            "type": "string",
+            "nullable": true
+          },
+          "custom_metric": {
+            "title": "Custom metric",
+            "minLength": 1,
+            "type": "string",
+            "nullable": true,
+            "readOnly": true
+          },
+          "fx_rate": {
+            "title": "Fx rate",
+            "type": "number",
+            "nullable": true,
+            "readOnly": true
+          },
+          "detailed_source": {
+            "title": "Detailed source",
+            "type": "string",
+            "readOnly": true
+          },
+          "updated_at": {
+            "title": "Updated at",
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "title": "Created at",
+            "type": "string",
+            "format": "date-time"
+          },
+          "company_id": {
+            "title": "Company id",
+            "type": "string"
+          },
+          "deleted_at": {
+            "title": "Deleted at",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "archived": {
+            "title": "Archived",
+            "type": "boolean",
+            "readOnly": true
+          }
+        }
+      },
+      "LibraryDocument": {
+        "required": [
+          "submitted_date"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          },
+          "link": {
+            "title": "Link",
+            "type": "string",
+            "readOnly": true
+          },
+          "company_id": {
+            "title": "Company id",
+            "type": "string",
+            "readOnly": true
+          },
+          "information_request_id": {
+            "title": "Information request id",
+            "type": "string",
+            "readOnly": true
+          },
+          "parse_state": {
+            "title": "Parse state",
+            "type": "string",
+            "readOnly": true
+          },
+          "parsed_at": {
+            "title": "Parsed at",
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "readOnly": true
+          },
+          "uploaded_at": {
+            "title": "Uploaded at",
+            "type": "string",
+            "format": "date-time",
+            "readOnly": true
+          },
+          "source": {
+            "title": "Source",
+            "type": "string",
+            "readOnly": true
+          },
+          "submitted_date": {
+            "title": "Submitted date",
+            "minLength": 1,
+            "type": "string"
+          }
+        }
+      },
+      "EntityProperty": {
+        "oneOf": [
+          {
+            "$ref": "#/components/schemas/TextEntityProperty"
+          },
+          {
+            "$ref": "#/components/schemas/SingleSelectEntityProperty"
+          },
+          {
+            "$ref": "#/components/schemas/MultiSelectEntityProperty"
+          }
+        ],
+        "discriminator": {
+          "propertyName": "type",
+          "mapping": {
+            "text": "#/components/schemas/TextEntityProperty",
+            "select": "#/components/schemas/SingleSelectEntityProperty",
+            "multi_select": "#/components/schemas/MultiSelectEntityProperty"
+          }
+        }
+      },
+      "APIUser": {
+        "required": [
+          "email",
+          "first_name",
+          "last_name"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string",
+            "readOnly": true
+          },
+          "first_name": {
+            "title": "First name",
+            "maxLength": 150,
+            "type": "string"
+          },
+          "last_name": {
+            "title": "Last name",
+            "maxLength": 150,
+            "type": "string"
+          },
+          "email": {
+            "title": "Email",
+            "maxLength": 255,
+            "minLength": 1,
+            "type": "string",
+            "format": "email"
+          },
+          "role": {
+            "title": "Role",
+            "minLength": 1,
+            "type": "string",
+            "readOnly": true
+          }
+        }
+      },
+      "EntityPropertyOption": {
+        "type": "object",
+        "required": [
+          "id",
+          "value",
+          "color"
+        ],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "value": {
+            "type": "string"
+          },
+          "color": {
+            "type": "string"
+          }
+        }
+      },
+      "TextEntityProperty": {
+        "type": "object",
+        "required": [
+          "company",
+          "id",
+          "name",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "company": {
+            "required": [
+              "id"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "title": "Id",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "minLength": 1,
+                "type": "string",
+                "readOnly": true
+              },
+              "slug": {
+                "title": "Slug",
+                "minLength": 1,
+                "pattern": "^[-a-zA-Z0-9_]+$",
+                "type": "string",
+                "format": "slug",
+                "readOnly": true
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "text"
+            ]
+          },
+          "value": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "SingleSelectEntityProperty": {
+        "type": "object",
+        "required": [
+          "company",
+          "id",
+          "name",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "company": {
+            "required": [
+              "id"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "title": "Id",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "minLength": 1,
+                "type": "string",
+                "readOnly": true
+              },
+              "slug": {
+                "title": "Slug",
+                "minLength": 1,
+                "pattern": "^[-a-zA-Z0-9_]+$",
+                "type": "string",
+                "format": "slug",
+                "readOnly": true
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "select"
+            ]
+          },
+          "value": {
+            "nullable": true,
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/EntityPropertyOption"
+              }
+            ]
+          }
+        }
+      },
+      "MultiSelectEntityProperty": {
+        "type": "object",
+        "required": [
+          "company",
+          "id",
+          "name",
+          "type"
+        ],
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "minLength": 1,
+            "type": "string"
+          },
+          "company": {
+            "required": [
+              "id"
+            ],
+            "type": "object",
+            "properties": {
+              "id": {
+                "title": "Id",
+                "type": "string"
+              },
+              "name": {
+                "title": "Name",
+                "minLength": 1,
+                "type": "string",
+                "readOnly": true
+              },
+              "slug": {
+                "title": "Slug",
+                "minLength": 1,
+                "pattern": "^[-a-zA-Z0-9_]+$",
+                "type": "string",
+                "format": "slug",
+                "readOnly": true
+              }
+            }
+          },
+          "type": {
+            "type": "string",
+            "enum": [
+              "multi_select"
+            ]
+          },
+          "value": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/EntityPropertyOption"
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "description": "Your valid bearer token. All Auth tokens persist for all requests. Make sure to replace Client Credential `Basic` tokens with `Bearer` tokens after retrieving your bearer token. Go to the API Reference/Setup, User Guides/Initial Setup, or API Reference/Get API Access Token page to get your token."
+      }
+    }
+  },
+  "x-original-swagger-version": "2.0"
+}

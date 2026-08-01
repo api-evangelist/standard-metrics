@@ -1,0 +1,12 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Standard Metrics API
+  version: 1.0.0
+extends: openapi/standard-metrics-main-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment: 2026-07-21
+    x-apievangelist-rate-limit: 30 requests / 10 seconds per bearer token; 500 / minute
+    x-apievangelist-mcp: https://mcp.standardmetrics.io/mcp
+    x-apievangelist-changelog: https://docs.standardmetrics.io/changelog

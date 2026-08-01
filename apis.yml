@@ -1,20 +1,189 @@
 aid: standard-metrics
 name: Standard Metrics
-description: Standard Metrics is a company surfaced as a portfolio company of 8vc and added to the API
-  Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Standard Metrics is an AI-driven portfolio management platform for venture capital and private
+  equity firms. It centralizes portfolio company performance data, financial metrics, documents,
+  cap-table and investment data, and notes so investors can streamline portfolio reviews, audits,
+  and LP reporting while reducing the reporting burden on portfolio companies. Standard Metrics
+  exposes a REST API (OAuth2 client-credentials, Bearer tokens) covering companies, metrics, budgets,
+  documents, funds, information requests, notes, users, and a beta Investment Data API for cap-table
+  financing events, securities, share classes, and transactions. It also publishes two official
+  remote MCP servers that connect Claude, ChatGPT, and other LLM clients directly to firm data.
 url: https://raw.githubusercontent.com/api-evangelist/standard-metrics/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - 8vc
-x-tier: stub
-x-tier-reason: portfolio-lead
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://standardmetrics.io/wp-content/uploads/2024/07/Standard-Metrics-Thumbnail.jpg
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
-apis: []
+- Venture Capital
+- Private Equity
+- Portfolio Management
+- Financial Data
+- Investment Data
+- Cap Table
+- Metrics
+- Reporting
+- MCP
+apis:
+- aid: standard-metrics:standard-metrics-budgets-api
+  name: Standard Metrics budgets API
+  description: The budgets API from Standard Metrics — 1 operation(s) for budgets.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - budgets
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-budgets-api-openapi.yml
+- aid: standard-metrics:standard-metrics-cap-table-api
+  name: Standard Metrics cap_table API
+  description: The cap_table API from Standard Metrics — 10 operation(s) for cap_table.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - cap_table
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-cap-table-api-openapi.yml
+- aid: standard-metrics:standard-metrics-companies-api
+  name: Standard Metrics companies API
+  description: The companies API from Standard Metrics — 3 operation(s) for companies.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - companies
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-companies-api-openapi.yml
+- aid: standard-metrics:standard-metrics-custom-columns-api
+  name: Standard Metrics custom-columns API
+  description: The custom-columns API from Standard Metrics — 3 operation(s) for custom-columns.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - custom-columns
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-custom-columns-api-openapi.yml
+- aid: standard-metrics:standard-metrics-documents-api
+  name: Standard Metrics documents API
+  description: The documents API from Standard Metrics — 2 operation(s) for documents.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - documents
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-documents-api-openapi.yml
+- aid: standard-metrics:standard-metrics-firm-details-api
+  name: Standard Metrics firm-details API
+  description: The firm-details API from Standard Metrics — 1 operation(s) for firm-details.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - firm-details
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-firm-details-api-openapi.yml
+- aid: standard-metrics:standard-metrics-funds-api
+  name: Standard Metrics funds API
+  description: The funds API from Standard Metrics — 1 operation(s) for funds.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - funds
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-funds-api-openapi.yml
+- aid: standard-metrics:standard-metrics-information-reports-api
+  name: Standard Metrics information-reports API
+  description: >-
+    The information-reports API from Standard Metrics — 1 operation(s) for information-reports.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - information-reports
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-information-reports-api-openapi.yml
+- aid: standard-metrics:standard-metrics-information-requests-api
+  name: Standard Metrics information-requests API
+  description: >-
+    The information-requests API from Standard Metrics — 1 operation(s) for information-requests.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - information-requests
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-information-requests-api-openapi.yml
+- aid: standard-metrics:standard-metrics-metrics-api
+  name: Standard Metrics metrics API
+  description: The metrics API from Standard Metrics — 3 operation(s) for metrics.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - metrics
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-metrics-api-openapi.yml
+- aid: standard-metrics:standard-metrics-notes-api
+  name: Standard Metrics notes API
+  description: The notes API from Standard Metrics — 1 operation(s) for notes.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - notes
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-notes-api-openapi.yml
+- aid: standard-metrics:standard-metrics-o-api
+  name: Standard Metrics O API
+  description: The O API from Standard Metrics — 1 operation(s) for o.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - O
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-o-api-openapi.yml
+- aid: standard-metrics:standard-metrics-users-api
+  name: Standard Metrics users API
+  description: The users API from Standard Metrics — 1 operation(s) for users.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - users
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-users-api-openapi.yml
+- aid: standard-metrics:standard-metrics-whoami-api
+  name: Standard Metrics whoami API
+  description: The whoami API from Standard Metrics — 1 operation(s) for whoami.
+  humanURL: https://docs.standardmetrics.io
+  baseURL: https://api.standardmetrics.io/v1
+  tags:
+  - whoami
+  properties:
+  - type: OpenAPI
+    url: openapi/standard-metrics-whoami-api-openapi.yml
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -23,3 +192,64 @@ maintainers:
 common:
 - type: Website
   url: https://standardmetrics.io
+- type: DeveloperPortal
+  url: https://docs.standardmetrics.io
+- type: Documentation
+  url: https://docs.standardmetrics.io/introduction
+- type: APIReference
+  url: https://docs.standardmetrics.io/api-reference/setting-up
+- type: GettingStarted
+  url: https://docs.standardmetrics.io/guides/initialsetup
+- type: Blog
+  url: https://standardmetrics.io/blog-posts/
+- type: Support
+  url: https://standardmetrics.io/faq/
+- type: SignUp
+  url: https://standardmetrics.io/request-a-demo/
+- type: TermsOfService
+  url: https://standardmetrics.io/terms-of-service/
+- type: PrivacyPolicy
+  url: https://standardmetrics.io/privacy-policy/
+- type: ChangeLog
+  url: https://docs.standardmetrics.io/changelog
+- type: Authentication
+  url: authentication/standard-metrics-authentication.yml
+- type: OAuthScopes
+  url: scopes/standard-metrics-scopes.yml
+- type: MCPServer
+  url: mcp/standard-metrics-mcp.yml
+- type: LLMsTxt
+  url: llms/standard-metrics-llms.txt
+- type: WellKnown
+  url: well-known/standard-metrics-well-known.yml
+- type: ErrorCatalog
+  url: errors/standard-metrics-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/standard-metrics-lifecycle.yml
+- type: Deprecation
+  url: lifecycle/standard-metrics-lifecycle.yml
+- type: Conventions
+  url: conventions/standard-metrics-conventions.yml
+- type: RateLimits
+  url: rate-limits/standard-metrics-rate-limits.yml
+- type: ChangeLog
+  url: changelog/standard-metrics-changelog.yml
+- type: Conformance
+  url: conformance/standard-metrics-conformance.yml
+- type: Compliance
+  url: https://standardmetrics.io/security/
+- type: DataModel
+  url: data-model/standard-metrics-data-model.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: AgenticAccess
+  url: agentic-access/standard-metrics-agentic-access.yml
+- type: TrustCenter
+  url: security/standard-metrics-trust-center.yml
+- type: DomainSecurity
+  url: security/standard-metrics-domain-security.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 25
+  pass: local-v1

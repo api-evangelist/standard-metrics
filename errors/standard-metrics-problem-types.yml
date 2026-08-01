@@ -1,0 +1,38 @@
+generated: '2026-07-21'
+method: searched
+format: http-status
+source: https://docs.standardmetrics.io/api-reference/errors
+description: >-
+  Standard Metrics uses standard HTTP status codes to signal success or failure.
+  Errors are returned as HTTP status codes with descriptive messages (not RFC 9457
+  application/problem+json). Derived from the docs error reference and the three
+  OpenAPI specs (which declare 200/201/302 success responses only).
+envelope: HTTP status code + message body
+problems:
+- status: 400
+  title: Bad Request
+  remediation: The request was malformed or contains invalid syntax. Check that all required fields are present and correctly formatted.
+- status: 401
+  title: Unauthorized
+  remediation: Authentication failed. The access token may be invalid, expired, or missing. Verify credentials and include the Bearer token in the Authorization header.
+- status: 403
+  title: Forbidden
+  remediation: Insufficient permission to access the resource or perform the action. May indicate insufficient account privileges.
+- status: 404
+  title: Not Found
+  remediation: The requested resource could not be found. Verify the endpoint URL and any resource IDs.
+- status: 413
+  title: Payload Too Large
+  remediation: The request payload exceeds the maximum allowed size (document uploads are capped at 32MB).
+- status: 415
+  title: Unsupported Media Type
+  remediation: The request content type is not supported. Verify the Content-Type header and file format.
+- status: 422
+  title: Unprocessable Entity
+  remediation: Well-formed request with semantic errors or validation failures (invalid data formats, out-of-range values, business-rule violations).
+- status: 429
+  title: Too Many Requests
+  remediation: Rate limit exceeded (30 requests in 10 seconds per bearer token). Implement exponential backoff and retry after the window resets.
+- status: 500
+  title: Internal Server Error
+  remediation: Unexpected server-side error. Contact Standard Metrics support if it persists.

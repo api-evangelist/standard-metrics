@@ -1,0 +1,36 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.standardmetrics.io/api-reference/setting-up
+description: >-
+  Cross-cutting request/response semantics for the Standard Metrics API, captured from
+  the docs and derived from the OpenAPI. Covers authentication, pagination, rate-limit
+  signaling, versioning, and the error envelope. No documented idempotency-key contract.
+authentication:
+  style: OAuth2 client-credentials -> Bearer JWT
+  header: 'Authorization: Bearer <access_token>'
+  token_endpoint: https://api.standardmetrics.io/o/token/
+  token_ttl_seconds: 3600
+  see: authentication/standard-metrics-authentication.yml
+pagination:
+  style: page-number
+  params:
+  - page (default 1)
+  - per_page (default 100, max 100)
+  note: All list endpoints are paginated and return a maximum of 100 results per page.
+rate_limiting:
+  documented_limits:
+  - 500 requests per minute (Setup guide)
+  - 30 requests per 10 seconds per bearer token (Error Handling / 429)
+  signal: HTTP 429 Too Many Requests
+  guidance: Implement exponential backoff and retry after the rate-limit window resets.
+  see: rate-limits/standard-metrics-rate-limits.yml
+versioning:
+  scheme: uri-path
+  current: v1
+  see: lifecycle/standard-metrics-lifecycle.yml
+error_envelope:
+  format: HTTP status code + message body (not RFC 9457)
+  see: errors/standard-metrics-problem-types.yml
+idempotency:
+  supported: false
+  note: No idempotency-key header or contract is documented. Write conflicts on Create Metrics are handled via an on_conflict query parameter (skip/overwrite), not idempotency keys.

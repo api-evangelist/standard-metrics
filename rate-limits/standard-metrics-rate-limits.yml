@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.standardmetrics.io/api-reference/setting-up
+description: >-
+  Published rate limits for the Standard Metrics API. The docs state two limits: a
+  ceiling of 500 requests per minute (Setup guide) and a burst limit of 30 requests
+  per 10 seconds per bearer token that triggers HTTP 429 (Error Handling).
+scope: per bearer token
+limits:
+- limit_count: 500
+  window: 1 minute
+  source: https://docs.standardmetrics.io/api-reference/setting-up
+- limit_count: 30
+  window: 10 seconds
+  source: https://docs.standardmetrics.io/api-reference/errors
+exceeded_response: HTTP 429 Too Many Requests
+guidance: Implement exponential backoff and retry after the rate-limit window resets.

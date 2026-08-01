@@ -1,0 +1,17 @@
+generated: '2026-07-21'
+method: generated
+source: openapi/standard-metrics-main-openapi.json, openapi/standard-metrics-investment-data-openapi.json
+description: Packaged Agent Skills for the Standard Metrics API, one per marquee flow. Every step is grounded in a real operationId verified against the OpenAPI.
+skills:
+- file: standard-metrics-pull-portfolio-metrics.md
+  name: Pull portfolio company metrics
+  api: openapi/standard-metrics-main-openapi.json
+  operations: [companies_list, metrics_options_list, metrics_list]
+- file: standard-metrics-write-metrics.md
+  name: Write metrics for a company
+  api: openapi/standard-metrics-main-openapi.json
+  operations: [companies_list, metrics_options_list, metrics_create]
+- file: standard-metrics-read-cap-table.md
+  name: Read a company cap table
+  api: openapi/standard-metrics-investment-data-openapi.json
+  operations: [get_financing_events, get_securities, get_share_classes, get_transactions]

@@ -1,0 +1,40 @@
+{
+  "provider": "standard-metrics",
+  "sources": [
+    "standard-metrics-budgets-api-openapi.yml",
+    "standard-metrics-cap-table-api-openapi.yml",
+    "standard-metrics-companies-api-openapi.yml",
+    "standard-metrics-custom-columns-api-openapi.yml",
+    "standard-metrics-documents-api-openapi.yml",
+    "standard-metrics-firm-details-api-openapi.yml",
+    "standard-metrics-funds-api-openapi.yml",
+    "standard-metrics-information-reports-api-openapi.yml",
+    "standard-metrics-information-requests-api-openapi.yml",
+    "standard-metrics-metrics-api-openapi.yml",
+    "standard-metrics-notes-api-openapi.yml",
+    "standard-metrics-o-api-openapi.yml",
+    "standard-metrics-users-api-openapi.yml",
+    "standard-metrics-whoami-api-openapi.yml"
+  ],
+  "outputs": [
+    "standard-metrics-budgets-api-openapi.yml",
+    "standard-metrics-cap-table-api-openapi.yml",
+    "standard-metrics-companies-api-openapi.yml",
+    "standard-metrics-custom-columns-api-openapi.yml",
+    "standard-metrics-documents-api-openapi.yml",
+    "standard-metrics-firm-details-api-openapi.yml",
+    "standard-metrics-funds-api-openapi.yml",
+    "standard-metrics-information-reports-api-openapi.yml",
+    "standard-metrics-information-requests-api-openapi.yml",
+    "standard-metrics-metrics-api-openapi.yml",
+    "standard-metrics-notes-api-openapi.yml",
+    "standard-metrics-o-api-openapi.yml",
+    "standard-metrics-users-api-openapi.yml",
+    "standard-metrics-whoami-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

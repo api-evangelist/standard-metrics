@@ -1,0 +1,12 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Standard Metrics OAuth Token API
+  version: 1.0.0
+extends: openapi/standard-metrics-auth-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enrichment: 2026-07-21
+    x-apievangelist-flow: client_credentials
+    x-apievangelist-token-ttl: 3600 seconds
+    x-apievangelist-scopes: read write all

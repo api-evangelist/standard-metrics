@@ -1,0 +1,26 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.standardmetrics.io/api-reference/setting-up
+docs: https://docs.standardmetrics.io/api-reference/get-oauth-access-token
+description: >-
+  Standard Metrics uses OAuth2 client-credentials. A client_id/client_secret pair
+  (created per OAuth application in Developer Settings) is exchanged at the token
+  endpoint for a Bearer access token. The token response returns a coarse-grained
+  scope string; per-user data access is additionally governed by API-key permissions
+  set by firm admins, not by fine-grained OAuth scopes.
+token_endpoint: https://api.standardmetrics.io/o/token/
+grant_type: client_credentials
+schemes:
+- name: OAuth2 Client Credentials
+  flow: clientCredentials
+  tokenUrl: https://api.standardmetrics.io/o/token/
+scopes:
+- scope: read
+  description: Read access to firm portfolio, metric, and investment data.
+- scope: write
+  description: Write access (create/update metrics, companies, documents, notes, cap-table data).
+- scope: all
+  description: Full read and write access (observed in token responses as "all read write").
+permissions_note: >-
+  Admins can define specific user permissions for each API key. See
+  https://intercom.help/standardmetrics/en/articles/10088424-permissions-for-api-keys

@@ -1,0 +1,22 @@
+generated: '2026-07-21'
+method: searched
+source: https://docs.standardmetrics.io/changelog
+description: >-
+  Versioning and deprecation posture for the Standard Metrics API, from the docs
+  and the dated changelog. The core API is versioned in the URI path (v1); the
+  Investment Data API is a separate beta surface. Deprecations are announced in the
+  changelog with a migration path and a removal window.
+versioning:
+  scheme: uri-path
+  current: v1
+  beta_surface: Investment Data API (beta) at app.standardmetrics.io/beta/investment/*
+  docs: https://docs.standardmetrics.io/api-reference/setting-up
+deprecation:
+  policy: Deprecations are announced in the dated changelog with a migration path; deprecated surfaces continue to work through a removal window before being removed.
+  docs: https://docs.standardmetrics.io/changelog
+  examples:
+  - The /custom-metrics endpoint was deprecated and removed (Jan 20, 2026); use Get Metrics Options instead.
+  - Cadence options day/week/half_year deprecated on Create Metrics (Sep 16, 2025).
+status_page: null
+sla: null
+deprecated_operations: []

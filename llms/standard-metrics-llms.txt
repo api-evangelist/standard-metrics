@@ -1,0 +1,50 @@
+# Standard Metrics
+
+## Docs
+
+- [Get budgets](https://docs.standardmetrics.io/api-reference/budgets/get-budgets.md): Retrieve all budgets associated with the firm. Each budget is associated with a company.
+- [Add financing rounds](https://docs.standardmetrics.io/api-reference/cap_table/add-financing-rounds.md): Add financing rounds across your cap tables. Creates new financing events with stage information, valuations, and co-investor details.
+- [Add securities](https://docs.standardmetrics.io/api-reference/cap_table/add-securities.md): Add a list of securities, across different types, to a company's cap table. Supports certificates, warrants, convertibles, and token-based securities.
+- [Add share classes](https://docs.standardmetrics.io/api-reference/cap_table/add-share-classes.md): Add share classes to a company's cap table. Creates new share classes with specified pricing, type, and purchase information.
+- [Add transactions](https://docs.standardmetrics.io/api-reference/cap_table/add-transactions.md): Add a list of transactions to a company's cap table. Supports sales, conversions, and exercises of securities.
+- [Get financing events](https://docs.standardmetrics.io/api-reference/cap_table/get-financing-events.md): Retrieve financing events for companies in the portfolio. Returns all financing rounds if no filters are applied. Can be filtered by company ID or financing ID to get specific rounds. Each financing event includes stage, pre-money valuation, round size, fully diluted shares, closing date, and co-inv…
+- [Get securities](https://docs.standardmetrics.io/api-reference/cap_table/get-securities.md): Retrieve securities for a firm or a specific company. If no filters are provided, the endpoint returns all securities across the firm. If company IDs or holding IDs are provided, it returns securities specific to those companies or holdings.
+- [Get share classes](https://docs.standardmetrics.io/api-reference/cap_table/get-share-classes.md): Retrieve share classes for a firm or a specific company. If no filters are provided, the endpoint returns all share classes across the firm. If company IDs or share class IDs are provided, it returns share classes specific to those companies or share classes.
+- [Get transactions](https://docs.standardmetrics.io/api-reference/cap_table/get-transactions.md): Retrieve transactions for a firm or a specific company. If no filters are provided, the endpoint returns all transactions across the firm. If company IDs or transaction IDs are provided, it returns transactions specific to those companies or transactions.
+- [Upsert overrides](https://docs.standardmetrics.io/api-reference/cap_table/upsert-overrides.md): Upsert overrides for ownership percentages, post-money valuations, and fair values. Creates or updates override data for companies and funds.
+- [Create company](https://docs.standardmetrics.io/api-reference/companies/create-company.md): Create a new company. Creates an offline company that can later be onboarded.
+- [Get companies](https://docs.standardmetrics.io/api-reference/companies/get-companies.md): Retrieve a list of all companies associated with the firm. Each company includes identifiers and metadata.
+- [Update company](https://docs.standardmetrics.io/api-reference/companies/update-company.md): Partially update company fields. Different fields are editable based on company onboarding status.
+- [Upload company logo](https://docs.standardmetrics.io/api-reference/companies/upload-company-logo.md): Upload a new logo for an offline company. Replaces any existing logo.
+- [Get custom column options](https://docs.standardmetrics.io/api-reference/custom-columns/get-custom-column-options.md): Retrieve all custom columns and their available options. Includes selectable options for select and multi-select columns.
+- [Get custom column values](https://docs.standardmetrics.io/api-reference/custom-columns/get-custom-column-values.md): Retrieve custom column values for companies. Includes column metadata, values, and company associations.
+- [Update custom column values](https://docs.standardmetrics.io/api-reference/custom-columns/update-custom-column-values.md): Update custom column values for companies. Fully replaces existing data for the specified company and column.
+- [Create document](https://docs.standardmetrics.io/api-reference/documents/create-document.md): Creates a new document in the library for a company.
+- [Download document](https://docs.standardmetrics.io/api-reference/documents/download-document.md): Download a specific document by redirecting to signed URL. Provides temporary access to securely stored documents.
+- [Get documents](https://docs.standardmetrics.io/api-reference/documents/get-documents.md): Retrieve all documents associated with the firm. Includes parsed and unparsed documents from various sources.
+- [Error Handling](https://docs.standardmetrics.io/api-reference/errors.md)
+- [Get funds](https://docs.standardmetrics.io/api-reference/funds/get-funds.md): Retrieve all funds associated with the firm. Provides fund details and status information.
+- [Get API Access Token](https://docs.standardmetrics.io/api-reference/get-oauth-access-token.md): This endpoint allows you to retrieve an API access token using your `client_id` and `client_secret`.
+- [Get information reports](https://docs.standardmetrics.io/api-reference/information-reports/get-information-reports.md): Retrieve all information reports associated with the firm. Includes submitted documents, metrics, and outstanding requirements.
+- [Get information requests](https://docs.standardmetrics.io/api-reference/information-requests/get-information-requests.md): Retrieve all information requests associated with the firm. Includes company associations and submission status.
+- [Create metrics](https://docs.standardmetrics.io/api-reference/metrics/create-metrics.md): Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.
+- [Delete a specific metric.](https://docs.standardmetrics.io/api-reference/metrics/delete-metric.md): **Permissions:** - User must be authenticated via OAuth. - User must have access to the company that owns the datum. - User must have ADMIN or EDITOR role.
+- [Get metrics](https://docs.standardmetrics.io/api-reference/metrics/get-metrics.md): Retrieve metrics for a specific company. Supports extensive filtering by category, date range, and cadence.
+- [Get metrics options](https://docs.standardmetrics.io/api-reference/metrics/get-metrics-options.md): Retrieve information about all available metrics for a firm. Includes category names, types, and configuration details.
+- [Create notes](https://docs.standardmetrics.io/api-reference/notes/create-notes.md): Create new notes for a company. Supports creating multiple notes in a single request.
+- [Get notes](https://docs.standardmetrics.io/api-reference/notes/get-notes.md): Retrieve all notes for a specific company. Notes are returned in markdown format.
+- [Setup](https://docs.standardmetrics.io/api-reference/setting-up.md)
+- [Get users](https://docs.standardmetrics.io/api-reference/users/get-users.md): Retrieve all users associated with the firm. Includes user details and information about their membership within the firm.
+- [Changelog](https://docs.standardmetrics.io/changelog.md): Product updates and announcements for the Standard Metrics API
+- [API Cookbook](https://docs.standardmetrics.io/guides/api-cookbook.md): Practical examples and integration patterns for the Standard Metrics API
+- [API Docs MCP](https://docs.standardmetrics.io/guides/api-docs-mcp.md): Give MCP clients access to Standard Metrics API documentation for AI-assisted development
+- [Initial Setup](https://docs.standardmetrics.io/guides/initialsetup.md): Set up your API access by creating a secure client credentials token in the Standard Metrics Developer Settings.
+- [Excel and MCP](https://docs.standardmetrics.io/guides/mcp-excel-plugin.md): Use Claude and the Standard Metrics MCP to build dynamic Excel spreadsheets that automatically pull portfolio data
+- [Setup and Configuration](https://docs.standardmetrics.io/guides/mcp-setup.md): Connect Standard Metrics data to LLM clients using our Model Context Protocol (MCP) server
+- [Welcome to the Standard Metrics API](https://docs.standardmetrics.io/introduction.md): The Standard Metrics API allows you to programmatically access your portfolio company data, financial metrics, and investment data. Using our API, you can build custom integrations, integrate with analytics tools, or create automated reporting workflows.
+
+## OpenAPI Specs
+
+- [main-openapi](https://docs.standardmetrics.io/api-reference/main-openapi.json)
+- [investment_data_openapi](https://docs.standardmetrics.io/api-reference/investment_data_openapi.json)
+- [auth_openapi](https://docs.standardmetrics.io/api-reference/auth_openapi.json)
