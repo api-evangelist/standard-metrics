@@ -1,0 +1,1012 @@
+{
+  "item": [
+    {
+      "id": "392c2cc6-b737-4628-b207-e196de091844",
+      "name": "cap_table",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "1ecb9136-890f-4063-b8d9-24aad3b1ee1d",
+          "name": "Get financing events",
+          "request": {
+            "name": "Get financing events",
+            "description": {
+              "content": "\n        Retrieve financing events for companies in the portfolio. Returns all financing rounds if no filters are applied. Can be filtered by company ID or financing ID to get specific rounds. Each financing event includes stage, pre-money valuation, round size, fully diluted shares, closing date, and co-investor information.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "financing-events",
+                "get",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"financing_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"<string>\",\n  \"is_crypto\": \"<boolean>\",\n  \"co_investors\": [\n    {\n      \"name\": \"<string>\",\n      \"role\": \"any\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"role\": \"any\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3d7f970a-7d3e-4c97-be6a-96b9d89f2608",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "financing-events",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"financing_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"sort_by\": \"<string>\",\n  \"is_crypto\": \"<boolean>\",\n  \"co_investors\": [\n    {\n      \"name\": \"<string>\",\n      \"role\": \"any\"\n    },\n    {\n      \"name\": \"<string>\",\n      \"role\": \"any\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"company_id\": \"string\",\n    \"name\": \"string\",\n    \"pre_money_valuation\": {\n      \"value\": 5258.674113991183,\n      \"currency\": \"IDR\",\n      \"converted_value\": 4053.3792911607193,\n      \"converted_currency\": \"MXN\",\n      \"fx_rate\": 5207.793603409104,\n      \"is_custom_rate\": true\n    },\n    \"round_size\": {\n      \"value\": 7652.702778001792,\n      \"currency\": \"NZD\",\n      \"converted_value\": 6225.239143442419,\n      \"converted_currency\": \"EUR\",\n      \"fx_rate\": 2164.5962257787023,\n      \"is_custom_rate\": true\n    },\n    \"fully_diluted_shares\": 3892.837639143938,\n    \"closing_date\": \"1989-06-13\",\n    \"co_investors\": [\n      {\n        \"name\": \"string\",\n        \"is_lead\": false\n      },\n      {\n        \"name\": \"string\",\n        \"is_lead\": false\n      }\n    ],\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"is_crypto\": false,\n    \"liquidation_multiple\": 3731.8032442971326,\n    \"cap_multiple\": 9796.56035457303,\n    \"seniority_position\": \"PARI_PASSU\",\n    \"participation_type\": \"NON_PARTICIPATING\",\n    \"pari_passu_rounds\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  },\n  {\n    \"company_id\": \"string\",\n    \"name\": \"string\",\n    \"pre_money_valuation\": {\n      \"value\": 231.41585986653945,\n      \"currency\": \"AUD\",\n      \"converted_value\": 2805.106415424823,\n      \"converted_currency\": \"NGN\",\n      \"fx_rate\": 4351.270960361055,\n      \"is_custom_rate\": false\n    },\n    \"round_size\": {\n      \"value\": 2617.601290627365,\n      \"currency\": \"CAD\",\n      \"converted_value\": 1633.84562208319,\n      \"converted_currency\": \"PKR\",\n      \"fx_rate\": 7351.481955034485,\n      \"is_custom_rate\": true\n    },\n    \"fully_diluted_shares\": 8915.98595226287,\n    \"closing_date\": \"1950-12-29\",\n    \"co_investors\": [\n      {\n        \"name\": \"string\",\n        \"is_lead\": false\n      },\n      {\n        \"name\": \"string\",\n        \"is_lead\": false\n      }\n    ],\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"is_crypto\": false,\n    \"liquidation_multiple\": 2995.960544882855,\n    \"cap_multiple\": 4982.414417652771,\n    \"seniority_position\": \"PARI_PASSU\",\n    \"participation_type\": \"FULLY_PARTICIPATING\",\n    \"pari_passu_rounds\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "17a762b7-5614-4288-8cfe-5acb416cded6",
+          "name": "Get share classes",
+          "request": {
+            "name": "Get share classes",
+            "description": {
+              "content": "\n        Retrieve share classes for a firm or a specific company. If no filters are provided, the endpoint returns all share classes across the firm. If company IDs or share class IDs are provided, it returns share classes specific to those companies or share classes.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "share-classes",
+                "get",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"share_class_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"purchase_type\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "c8625e8f-9a58-434b-a8a7-579327633a30",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "share-classes",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"share_class_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"purchase_type\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"company_id\": \"string\",\n    \"financing_id\": \"string\",\n    \"purchase_type\": \"primary\",\n    \"type\": \"preferred\",\n    \"name\": \"string\",\n    \"price_per_share\": {\n      \"value\": 345.3050560324089,\n      \"currency\": \"SGD\",\n      \"converted_value\": 2134.182553803663,\n      \"converted_currency\": \"JPY\",\n      \"fx_rate\": 2149.378637573458,\n      \"is_custom_rate\": true\n    },\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"include_in_fair_value\": false\n  },\n  {\n    \"company_id\": \"string\",\n    \"financing_id\": \"string\",\n    \"purchase_type\": \"secondary\",\n    \"type\": \"common\",\n    \"name\": \"string\",\n    \"price_per_share\": {\n      \"value\": 270.39186559544737,\n      \"currency\": \"COP\",\n      \"converted_value\": 7396.35345759587,\n      \"converted_currency\": \"KES\",\n      \"fx_rate\": 488.8836497423354,\n      \"is_custom_rate\": true\n    },\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"include_in_fair_value\": false\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91d38006-1f95-46ea-af5c-c17fb66eb5c0",
+          "name": "Get transactions",
+          "request": {
+            "name": "Get transactions",
+            "description": {
+              "content": "\n        Retrieve transactions for a firm or a specific company. If no filters are provided, the endpoint returns all transactions across the firm. If company IDs or transaction IDs are provided, it returns transactions specific to those companies or transactions.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "transactions",
+                "get",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"transaction_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event\": \"<string>\",\n  \"input_security_id\": \"<string>\",\n  \"output_security_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92accd18-497d-4d59-9d40-5f8052013646",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "transactions",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"transaction_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"event\": \"<string>\",\n  \"input_security_id\": \"<string>\",\n  \"output_security_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"company_id\": \"string\",\n    \"company_name\": \"string\",\n    \"input_security_id\": \"string\",\n    \"output_security_id\": \"string\",\n    \"date\": \"1947-10-09\",\n    \"event\": \"<string>\",\n    \"shares\": 1624.4207931706046,\n    \"investment_amount\": {\n      \"value\": 949.6860928558959,\n      \"currency\": \"SEK\",\n      \"converted_value\": 5729.122872174903,\n      \"converted_currency\": \"BRL\",\n      \"fx_rate\": 2275.1661745965303,\n      \"is_custom_rate\": true\n    },\n    \"proceeds\": {\n      \"value\": 9031.382898254948,\n      \"currency\": \"KRW\",\n      \"converted_value\": 9283.38704162788,\n      \"converted_currency\": \"NZD\",\n      \"fx_rate\": 1487.6448135890819,\n      \"is_custom_rate\": false\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"company_id\": \"string\",\n    \"company_name\": \"string\",\n    \"input_security_id\": \"string\",\n    \"output_security_id\": \"string\",\n    \"date\": \"1954-02-05\",\n    \"event\": \"<string>\",\n    \"shares\": 920.6259821650686,\n    \"investment_amount\": {\n      \"value\": 2476.448584143407,\n      \"currency\": \"SAR\",\n      \"converted_value\": 1714.6799299643433,\n      \"converted_currency\": \"PKR\",\n      \"fx_rate\": 9982.103439825538,\n      \"is_custom_rate\": false\n    },\n    \"proceeds\": {\n      \"value\": 7223.0600663481655,\n      \"currency\": \"CZK\",\n      \"converted_value\": 7847.655799848191,\n      \"converted_currency\": \"PHP\",\n      \"fx_rate\": 7317.264890808787,\n      \"is_custom_rate\": true\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e8e282a9-4d93-49fc-9be9-c140d90359d7",
+          "name": "Get securities",
+          "request": {
+            "name": "Get securities",
+            "description": {
+              "content": "\n        Retrieve securities for a firm or a specific company. If no filters are provided, the endpoint returns all securities across the firm. If company IDs or holding IDs are provided, it returns securities specific to those companies or holdings.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "securities",
+                "get",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"security_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"fund_id\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "01af7e93-1365-4a92-80d5-878a1585cbbf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "securities",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"security_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"fund_id\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"issue_date\": \"2014-09-04\",\n    \"fund_id\": \"string\",\n    \"company_id\": \"string\",\n    \"fund_name\": \"string\",\n    \"company_name\": \"string\",\n    \"investment_amount\": {\n      \"value\": 4293.7300087554095,\n      \"currency\": \"BRL\",\n      \"converted_value\": 544.855295348724,\n      \"converted_currency\": \"SEK\",\n      \"fx_rate\": 4851.719692408676,\n      \"is_custom_rate\": true\n    },\n    \"shares\": 1613.2063045174427,\n    \"share_class_id\": \"string\",\n    \"financing_id\": \"string\",\n    \"share_class_name\": \"string\",\n    \"id\": \"string\",\n    \"type\": \"certificate\"\n  },\n  {\n    \"issue_date\": \"1952-11-12\",\n    \"fund_id\": \"string\",\n    \"company_id\": \"string\",\n    \"fund_name\": \"string\",\n    \"company_name\": \"string\",\n    \"investment_amount\": {\n      \"value\": 8154.735522392303,\n      \"currency\": \"BDT\",\n      \"converted_value\": 6823.870291519743,\n      \"converted_currency\": \"ILS\",\n      \"fx_rate\": 4819.049978886884,\n      \"is_custom_rate\": false\n    },\n    \"shares\": 4817.112265360791,\n    \"share_class_id\": \"string\",\n    \"financing_id\": \"string\",\n    \"share_class_name\": \"string\",\n    \"id\": \"string\",\n    \"type\": \"certificate\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5d61b1a6-2c2d-43ca-a22f-1a4bceddf0a7",
+          "name": "Add share classes",
+          "request": {
+            "name": "Add share classes",
+            "description": {
+              "content": "\n        Add share classes to a company's cap table. Creates new share classes with specified pricing, type, and purchase information.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "share-classes",
+                "add",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"share_classes\": [\n    {\n      \"company_id\": \"<string>\",\n      \"financing_id\": \"<string>\",\n      \"purchase_type\": \"<string>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price_per_share\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"include_in_fair_value\": \"<boolean>\"\n    },\n    {\n      \"company_id\": \"<string>\",\n      \"financing_id\": \"<string>\",\n      \"purchase_type\": \"<string>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price_per_share\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"include_in_fair_value\": \"<boolean>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dc1105f3-ce32-415f-9a70-bb7f61718fd5",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "share-classes",
+                    "add",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"share_classes\": [\n    {\n      \"company_id\": \"<string>\",\n      \"financing_id\": \"<string>\",\n      \"purchase_type\": \"<string>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price_per_share\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"include_in_fair_value\": \"<boolean>\"\n    },\n    {\n      \"company_id\": \"<string>\",\n      \"financing_id\": \"<string>\",\n      \"purchase_type\": \"<string>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"price_per_share\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"include_in_fair_value\": \"<boolean>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"company_id\": \"string\",\n    \"financing_id\": \"string\",\n    \"purchase_type\": \"secondary\",\n    \"type\": \"common\",\n    \"name\": \"string\",\n    \"price_per_share\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 5627.330252615513,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    },\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"include_in_fair_value\": false\n  },\n  {\n    \"company_id\": \"string\",\n    \"financing_id\": \"string\",\n    \"purchase_type\": \"primary\",\n    \"type\": \"common\",\n    \"name\": \"string\",\n    \"price_per_share\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 9571.291623395824,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": false\n    },\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"include_in_fair_value\": true\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5036b5b-2d73-42ab-ad4d-cee455f4caa4",
+          "name": "Add financing rounds",
+          "request": {
+            "name": "Add financing rounds",
+            "description": {
+              "content": "\n        Add financing rounds across your cap tables. Creates new financing events with stage information, valuations, and co-investor details.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n        - User must have permission to add data to the cap tables.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "financing-rounds",
+                "add",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"financing_rounds\": [\n    {\n      \"company_id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"pre_money_valuation\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"round_size\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"fully_diluted_shares\": \"<number>\",\n      \"closing_date\": \"<date>\",\n      \"co_investors\": [\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        },\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        }\n      ],\n      \"is_crypto\": false,\n      \"liquidation_multiple\": \"<number>\",\n      \"cap_multiple\": \"<number>\",\n      \"seniority_position\": \"<string>\",\n      \"participation_type\": \"<string>\",\n      \"pari_passu_rounds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"company_id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"pre_money_valuation\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"round_size\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"fully_diluted_shares\": \"<number>\",\n      \"closing_date\": \"<date>\",\n      \"co_investors\": [\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        },\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        }\n      ],\n      \"is_crypto\": false,\n      \"liquidation_multiple\": \"<number>\",\n      \"cap_multiple\": \"<number>\",\n      \"seniority_position\": \"<string>\",\n      \"participation_type\": \"<string>\",\n      \"pari_passu_rounds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "37be6b9b-5bf9-414d-b173-8acb0a474d4d",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "financing-rounds",
+                    "add",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"financing_rounds\": [\n    {\n      \"company_id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"pre_money_valuation\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"round_size\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"fully_diluted_shares\": \"<number>\",\n      \"closing_date\": \"<date>\",\n      \"co_investors\": [\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        },\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        }\n      ],\n      \"is_crypto\": false,\n      \"liquidation_multiple\": \"<number>\",\n      \"cap_multiple\": \"<number>\",\n      \"seniority_position\": \"<string>\",\n      \"participation_type\": \"<string>\",\n      \"pari_passu_rounds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"company_id\": \"<string>\",\n      \"name\": \"<string>\",\n      \"pre_money_valuation\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"round_size\": {\n        \"value\": \"<number>\",\n        \"currency\": \"<string>\",\n        \"fx_rate\": \"<number>\"\n      },\n      \"fully_diluted_shares\": \"<number>\",\n      \"closing_date\": \"<date>\",\n      \"co_investors\": [\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        },\n        {\n          \"name\": \"<string>\",\n          \"is_lead\": false\n        }\n      ],\n      \"is_crypto\": false,\n      \"liquidation_multiple\": \"<number>\",\n      \"cap_multiple\": \"<number>\",\n      \"seniority_position\": \"<string>\",\n      \"participation_type\": \"<string>\",\n      \"pari_passu_rounds\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"company_id\": \"string\",\n    \"name\": \"string\",\n    \"pre_money_valuation\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 8795.391249758859,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": false\n    },\n    \"round_size\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 3729.8921367411917,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": false\n    },\n    \"fully_diluted_shares\": 8592.344870363895,\n    \"closing_date\": \"2019-05-22\",\n    \"co_investors\": [\n      {\n        \"name\": \"<string>\",\n        \"is_lead\": false\n      },\n      {\n        \"name\": \"<string>\",\n        \"is_lead\": false\n      }\n    ],\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"is_crypto\": false,\n    \"liquidation_multiple\": 3610.3000922021743,\n    \"cap_multiple\": 4188.358697878658,\n    \"seniority_position\": \"<string>\",\n    \"participation_type\": \"<string>\",\n    \"pari_passu_rounds\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  },\n  {\n    \"company_id\": \"string\",\n    \"name\": \"string\",\n    \"pre_money_valuation\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 8665.965755136185,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    },\n    \"round_size\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 6493.827843511016,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    },\n    \"fully_diluted_shares\": 3056.476238437251,\n    \"closing_date\": \"1971-04-15\",\n    \"co_investors\": [\n      {\n        \"name\": \"<string>\",\n        \"is_lead\": false\n      },\n      {\n        \"name\": \"<string>\",\n        \"is_lead\": false\n      }\n    ],\n    \"company_name\": \"string\",\n    \"id\": \"string\",\n    \"is_crypto\": false,\n    \"liquidation_multiple\": 8414.715329857076,\n    \"cap_multiple\": 2842.1384740643907,\n    \"seniority_position\": \"<string>\",\n    \"participation_type\": \"<string>\",\n    \"pari_passu_rounds\": [\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      },\n      {\n        \"id\": \"string\",\n        \"name\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16c0558c-518c-40af-8cef-17f04eb2c898",
+          "name": "Upsert overrides",
+          "request": {
+            "name": "Upsert overrides",
+            "description": {
+              "content": "\n        Upsert overrides for ownership percentages, post-money valuations, and fair values. Creates or updates override data for companies and funds.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies and funds.\n        - User must have permission to modify data in the portco.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "overrides",
+                "upsert",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b1e5be97-418c-4964-b13f-087dd0dea0cf",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "overrides",
+                    "upsert",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b94cd45a-6ef9-440f-acc4-6dcf964e41a1",
+          "name": "Add transactions",
+          "request": {
+            "name": "Add transactions",
+            "description": {
+              "content": "\n        Add a list of transactions to a company's cap table. Supports sales, conversions, and exercises of securities.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "transactions",
+                "add",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f646febc-6e0b-44a8-8417-0a31d765fc47",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "transactions",
+                    "add",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"string\",\n    \"company_id\": \"string\",\n    \"company_name\": \"string\",\n    \"input_security_id\": \"string\",\n    \"output_security_id\": \"string\",\n    \"date\": \"2026-03-29\",\n    \"event\": \"<string>\",\n    \"shares\": 8581.866506848408,\n    \"investment_amount\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 4218.534523183854,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    },\n    \"proceeds\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 959.0656835984246,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    }\n  },\n  {\n    \"id\": \"string\",\n    \"company_id\": \"string\",\n    \"company_name\": \"string\",\n    \"input_security_id\": \"string\",\n    \"output_security_id\": \"string\",\n    \"date\": \"1982-07-14\",\n    \"event\": \"<string>\",\n    \"shares\": 9546.258039515076,\n    \"investment_amount\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 2491.0835727375525,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    },\n    \"proceeds\": {\n      \"value\": \"<number>\",\n      \"currency\": \"<string>\",\n      \"converted_value\": 640.1993071529632,\n      \"converted_currency\": \"<string>\",\n      \"fx_rate\": \"<number>\",\n      \"is_custom_rate\": true\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "fef786b5-adfa-4af2-aaec-9bcdde92fb5b",
+          "name": "Add securities",
+          "request": {
+            "name": "Add securities",
+            "description": {
+              "content": "\n        Add a list of securities, across different types, to a company's cap table. Supports certificates, warrants, convertibles, and token-based securities.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "securities",
+                "add",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "06429117-904c-4a49-acad-337364f08490",
+              "name": "Created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "securities",
+                    "add",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63e9eed0-4029-4a66-94ac-0e640c5cb5be",
+          "name": "Get investment performance metrics (Alpha)",
+          "request": {
+            "name": "Get investment performance metrics (Alpha)",
+            "description": {
+              "content": "\n        **Unstable:** This endpoint is in alpha and may change without notice.\n\n        Retrieve investment metrics for portfolio companies.\n\n        If `fund_ids` is omitted, metrics are aggregated across all funds.\n        If `fund_ids` is provided, metrics reflect only those funds' positions.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    ",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "beta",
+                "investment",
+                "metrics",
+                "get",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"fund_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"as_of_date\": \"<date>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "60704ccf-1d61-45b5-8861-efd2bc5ad208",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "beta",
+                    "investment",
+                    "metrics",
+                    "get",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"company_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"fund_ids\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"as_of_date\": \"<date>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metrics\": [\n    {\n      \"company_id\": \"string\",\n      \"as_of_date\": \"2008-09-25\",\n      \"currency\": \"<string>\",\n      \"irr\": 4395.674600983668,\n      \"moic\": 7835.559555062486,\n      \"fair_value\": 4285.96454584334,\n      \"investment_amount\": 545.4914907482666,\n      \"realized_value\": 830.1707122804991,\n      \"ownership\": 4271.079380777829,\n      \"total_shares_owned\": 6431.528099844048,\n      \"pre_money_valuation\": 4231.10112131446,\n      \"post_money_valuation\": 5980.4376556354255,\n      \"fully_diluted_shares\": 5979.817763799759,\n      \"latest_price_per_share\": 6565.590404096811\n    },\n    {\n      \"company_id\": \"string\",\n      \"as_of_date\": \"1955-04-09\",\n      \"currency\": \"<string>\",\n      \"irr\": 424.1418498594662,\n      \"moic\": 9053.815820596401,\n      \"fair_value\": 9758.341427367624,\n      \"investment_amount\": 6373.62192760049,\n      \"realized_value\": 109.50388139877809,\n      \"ownership\": 4664.866148288719,\n      \"total_shares_owned\": 7813.285397555065,\n      \"pre_money_valuation\": 2696.963391432694,\n      \"post_money_valuation\": 1364.6173954095652,\n      \"fully_diluted_shares\": 1404.1902148715635,\n      \"latest_price_per_share\": 3178.6426571406632\n    }\n  ],\n  \"as_of_date\": \"1956-09-20\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "502c6c16-a525-4ada-b8e2-65ff24249fa2",
+    "name": "OAuth Token budgets cap_table API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets funds API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "funds",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get funds",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/funds/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              }
+            ]
+          },
+          "docs": "Retrieve all funds associated with the firm. Provides fund details and status information.\n\n**Permissions:**\n- User must be authenticated via OAuth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

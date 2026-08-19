@@ -1,0 +1,334 @@
+{
+  "item": [
+    {
+      "id": "19b7699e-d5e5-4c0a-9e97-402e75061b07",
+      "name": "custom-columns",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "35e722ff-e780-4c93-979b-500402102e07",
+          "name": "Get custom column values",
+          "request": {
+            "name": "Get custom column values",
+            "description": {
+              "content": "Retrieve custom column values for companies. Includes column metadata, values, and company associations.\n\n**Notes:**\n- If no company is specified, returns custom column data for all companies.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the metrics data.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-columns",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_slug",
+                  "value": "<string>",
+                  "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_id",
+                  "value": "<string>",
+                  "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "46d55965-67d3-471c-9498-5f8cded49736",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-columns",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 791,\n  \"results\": [\n    {\n      \"company\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"slug\": \"1M4CXOGE4E\"\n      },\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"text\",\n      \"value\": \"string\"\n    },\n    {\n      \"company\": {\n        \"id\": \"string\",\n        \"name\": \"string\",\n        \"slug\": \"ycI7\"\n      },\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"text\",\n      \"value\": \"string\"\n    }\n  ],\n  \"next\": \"http://MFaIRRURsTrT.dufBuD2WzqGtFDoxtsrawZEM8PdSVqYkq2eJPdM4LwE1Vg3A\",\n  \"previous\": \"http://dnlHngzNxwF.xgrxc8hUAmLVtdR36lYOrGFvrCLcfbY5Bc-Q.k-+1yD,zz7HSBEL,4kZ-ZXTUBdKE0lJuPFUO\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ebafd42b-e1d4-4ba4-9136-a3199d228651",
+          "name": "Get custom column options",
+          "request": {
+            "name": "Get custom column options",
+            "description": {
+              "content": "Retrieve all custom columns and their available options. Includes selectable options for select and multi-select columns.\n\n**Notes:**\n- Particularly helpful for retrieving available options for `select` and `multi_select` custom columns.\n- Text columns will have empty options arrays.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-columns",
+                "options",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "7ea149b5-a563-4ec7-a14f-8cd5efbba019",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-columns",
+                    "options",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 6135,\n  \"results\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"options\": [\n        {\n          \"color\": \"string\",\n          \"id\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"color\": \"string\",\n          \"id\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"type\": \"string\",\n      \"options\": [\n        {\n          \"color\": \"string\",\n          \"id\": \"string\",\n          \"value\": \"string\"\n        },\n        {\n          \"color\": \"string\",\n          \"id\": \"string\",\n          \"value\": \"string\"\n        }\n      ]\n    }\n  ],\n  \"next\": \"http://ICtvdXm.nxvcYDNpKLr749WoGZvsOtTOZ5bm4GCcTRkEylx5yZBxVLwfRKFCdfdCFwpo,oEpKpJCGrIag-QC,mfQ\",\n  \"previous\": \"https://EMdyefquUhZIiQUNXR.zzlsjpeqzRfNPbcJpWE1UN,dHWDN8jqyrejIV+KEUS-zHmqp42WzG\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6692e78c-86f7-440a-ae9c-9f1dd0dd8594",
+          "name": "Update custom column values",
+          "request": {
+            "name": "Update custom column values",
+            "description": {
+              "content": "Update custom column values for companies. Fully replaces existing data for the specified company and column.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "custom-columns",
+                "values",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"company_slug\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"custom_column_id\": \"<string>\",\n    \"value\": \"<string>\",\n    \"selected_options\": [\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      },\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"company_slug\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"custom_column_id\": \"<string>\",\n    \"value\": \"<string>\",\n    \"selected_options\": [\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      },\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    ]\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1c159fbd-0774-4e5c-98a0-c6ca2e1345a6",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "custom-columns",
+                    "values",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"company_slug\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"custom_column_id\": \"<string>\",\n    \"value\": \"<string>\",\n    \"selected_options\": [\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      },\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    ]\n  },\n  {\n    \"company_slug\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"custom_column_id\": \"<string>\",\n    \"value\": \"<string>\",\n    \"selected_options\": [\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      },\n      {\n        \"option_id\": \"<string>\",\n        \"value\": \"<string>\",\n        \"color\": \"<string>\"\n      }\n    ]\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"company_slug\": \"string\",\n    \"company_id\": \"string\",\n    \"custom_column_id\": \"string\",\n    \"value\": \"string\",\n    \"selected_options\": [\n      {\n        \"option_id\": \"string\",\n        \"value\": \"string\",\n        \"color\": \"string\"\n      },\n      {\n        \"option_id\": \"string\",\n        \"value\": \"string\",\n        \"color\": \"string\"\n      }\n    ]\n  },\n  {\n    \"company_slug\": \"string\",\n    \"company_id\": \"string\",\n    \"custom_column_id\": \"string\",\n    \"value\": \"string\",\n    \"selected_options\": [\n      {\n        \"option_id\": \"string\",\n        \"value\": \"string\",\n        \"color\": \"string\"\n      },\n      {\n        \"option_id\": \"string\",\n        \"value\": \"string\",\n        \"color\": \"string\"\n      }\n    ]\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5c91b594-3473-4cc3-9ea7-2c66fa0a8206",
+    "name": "OAuth Token budgets custom-columns API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

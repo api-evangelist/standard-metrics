@@ -1,0 +1,145 @@
+{
+  "item": [
+    {
+      "id": "e028fe16-a8ad-4f94-bd9c-228991bb345d",
+      "name": "information-reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "67ed5f95-c400-4df2-84c1-dbf98c5e7ca9",
+          "name": "Get information reports",
+          "request": {
+            "name": "Get information reports",
+            "description": {
+              "content": "Retrieve all information reports associated with the firm. Includes submitted documents, metrics, and outstanding requirements.\n\n**Permissions:**\n- User must have VIEWER, ADMIN, or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "information-reports",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_id",
+                  "value": "<string>",
+                  "description": "ID of a company to filter"
+                },
+                {
+                  "disabled": false,
+                  "key": "information_request_id",
+                  "value": "<string>",
+                  "description": "ID of an Information Request to filter"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "3709ba39-e10e-46c4-b95a-f042f95f25c4",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "information-reports",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "information_request_id",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1833,\n  \"results\": [\n    {\n      \"company_id\": \"string\",\n      \"id\": \"string\",\n      \"information_request_id\": \"string\",\n      \"submitted_at\": \"1984-08-12T10:14:17.799Z\",\n      \"documents\": [\n        {\n          \"requested_document\": \"string\",\n          \"id\": \"string\",\n          \"status\": \"string\"\n        },\n        {\n          \"requested_document\": \"string\",\n          \"id\": \"string\",\n          \"status\": \"string\"\n        }\n      ],\n      \"documents_completed\": 6896,\n      \"documents_missing\": 1295,\n      \"metrics\": [\n        {\n          \"id\": \"string\",\n          \"date\": \"string\",\n          \"name\": \"string\",\n          \"status\": \"string\",\n          \"time_period\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"date\": \"string\",\n          \"name\": \"string\",\n          \"status\": \"string\",\n          \"time_period\": \"string\"\n        }\n      ],\n      \"metrics_completed\": 3747,\n      \"metrics_missing\": 2358,\n      \"status\": \"string\"\n    },\n    {\n      \"company_id\": \"string\",\n      \"id\": \"string\",\n      \"information_request_id\": \"string\",\n      \"submitted_at\": \"1991-12-17T05:47:42.233Z\",\n      \"documents\": [\n        {\n          \"requested_document\": \"string\",\n          \"id\": \"string\",\n          \"status\": \"string\"\n        },\n        {\n          \"requested_document\": \"string\",\n          \"id\": \"string\",\n          \"status\": \"string\"\n        }\n      ],\n      \"documents_completed\": 3937,\n      \"documents_missing\": 3448,\n      \"metrics\": [\n        {\n          \"id\": \"string\",\n          \"date\": \"string\",\n          \"name\": \"string\",\n          \"status\": \"string\",\n          \"time_period\": \"string\"\n        },\n        {\n          \"id\": \"string\",\n          \"date\": \"string\",\n          \"name\": \"string\",\n          \"status\": \"string\",\n          \"time_period\": \"string\"\n        }\n      ],\n      \"metrics_completed\": 7042,\n      \"metrics_missing\": 831,\n      \"status\": \"string\"\n    }\n  ],\n  \"next\": \"http://LLJBmbCBleEhi.umthGNjiAD5M8jym\",\n  \"previous\": \"http://sEUYggOkYIPvsjccGumtHdMERH.xgrmiDeO9xCia.etTC9KWAKihVblRR9\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "38575ac2-3426-40b9-ab28-5c176d6881e3",
+    "name": "OAuth Token budgets information-reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

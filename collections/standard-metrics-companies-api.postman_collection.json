@@ -1,0 +1,477 @@
+{
+  "item": [
+    {
+      "id": "2d8d54ba-222a-4300-958d-4454529d0a4c",
+      "name": "companies",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8ddeeb48-8df2-4a7b-ae37-43f55fd8cb6f",
+          "name": "Get companies",
+          "request": {
+            "name": "Get companies",
+            "description": {
+              "content": "Retrieve a list of all companies associated with the firm. Each company includes identifiers and metadata.\n\n**Filtering:**\n- Use `ids[]` parameter to filter by specific company IDs\n- Use `name` parameter to filter by company name (case-insensitive partial matching)\n\n**Notes:**\n- If no filters are specified, returns all companies associated with the firm.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "companies",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids[]",
+                  "value": "<string>",
+                  "description": "Filter companies by ID. Can be specified multiple times to filter by multiple IDs (e.g., ?ids[]=123&ids[]=456&ids[]=789)."
+                },
+                {
+                  "disabled": false,
+                  "key": "ids[]",
+                  "value": "<string>",
+                  "description": "Filter companies by ID. Can be specified multiple times to filter by multiple IDs (e.g., ?ids[]=123&ids[]=456&ids[]=789)."
+                },
+                {
+                  "disabled": false,
+                  "key": "name",
+                  "value": "<string>",
+                  "description": "Filter companies by name. Performs case-insensitive partial matching on company names. ."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "63244763-bcb1-4246-b9dc-847a76283605",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "ids[]",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "name",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 3981,\n  \"results\": [\n    {\n      \"description\": \"string\",\n      \"firm_sector\": \"string\",\n      \"investment_lead_id\": \"string\",\n      \"logo_url\": \"string\",\n      \"name\": \"string\",\n      \"sector\": \"string\",\n      \"city\": \"string\",\n      \"fiscal_year_end\": \"string\",\n      \"id\": \"string\",\n      \"invested_fund_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"reporting_currency\": \"string\",\n      \"slug\": \"RCk5y\",\n      \"status\": \"string\",\n      \"unique_ref\": \"string\",\n      \"website\": \"string\"\n    },\n    {\n      \"description\": \"string\",\n      \"firm_sector\": \"string\",\n      \"investment_lead_id\": \"string\",\n      \"logo_url\": \"string\",\n      \"name\": \"string\",\n      \"sector\": \"string\",\n      \"city\": \"string\",\n      \"fiscal_year_end\": \"string\",\n      \"id\": \"string\",\n      \"invested_fund_ids\": [\n        \"string\",\n        \"string\"\n      ],\n      \"reporting_currency\": \"string\",\n      \"slug\": \"5J\",\n      \"status\": \"string\",\n      \"unique_ref\": \"string\",\n      \"website\": \"string\"\n    }\n  ],\n  \"next\": \"http://wSygLeHVozhGysFFvROjpvNOBUNsfIFqs.wxqNnAJFBZXPMXh-wVb,BFTuSYj+fFj,91znolz+spjHV5isIj.\",\n  \"previous\": \"http://okGIQSwmpdpOuL.xaazG6\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "63d2019c-de34-411c-9de2-51e912757f89",
+          "name": "Create company",
+          "request": {
+            "name": "Create company",
+            "description": {
+              "content": "Create a new company. Creates an offline company that can later be onboarded.\n\n**Notes:**\n- Name is the only required field.\n- Non-required fields and their defaults:\n  - `description`: defaults to empty string\n  - `city`: defaults to empty string\n  - `sector`: defaults to \"Other\" if not provided or invalid\n  - `fiscal_year_end`: defaults to \"12/31\"\n  - `website`: defaults to empty string\n\nYou may update the company later using the `Update Company` endpoint. Reference this endpoint to understand what fields can be modified.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "companies",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"city\": \"<string>\",\n  \"sector\": \"<string>\",\n  \"fiscal_year_end\": \"<string>\",\n  \"website\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "00c75fb4-e424-4ea3-bb9b-2ed1cd4f233a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"description\": \"<string>\",\n  \"city\": \"San Francisco\",\n  \"sector\": \"<string>\",\n  \"fiscal_year_end\": \"12/31\",\n  \"website\": \"https://www.example.com\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"description\": \"string\",\n  \"city\": \"San Francisco\",\n  \"sector\": \"AG-Tech\",\n  \"fiscal_year_end\": \"12/31\",\n  \"website\": \"https://www.example.com\",\n  \"slug\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1806cefc-1a4a-4ee6-bb56-374489b08111",
+          "name": "Update company",
+          "request": {
+            "name": "Update company",
+            "description": {
+              "content": "Partially update company fields. Different fields are editable based on company onboarding status.\n\n**Online companies** (already onboarded):\nOnly the following fields can be updated:\n1. `firm_sector` (the name of the Firm Sector for this company)\n2. `investment_lead_id` (the user ID of the investment lead)\n\n**Offline or Pending companies** (not onboarded; Pending means there's an active invite):\nThe following fields can be updated:\n1. `firm_sector`\n2. `investment_lead_id`\n3. `city` (the city where the company is based)\n4. `description` (a description of the company)\n5. `fiscal_year_end` (formatted as 'MM/DD')\n6. `name` (the company name)\n7. `sector` (the company's standard sector from the supported list)\n8. `website` (the company's website)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "companies",
+                ":company_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firm_sector\": \"<string>\",\n  \"investment_lead_id\": \"<string>\",\n  \"city\": \"<string>\",\n  \"description\": \"<string>\",\n  \"fiscal_year_end\": \"<string>\",\n  \"name\": \"<string>\",\n  \"sector\": \"<string>\",\n  \"website\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "467d4312-9656-4ecd-ad40-8cd378f4b1e3",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":company_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"firm_sector\": \"<string>\",\n  \"investment_lead_id\": \"<string>\",\n  \"city\": \"<string>\",\n  \"description\": \"<string>\",\n  \"fiscal_year_end\": \"<string>\",\n  \"name\": \"<string>\",\n  \"sector\": \"<string>\",\n  \"website\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"description\": \"string\",\n  \"firm_sector\": \"string\",\n  \"investment_lead_id\": \"string\",\n  \"logo_url\": \"string\",\n  \"name\": \"string\",\n  \"sector\": \"string\",\n  \"city\": \"string\",\n  \"fiscal_year_end\": \"string\",\n  \"id\": \"string\",\n  \"invested_fund_ids\": [\n    \"string\",\n    \"string\"\n  ],\n  \"reporting_currency\": \"string\",\n  \"slug\": \"U3BT\",\n  \"status\": \"string\",\n  \"unique_ref\": \"string\",\n  \"website\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "005b8968-cd6c-4e24-8501-5f44f4c19435",
+          "name": "Upload company logo",
+          "request": {
+            "name": "Upload company logo",
+            "description": {
+              "content": "Upload a new logo for an offline company. Replaces any existing logo.\n\n**Notes:**\n- File size limit: 5 MB maximum.\n- Logo is owned by the firm since this action is only available for offline companies.\n- Accepted file types:\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - GIF images (.gif)\n    - WEBP images (.webp)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "companies",
+                ":company_id",
+                "logo",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "company_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "file",
+                  "value": "<binary>",
+                  "description": "(Required) The logo file to upload. Must be sent as part of a multipart/form-data POST request. File size limit: 5 MB maximum. Accepted file types: .jpg, .jpeg, .png, .gif, .webp"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3bcd47fd-be4e-441b-873b-be45b2c269e5",
+              "name": "Logo successfully uploaded",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "companies",
+                    ":company_id",
+                    "logo",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "company_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) The logo file to upload. Must be sent as part of a multipart/form-data POST request. File size limit: 5 MB maximum. Accepted file types: .jpg, .jpeg, .png, .gif, .webp",
+                        "type": "text/plain"
+                      },
+                      "key": "file",
+                      "value": "<binary>"
+                    }
+                  ]
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"success\": false,\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e7368db0-a5cd-4edb-b9c4-d405dea0194b",
+    "name": "OAuth Token budgets companies API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

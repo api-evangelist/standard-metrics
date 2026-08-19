@@ -1,0 +1,247 @@
+{
+  "item": [
+    {
+      "id": "1f2ee106-4ac3-4432-b42c-1009dce120e8",
+      "name": "notes",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "8952f024-9f9c-4710-8659-eaa35463f103",
+          "name": "Get notes",
+          "request": {
+            "name": "Get notes",
+            "description": {
+              "content": "Retrieve all notes for a specific company. Notes are returned in markdown format.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notes",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_slug",
+                  "value": "<string>",
+                  "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_id",
+                  "value": "<string>",
+                  "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "76075faf-fcdd-4659-bd4d-5da2f1127e6c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notes",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 5397,\n  \"results\": [\n    {\n      \"author_id\": \"string\",\n      \"note\": \"string\",\n      \"author\": \"string\",\n      \"created_at\": \"1959-03-16T23:12:15.373Z\",\n      \"email\": \"string\",\n      \"id\": \"string\",\n      \"company_id\": \"string\"\n    },\n    {\n      \"author_id\": \"string\",\n      \"note\": \"string\",\n      \"author\": \"string\",\n      \"created_at\": \"2011-06-07T11:45:29.618Z\",\n      \"email\": \"string\",\n      \"id\": \"string\",\n      \"company_id\": \"string\"\n    }\n  ],\n  \"next\": \"http://ygdBDgmB.klfyM5A33gHCpkyDe+VTFVAZZ\",\n  \"previous\": \"https://LWCYTZwcIIKCkWZlHaobqiUnJqcSCPRJe.dvdvum2cq9OMKJNGb9g9wLJkxu.wkA1gGov+svRSmFkZbkNJGf1l86OElcM72\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "803bf96b-b31d-45dd-a95c-29ef8bb5e117",
+          "name": "Create notes",
+          "request": {
+            "name": "Create notes",
+            "description": {
+              "content": "Create new notes for a company. Supports creating multiple notes in a single request.\n\n**Notes:**:\n- All notes created must be for the same company.\n- `note` and `author_id` fields are required.\n- Either `company_id` or `company_slug` is required.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "notes",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"note\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"company_slug\": \"<string>\",\n    \"author_id\": \"<string>\"\n  },\n  {\n    \"note\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"company_slug\": \"<string>\",\n    \"author_id\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "b68454af-f933-4fdb-a4b8-38ce57b83c17",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "notes",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"note\": \"Note content\",\n    \"company_id\": \"a7Rt\",\n    \"company_slug\": \"company-name\",\n    \"author_id\": \"a7Rt\"\n  },\n  {\n    \"note\": \"Note content\",\n    \"company_id\": \"a7Rt\",\n    \"company_slug\": \"company-name\",\n    \"author_id\": \"a7Rt\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"author_id\": \"string\",\n  \"note\": \"string\",\n  \"author\": \"string\",\n  \"created_at\": \"1984-06-09T11:08:47.079Z\",\n  \"email\": \"string\",\n  \"id\": \"string\",\n  \"company_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "e46df710-657e-437a-994d-1106fe52b1b8",
+    "name": "OAuth Token budgets notes API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

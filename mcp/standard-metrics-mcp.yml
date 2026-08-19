@@ -2,12 +2,10 @@ generated: '2026-07-21'
 method: searched
 status: published
 source: https://docs.standardmetrics.io/guides/mcp-setup
-description: >-
-  Standard Metrics publishes two official remote MCP servers. The primary data server
-  connects MCP-compatible clients (Claude, ChatGPT) directly to a firm's portfolio data
-  via Streamable HTTP; the API-docs server exposes the API reference for AI-assisted
-  development. Authentication is a browser login with the same Standard Metrics account
-  used for the web app; logins persist ~30 days.
+description: Standard Metrics publishes two official remote MCP servers. The primary data server connects
+  MCP-compatible clients (Claude, ChatGPT) directly to a firm's portfolio data via Streamable HTTP; the
+  API-docs server exposes the API reference for AI-assisted development. Authentication is a browser login
+  with the same Standard Metrics account used for the web app; logins persist ~30 days.
 servers:
 - name: standard-metrics
   role: portfolio-data
@@ -69,3 +67,10 @@ tools:
   description: Returns an instruction guide for an LLM to use the Standard Metrics Excel plugin.
 - name: whoami
   description: Get information about the current user — name, role, and authenticated firm.
+deployment:
+  mode: remote
+  endpoint: https://mcp.standardmetrics.io/mcp
+  verified: probed
+  probe: gated
+  checked: '2026-08-12'
+  source: catalog MCP census

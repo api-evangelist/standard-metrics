@@ -1,0 +1,247 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets metrics API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "metrics",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/metrics/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "company_slug",
+                "value": "",
+                "type": "query",
+                "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+              },
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "query",
+                "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The from date (inclusive) from which to query metrics for as an ISO 8601 formatted date"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The to date (inclusive) from which to query metrics until as an ISO 8601 formatted date"
+              },
+              {
+                "name": "category",
+                "value": "",
+                "type": "query",
+                "description": "The category of metrics to request. If not specified, all metrics are returned. This parameter can be passed multiple times to filter by multiple categories. Custom metrics can be queried by using their display name (e.g., \"Total Number of Customers\"). To return only custom metrics, set category to \"custom\". \n\n Available standard metric categories include: `accounts_payable`, `accounts_receivable`, `arr`, `assets`, `burn_per_fte`, `cash_flow_from_financing_activities`, `cash_flow_from_investing_activities`, `cash_flow_from_operating_activities`, `cash_in_bank`, `churned_arr`, `contraction_arr`, `cost_of_goods_sold`, `current_assets`, `current_liabilities`, `custom`, `ebitda`, `equity`, `expansion_arr`, `fair_value`, `fully_diluted_shares`, `gross_irr`, `gross_margin`, `gross_profit`, `headcount`, `investment_amount`, `latest_price_per_share`, `liabilities`, `long_term_liabilities`, `moic`, `net_assets`, `net_burn`, `net_income`, `net_new_arr`, `net_operating_profit`, `net_other_income`, `net_profit`, `new_logo_arr`, `non_current_assets`, `operating_margin`, `other_non_current_assets`, `ownership`, `post_money_valuation`, `pre_money_valuation`, `property_plants_and_equipment`, `reactivation_arr`, `realized_value`, `revenue`, `revenue_growth`, `revenue_per_fte`, `runway`, `short_term_investments`, `total_change_in_cash`, `total_operating_expenses`, `total_shares_owned`"
+              },
+              {
+                "name": "budget_id",
+                "value": "",
+                "type": "query",
+                "description": "A budget id for requesting budget metrics. See the `/budgets` endpoint for more information about how to get budget ids"
+              },
+              {
+                "name": "updated_at_from",
+                "value": "",
+                "type": "query",
+                "description": "The from date (inclusive) from which to query updated_at as an ISO 8601 formatted date"
+              },
+              {
+                "name": "updated_at_to",
+                "value": "",
+                "type": "query",
+                "description": "The to date (inclusive) from which to query updated_at as an ISO 8601 formatted date"
+              },
+              {
+                "name": "include_deleted",
+                "value": "",
+                "type": "query",
+                "description": "Set to '1' if you want to include deleted metrics."
+              },
+              {
+                "name": "include_budgets",
+                "value": "",
+                "type": "query",
+                "description": "Set to \"1\" if you want budget metrics to be returned as well."
+              },
+              {
+                "name": "include_archived",
+                "value": "",
+                "type": "query",
+                "description": "Set to '0' to exclude archived metrics. Defaults to '1' (include archived)."
+              },
+              {
+                "name": "include_non_fye_aligned",
+                "value": "",
+                "type": "query",
+                "description": "Set to 'true' to include metrics whose dates do not align with the company's fiscal year end. These are hidden in the app by default."
+              },
+              {
+                "name": "cadence",
+                "value": "",
+                "type": "query",
+                "description": "The cadence type of the metrics to request. Cadence options include: `\"point_in_time\"`, `\"month\"`, `\"quarter\"`, `\"year\"`. The later three should only be set for cumulative categories."
+              },
+              {
+                "name": "custom_metric",
+                "value": "",
+                "type": "query",
+                "description": "The name of the custom metric to query. This field is only populated for metrics in the \"custom\" category. When filtering for specific metrics, using the `category` field is preferred."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`."
+              }
+            ]
+          },
+          "docs": "Retrieve metrics for a specific company. Supports extensive filtering by category, date range, and cadence.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company."
+        },
+        {
+          "info": {
+            "name": "Create metrics",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/metrics/",
+            "params": [
+              {
+                "name": "on_conflict",
+                "value": "",
+                "type": "query",
+                "description": "Conflict resolution strategy when a metric already exists for the same company, category, and date. 'overwrite' (default) updates the existing row. 'skip' leaves the existing row unchanged."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.\n\n**Notes:**\n- Each request can only be for one company.\n- Supports both standard and custom metrics.\n- Can write to budgets by specifying `budget_id` and `is_budget_metric`.\n- Each request can only target a single budget: all metrics in a request must have the same `budget_id` and `is_budget_metric` values. Budget and non-budget metrics cannot be mixed in one request.\n- Required fields"
+        },
+        {
+          "info": {
+            "name": "Get metrics options",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/metrics/options/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "category_name",
+                "value": "",
+                "type": "query",
+                "description": "Name of the category"
+              },
+              {
+                "name": "category_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of the category"
+              },
+              {
+                "name": "is_standard",
+                "value": "",
+                "type": "query",
+                "description": "Is category standard"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Type of the category"
+              },
+              {
+                "name": "is_point_in_time",
+                "value": "",
+                "type": "query",
+                "description": "Is category point in time"
+              },
+              {
+                "name": "is_archived",
+                "value": "",
+                "type": "query",
+                "description": "Is category archived"
+              },
+              {
+                "name": "choices",
+                "value": "",
+                "type": "query",
+                "description": "Choice options for the category"
+              },
+              {
+                "name": "is_multiple",
+                "value": "",
+                "type": "query",
+                "description": "Is the category multiple choice"
+              }
+            ]
+          },
+          "docs": "Retrieve information about all available metrics for a firm. Includes category names, types, and configuration details.\n\n**Permissions:**\n- User must be authenticated via OAuth."
+        },
+        {
+          "info": {
+            "name": "Delete a specific metric.",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.standardmetrics.io/metrics/:datum_id/",
+            "params": [
+              {
+                "name": "datum_id",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company that owns the datum.\n- User must have ADMIN or EDITOR role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,61 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "budgets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get budgets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/budgets/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "company_slug",
+                "value": "",
+                "type": "query",
+                "description": "The slug of the company to fetch budgets for. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `\"example-slug\"` would the the slug. This endpoint will return all budget data for your firm if a company slug isn't included. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs."
+              },
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "query",
+                "description": "The id for the company to fetch budget data for. You can get a company's id by making a request to the `/companies` endpoint. This endpoint will return all budget data for your firm if a company id isn't included. You can get a company's id by making a request to the `/companies` endpoint."
+              },
+              {
+                "name": "sort_by",
+                "value": "",
+                "type": "query",
+                "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`."
+              }
+            ]
+          },
+          "docs": "Retrieve all budgets associated with the firm. Each budget is associated with a company.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

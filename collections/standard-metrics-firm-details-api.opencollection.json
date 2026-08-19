@@ -1,0 +1,29 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets firm-details API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "firm-details",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get current user information",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/firm-details/"
+          },
+          "docs": "Returns information about the currently authenticated user.\n\n**Permissions:**\n- User must be authenticated via OAuth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

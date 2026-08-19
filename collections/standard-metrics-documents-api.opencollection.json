@@ -1,0 +1,116 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets documents API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "documents",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get documents",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/documents/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "query",
+                "description": "The id for the company whose documents to request. You can get a company's id by making a request to the `/companies` endpoint."
+              },
+              {
+                "name": "parse_state",
+                "value": "",
+                "type": "query",
+                "description": "The parse state of the documents to request. One of \"not-started\", \"in-progress\", \"completed\", \"needs-input\", \"not-parseable\"."
+              },
+              {
+                "name": "from",
+                "value": "",
+                "type": "query",
+                "description": "The from date (inclusive) from which to query uploaded_at as an ISO 8601 formatted date"
+              },
+              {
+                "name": "to",
+                "value": "",
+                "type": "query",
+                "description": "The to date (inclusive) from which to query uploaded_at as an ISO 8601 formatted date"
+              },
+              {
+                "name": "source",
+                "value": "",
+                "type": "query",
+                "description": "The source of the documents to request. One of \"information-request\", \"implementation\", \"upload\", \"email\"."
+              }
+            ]
+          },
+          "docs": "Retrieve all documents associated with the firm. Includes parsed and unparsed documents from various sources.\n\n**Notes:**\n- If no company is specified, returns documents for all companies.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the documents."
+        },
+        {
+          "info": {
+            "name": "Create document",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/documents/",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "company_id",
+                  "value": ""
+                },
+                {
+                  "name": "file",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Creates a new document in the library for a company.\n\n**Notes:**\n- File size limit: 32 MB maximum.\n- Accepted file types:\n    - PDF files (.pdf)\n    - Microsoft Word documents (.docx)\n    - Microsoft Excel spreadsheets (.xlsx)\n    - Microsoft PowerPoint presentations (.pptx)\n    - OpenDocument spreadsheets (.ods)\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - WebP images (.webp)\n    - GIF images (.gif)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have acce"
+        },
+        {
+          "info": {
+            "name": "Download document",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/documents/:document_id/download/",
+            "params": [
+              {
+                "name": "document_id",
+                "value": "",
+                "type": "path",
+                "description": "The hashed ID of the document to download"
+              }
+            ]
+          },
+          "docs": "Download a specific document by redirecting to signed URL. Provides temporary access to securely stored documents.\n\nThe signed URL expires after 1 hour. After expiration, a new request must be made to obtain a fresh download link.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the document."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

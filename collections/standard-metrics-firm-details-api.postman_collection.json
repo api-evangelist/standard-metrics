@@ -1,0 +1,103 @@
+{
+  "item": [
+    {
+      "id": "6b0046b9-980d-4968-8902-9897478d62f8",
+      "name": "firm-details",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "17bb186e-33e2-411c-888d-9b0c94989700",
+          "name": "Get current user information",
+          "request": {
+            "name": "Get current user information",
+            "description": {
+              "content": "Returns information about the currently authenticated user.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "firm-details",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "25623dd0-558c-4115-9f61-2c337bfcb312",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "firm-details",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"name\": \"string\",\n  \"id\": \"string\",\n  \"slug\": \"3I\",\n  \"country\": \"string\",\n  \"city\": \"string\",\n  \"preferred_currency\": \"string\",\n  \"enabled_feature_flags\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "11589996-e4a9-4c52-bf76-e5b97bf87039",
+    "name": "OAuth Token budgets firm-details API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets information-reports API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "information-reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information reports",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/information-reports/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of a company to filter"
+              },
+              {
+                "name": "information_request_id",
+                "value": "",
+                "type": "query",
+                "description": "ID of an Information Request to filter"
+              }
+            ]
+          },
+          "docs": "Retrieve all information reports associated with the firm. Includes submitted documents, metrics, and outstanding requirements.\n\n**Permissions:**\n- User must have VIEWER, ADMIN, or EDITOR role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

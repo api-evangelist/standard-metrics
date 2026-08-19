@@ -1,0 +1,135 @@
+{
+  "item": [
+    {
+      "id": "4ff54b42-92c9-4de3-a76e-a7f9ff66d924",
+      "name": "users",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e9e6adaf-f68b-481a-9fe7-e1f88b9d127e",
+          "name": "Get users",
+          "request": {
+            "name": "Get users",
+            "description": {
+              "content": "Retrieve all users associated with the firm. Includes user details and information about their membership within the firm.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "users",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "email",
+                  "value": "<string>",
+                  "description": "An optional email address to filter the users. Must be an exact match."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ddfd6365-14d0-4995-9d85-e4172c9678b9",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "users",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "email",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1541,\n  \"results\": [\n    {\n      \"email\": \"IyllBc@TxkhxeoJABiEKvVOyOchYIGw.nlik\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"id\": \"string\",\n      \"role\": \"string\"\n    },\n    {\n      \"email\": \"EjU6VzV@fs.goez\",\n      \"first_name\": \"string\",\n      \"last_name\": \"string\",\n      \"id\": \"string\",\n      \"role\": \"string\"\n    }\n  ],\n  \"next\": \"https://KZO.dgvA3jAAzUeaG-HPhSYtL\",\n  \"previous\": \"https://BPfxYNXyyKYFBGVETfIssZZDmbwB.djxe-Zs+sTB,TRV0BY4qJpXKdWJN9e1HsgpN,CR6y6GwuP,Ekm4jC8Ii5wzU7xyOQF,kuqDXFA\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6c50e33d-114d-477e-abb2-dd92fdf0cfb0",
+    "name": "OAuth Token budgets users API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

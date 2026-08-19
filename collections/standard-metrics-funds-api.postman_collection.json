@@ -1,0 +1,125 @@
+{
+  "item": [
+    {
+      "id": "e7f06118-6e55-4a80-8da9-3527e0489895",
+      "name": "funds",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "67a5d7fb-e30b-4200-8098-fc261b9dcbcf",
+          "name": "Get funds",
+          "request": {
+            "name": "Get funds",
+            "description": {
+              "content": "Retrieve all funds associated with the firm. Provides fund details and status information.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "funds",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "dc3d8661-1246-4050-9654-ff10b832f557",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "funds",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 4860,\n  \"results\": [\n    {\n      \"currency\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"size\": \"string\",\n      \"vintage\": 4956\n    },\n    {\n      \"currency\": \"string\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"size\": \"string\",\n      \"vintage\": 801\n    }\n  ],\n  \"next\": \"https://OGgCPWqbQedDjqYfLhXYZc.rrxdUtr7S1+f1GVrHQ2J,dHP\",\n  \"previous\": \"http://VQnoKcqWTXKuCgPxxHZDpU.niqlR5miSNsGm9cB7WhMnO2tvjI1GWA+vdEtC\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "36cb4198-5360-4943-a917-36132cd1e7ac",
+    "name": "OAuth Token budgets funds API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

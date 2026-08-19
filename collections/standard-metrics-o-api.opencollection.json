@@ -1,0 +1,43 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets O API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "O",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get API Access Token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/o/token/",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "This endpoint allows you to retrieve an API access token using your `client_id` and `client_secret`.\n\nTo authenticate:\n\n- Click `Try it ▶`\n- Enter your **client_id** as the `Authorization.username`\n- Enter your **client_secret** as the `Authorization.password`\n\nThe request must include the following body parameter:\n\n- `grant_type`: This is always set to `client_credentials`\n\nHit `Send ▶` and the response will contain an `access_token`, which you can use as a Bearer token to authenticate requests"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

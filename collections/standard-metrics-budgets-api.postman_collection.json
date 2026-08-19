@@ -1,0 +1,155 @@
+{
+  "item": [
+    {
+      "id": "f9234c6f-f6f8-4ffa-8098-39af7240ffcc",
+      "name": "budgets",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fa993c2c-5dd8-4919-8528-4f78b9b3f14e",
+          "name": "Get budgets",
+          "request": {
+            "name": "Get budgets",
+            "description": {
+              "content": "Retrieve all budgets associated with the firm. Each budget is associated with a company.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the companies.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "budgets",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_slug",
+                  "value": "<string>",
+                  "description": "The slug of the company to fetch budgets for. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `\"example-slug\"` would the the slug. This endpoint will return all budget data for your firm if a company slug isn't included. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_id",
+                  "value": "<string>",
+                  "description": "The id for the company to fetch budget data for. You can get a company's id by making a request to the `/companies` endpoint. This endpoint will return all budget data for your firm if a company id isn't included. You can get a company's id by making a request to the `/companies` endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "afc0a5a2-3103-4c5f-b810-7239523eebc0",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "budgets",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 1617,\n  \"results\": [\n    {\n      \"company\": \"string\",\n      \"company_slug\": \"string\",\n      \"date\": \"1999-04-11\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"color\": \"#ffffff\",\n      \"description\": \"string\"\n    },\n    {\n      \"company\": \"string\",\n      \"company_slug\": \"string\",\n      \"date\": \"1965-10-27\",\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"color\": \"#ffffff\",\n      \"description\": \"string\"\n    }\n  ],\n  \"next\": \"http://IBsw.xhyYxEDrut7x2hjslece4GagnYl+yl\",\n  \"previous\": \"http://ZDCwRMDgugVIzjCQnuRa.zldfSbbGrbl.1Rux7X4cUSriMJ9JLvPgw4j4ITtjdYETLK\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "52a0155a-a496-4661-9ab8-e6a244ee14bf",
+    "name": "OAuth Token budgets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

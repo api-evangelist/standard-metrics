@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets users API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "users",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get users",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/users/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "An optional email address to filter the users. Must be an exact match."
+              }
+            ]
+          },
+          "docs": "Retrieve all users associated with the firm. Includes user details and information about their membership within the firm.\n\n**Permissions:**\n- User must be authenticated via OAuth."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

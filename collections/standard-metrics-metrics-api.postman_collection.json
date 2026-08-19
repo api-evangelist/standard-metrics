@@ -1,0 +1,643 @@
+{
+  "item": [
+    {
+      "id": "f4c96efb-221b-409e-9431-a407b850b7dd",
+      "name": "metrics",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "213b52e8-d968-4ec8-9d90-ed53411ef8bd",
+          "name": "Get metrics",
+          "request": {
+            "name": "Get metrics",
+            "description": {
+              "content": "Retrieve metrics for a specific company. Supports extensive filtering by category, date range, and cadence.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_slug",
+                  "value": "<string>",
+                  "description": "The slug that uniquely identifies the company whose metrics' to request. You can find the slug for a company by going to that company's portfolio page, and then the last portion of the URL will be the unique slug for said company. For example: in the url: `app.standardmetrics.io/venture/fund-slug/portfolio/example-slug/`, `example-slug` would the the slug. You can also make a request to the `/companies` endpoint to get a list of all your firm's companies and their slugs. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "company_id",
+                  "value": "<string>",
+                  "description": "The id for the company whose metrics' to request. You can get a company's id by making a request to the `/companies` endpoint. Either the `company_slug` or `company_id` parameter must be passed to this endpoint."
+                },
+                {
+                  "disabled": false,
+                  "key": "from",
+                  "value": "<string>",
+                  "description": "The from date (inclusive) from which to query metrics for as an ISO 8601 formatted date"
+                },
+                {
+                  "disabled": false,
+                  "key": "to",
+                  "value": "<string>",
+                  "description": "The to date (inclusive) from which to query metrics until as an ISO 8601 formatted date"
+                },
+                {
+                  "disabled": false,
+                  "key": "category",
+                  "value": "<string>",
+                  "description": "The category of metrics to request. If not specified, all metrics are returned. This parameter can be passed multiple times to filter by multiple categories. Custom metrics can be queried by using their display name (e.g., \"Total Number of Customers\"). To return only custom metrics, set category to \"custom\". \n\n Available standard metric categories include: `accounts_payable`, `accounts_receivable`, `arr`, `assets`, `burn_per_fte`, `cash_flow_from_financing_activities`, `cash_flow_from_investing_activities`, `cash_flow_from_operating_activities`, `cash_in_bank`, `churned_arr`, `contraction_arr`, `cost_of_goods_sold`, `current_assets`, `current_liabilities`, `custom`, `ebitda`, `equity`, `expansion_arr`, `fair_value`, `fully_diluted_shares`, `gross_irr`, `gross_margin`, `gross_profit`, `headcount`, `investment_amount`, `latest_price_per_share`, `liabilities`, `long_term_liabilities`, `moic`, `net_assets`, `net_burn`, `net_income`, `net_new_arr`, `net_operating_profit`, `net_other_income`, `net_profit`, `new_logo_arr`, `non_current_assets`, `operating_margin`, `other_non_current_assets`, `ownership`, `post_money_valuation`, `pre_money_valuation`, `property_plants_and_equipment`, `reactivation_arr`, `realized_value`, `revenue`, `revenue_growth`, `revenue_per_fte`, `runway`, `short_term_investments`, `total_change_in_cash`, `total_operating_expenses`, `total_shares_owned`"
+                },
+                {
+                  "disabled": false,
+                  "key": "budget_id",
+                  "value": "<string>",
+                  "description": "A budget id for requesting budget metrics. See the `/budgets` endpoint for more information about how to get budget ids"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_from",
+                  "value": "<dateTime>",
+                  "description": "The from date (inclusive) from which to query updated_at as an ISO 8601 formatted date"
+                },
+                {
+                  "disabled": false,
+                  "key": "updated_at_to",
+                  "value": "<dateTime>",
+                  "description": "The to date (inclusive) from which to query updated_at as an ISO 8601 formatted date"
+                },
+                {
+                  "disabled": false,
+                  "key": "include_deleted",
+                  "value": "<string>",
+                  "description": "Set to '1' if you want to include deleted metrics."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_budgets",
+                  "value": "<string>",
+                  "description": "Set to \"1\" if you want budget metrics to be returned as well."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_archived",
+                  "value": "1",
+                  "description": "Set to '0' to exclude archived metrics. Defaults to '1' (include archived)."
+                },
+                {
+                  "disabled": false,
+                  "key": "include_non_fye_aligned",
+                  "value": "false",
+                  "description": "Set to 'true' to include metrics whose dates do not align with the company's fiscal year end. These are hidden in the app by default."
+                },
+                {
+                  "disabled": false,
+                  "key": "cadence",
+                  "value": "<string>",
+                  "description": "The cadence type of the metrics to request. Cadence options include: `\"point_in_time\"`, `\"month\"`, `\"quarter\"`, `\"year\"`. The later three should only be set for cumulative categories."
+                },
+                {
+                  "disabled": false,
+                  "key": "custom_metric",
+                  "value": "<string>",
+                  "description": "The name of the custom metric to query. This field is only populated for metrics in the \"custom\" category. When filtering for specific metrics, using the `category` field is preferred."
+                },
+                {
+                  "disabled": false,
+                  "key": "sort_by",
+                  "value": "<string>",
+                  "description": "The field to sort your query by. Currently, `created_at` is the only supported field. To sort in descending order, prepend the field you're sorting by with a `-`. Ascending order is implied, but you can also prepend the field you're sorting by with `+` to sort in ascending order. E.g. to sort by created_at in ascending order use `\"sort_by=-created_at\"` and to sort by created_at in descending order use `\"sort_by=+created_at\"` or just `\"sort_by=created_at\"`."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d778034d-087e-4d39-9e0d-50019710a70c",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "company_slug",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "company_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "from",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "to",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "budget_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "updated_at_from",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "updated_at_to",
+                      "value": "<dateTime>"
+                    },
+                    {
+                      "key": "include_deleted",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_budgets",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "include_archived",
+                      "value": "1"
+                    },
+                    {
+                      "key": "include_non_fye_aligned",
+                      "value": "false"
+                    },
+                    {
+                      "key": "cadence",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "custom_metric",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "sort_by",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 9251,\n  \"results\": [\n    {\n      \"budget_id\": \"string\",\n      \"category_id\": \"string\",\n      \"company_id\": \"string\",\n      \"created_at\": \"1998-02-17T04:54:38.362Z\",\n      \"currency\": \"string\",\n      \"date\": \"1977-11-22\",\n      \"id\": \"string\",\n      \"updated_at\": \"1986-06-01T14:14:38.026Z\",\n      \"value\": \"string\",\n      \"converted_value\": \"string\",\n      \"preferred_currency\": \"string\",\n      \"category\": \"string\",\n      \"category_type\": \"string\",\n      \"cadence\": \"string\",\n      \"is_budget_metric\": true,\n      \"custom_metric\": \"string\",\n      \"fx_rate\": 2875.6165352128714,\n      \"detailed_source\": \"string\",\n      \"deleted_at\": \"1978-02-01T01:34:27.696Z\",\n      \"archived\": true\n    },\n    {\n      \"budget_id\": \"string\",\n      \"category_id\": \"string\",\n      \"company_id\": \"string\",\n      \"created_at\": \"1969-01-07T05:19:03.602Z\",\n      \"currency\": \"string\",\n      \"date\": \"1971-03-29\",\n      \"id\": \"string\",\n      \"updated_at\": \"2024-06-03T06:35:01.577Z\",\n      \"value\": \"string\",\n      \"converted_value\": \"string\",\n      \"preferred_currency\": \"string\",\n      \"category\": \"string\",\n      \"category_type\": \"string\",\n      \"cadence\": \"string\",\n      \"is_budget_metric\": false,\n      \"custom_metric\": \"string\",\n      \"fx_rate\": 4659.65842985821,\n      \"detailed_source\": \"string\",\n      \"deleted_at\": \"2016-04-01T16:58:04.718Z\",\n      \"archived\": false\n    }\n  ],\n  \"next\": \"https://grCuQ.sexh9A6\",\n  \"previous\": \"https://dDGMSXa.dlt0tiusX4BA7ZgA.Tt,SWONu0DYkDhOfbFO1IaXRtR.enH3gckQ5EjgPgy5L\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "1cb3a1fe-cf28-49d8-9c1f-b7427d988202",
+          "name": "Create metrics",
+          "request": {
+            "name": "Create metrics",
+            "description": {
+              "content": "Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.\n\n**Notes:**\n- Each request can only be for one company.\n- Supports both standard and custom metrics.\n- Can write to budgets by specifying `budget_id` and `is_budget_metric`.\n- Each request can only target a single budget: all metrics in a request must have the same `budget_id` and `is_budget_metric` values. Budget and non-budget metrics cannot be mixed in one request.\n- Required fields:\n  - `value`\n  - `company_id`\n  - `category`\n  - `metric_cadence`\n  - `date`\n- Optional fields:\n  - `currency` (only for money-type metrics)\n  - `is_budget_metric` (defaults to False)\n- Query parameters:\n  - `on_conflict` ('overwrite' | 'skip', default: 'overwrite')\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "on_conflict",
+                  "value": "overwrite",
+                  "description": "Conflict resolution strategy when a metric already exists for the same company, category, and date. 'overwrite' (default) updates the existing row. 'skip' leaves the existing row unchanged."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"value\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"category\": \"<string>\",\n    \"date\": \"<string>\",\n    \"metric_cadence\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"is_budget_metric\": \"<boolean>\",\n    \"budget_id\": \"<string>\"\n  },\n  {\n    \"value\": \"<string>\",\n    \"company_id\": \"<string>\",\n    \"category\": \"<string>\",\n    \"date\": \"<string>\",\n    \"metric_cadence\": \"<string>\",\n    \"currency\": \"<string>\",\n    \"is_budget_metric\": \"<boolean>\",\n    \"budget_id\": \"<string>\"\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "da11c250-5a80-408c-a015-0bf590aa422a",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "on_conflict",
+                      "value": "overwrite"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"value\": \"1000\",\n    \"company_id\": \"RjX8\",\n    \"category\": \"cash_in_bank\",\n    \"date\": \"2023-07-31\",\n    \"metric_cadence\": \"point_in_time\",\n    \"currency\": \"USD\",\n    \"is_budget_metric\": true,\n    \"budget_id\": \"yzJm\"\n  },\n  {\n    \"value\": \"1000\",\n    \"company_id\": \"RjX8\",\n    \"category\": \"cash_in_bank\",\n    \"date\": \"2023-07-31\",\n    \"metric_cadence\": \"point_in_time\",\n    \"currency\": \"USD\",\n    \"is_budget_metric\": true,\n    \"budget_id\": \"yzJm\"\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"value\": \"1000\",\n    \"company_id\": \"RjX8\",\n    \"category\": \"cash_in_bank\",\n    \"date\": \"2023-07-31\",\n    \"metric_cadence\": \"point_in_time\",\n    \"currency\": \"USD\",\n    \"is_budget_metric\": true,\n    \"budget_id\": \"yzJm\"\n  },\n  {\n    \"value\": \"1000\",\n    \"company_id\": \"RjX8\",\n    \"category\": \"cash_in_bank\",\n    \"date\": \"2023-07-31\",\n    \"metric_cadence\": \"point_in_time\",\n    \"currency\": \"USD\",\n    \"is_budget_metric\": true,\n    \"budget_id\": \"yzJm\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "95f2c51c-88b3-4820-b33a-3ab4f8f50354",
+          "name": "Get metrics options",
+          "request": {
+            "name": "Get metrics options",
+            "description": {
+              "content": "Retrieve information about all available metrics for a firm. Includes category names, types, and configuration details.\n\n**Permissions:**\n- User must be authenticated via OAuth.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                "options",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "page",
+                  "value": "<integer>",
+                  "description": "A page number within the paginated result set."
+                },
+                {
+                  "disabled": false,
+                  "key": "page_size",
+                  "value": "<integer>",
+                  "description": "Number of results to return per page."
+                },
+                {
+                  "disabled": false,
+                  "key": "category_name",
+                  "value": "<string>",
+                  "description": "Name of the category"
+                },
+                {
+                  "disabled": false,
+                  "key": "category_id",
+                  "value": "<string>",
+                  "description": "ID of the category"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_standard",
+                  "value": "<boolean>",
+                  "description": "Is category standard"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Type of the category"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_point_in_time",
+                  "value": "<boolean>",
+                  "description": "Is category point in time"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_archived",
+                  "value": "<boolean>",
+                  "description": "Is category archived"
+                },
+                {
+                  "disabled": false,
+                  "key": "choices",
+                  "value": "<string>,<string>",
+                  "description": "Choice options for the category"
+                },
+                {
+                  "disabled": false,
+                  "key": "is_multiple",
+                  "value": "<boolean>",
+                  "description": "Is the category multiple choice"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9ebf6561-f688-4935-8726-6a934961dedb",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    "options",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "page",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "page_size",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "category_name",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "category_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_standard",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "is_point_in_time",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "is_archived",
+                      "value": "<boolean>"
+                    },
+                    {
+                      "key": "choices",
+                      "value": "<string>,<string>"
+                    },
+                    {
+                      "key": "is_multiple",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"count\": 2342,\n  \"results\": [\n    {\n      \"category_id\": \"string\",\n      \"category_name\": \"string\",\n      \"is_standard\": false,\n      \"is_archived\": true,\n      \"type\": \"string\",\n      \"is_point_in_time\": false,\n      \"description\": \"string\",\n      \"choices\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_multiple\": true\n    },\n    {\n      \"category_id\": \"string\",\n      \"category_name\": \"string\",\n      \"is_standard\": true,\n      \"is_archived\": false,\n      \"type\": \"string\",\n      \"is_point_in_time\": false,\n      \"description\": \"string\",\n      \"choices\": [\n        \"string\",\n        \"string\"\n      ],\n      \"is_multiple\": false\n    }\n  ],\n  \"next\": \"https://RHMYyHLTuutVPiEleTnYkMuBJD.dqjdJ87cBRviVuOqkLzPK6Hq3Bp1X-UIuIQ5VYjM5vQ8AgqA,QyPSFmJrmXRUMvxi9gCOYtV9I\",\n  \"previous\": \"http://CGNosvz.fathk9S1tymFffF3,D,klmAm2psFZd2nrBGO+Rnn1OYL4ZG+4pRstFwYpf2otIT\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "15a9fae0-63af-4236-bcde-f1392d0574fe",
+          "name": "Delete a specific metric.",
+          "request": {
+            "name": "Delete a specific metric.",
+            "description": {
+              "content": "**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company that owns the datum.\n- User must have ADMIN or EDITOR role.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "metrics",
+                ":datum_id",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "datum_id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "cf3443c2-d492-44e0-8989-68f367ef8b30",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "metrics",
+                    ":datum_id",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "datum_id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"success\": true\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a623e381-c10d-4041-b44d-702f00cfa260",
+    "name": "OAuth Token budgets metrics API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}

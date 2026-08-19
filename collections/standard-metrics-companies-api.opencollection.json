@@ -1,0 +1,119 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets companies API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "companies",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get companies",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/companies/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "ids[]",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by ID. Can be specified multiple times to filter by multiple IDs (e.g., ?ids[]=123&ids[]=456&ids[]=789)."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "Filter companies by name. Performs case-insensitive partial matching on company names. ."
+              }
+            ]
+          },
+          "docs": "Retrieve a list of all companies associated with the firm. Each company includes identifiers and metadata.\n\n**Filtering:**\n- Use `ids[]` parameter to filter by specific company IDs\n- Use `name` parameter to filter by company name (case-insensitive partial matching)\n\n**Notes:**\n- If no filters are specified, returns all companies associated with the firm.\n\n**Permissions:**\n- User must be authenticated via OAuth."
+        },
+        {
+          "info": {
+            "name": "Create company",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/companies/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create a new company. Creates an offline company that can later be onboarded.\n\n**Notes:**\n- Name is the only required field.\n- Non-required fields and their defaults:\n  - `description`: defaults to empty string\n  - `city`: defaults to empty string\n  - `sector`: defaults to \"Other\" if not provided or invalid\n  - `fiscal_year_end`: defaults to \"12/31\"\n  - `website`: defaults to empty string\n\nYou may update the company later using the `Update Company` endpoint. Reference this endpoint to understand"
+        },
+        {
+          "info": {
+            "name": "Update company",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.standardmetrics.io/companies/:company_id/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partially update company fields. Different fields are editable based on company onboarding status.\n\n**Online companies** (already onboarded):\nOnly the following fields can be updated:\n1. `firm_sector` (the name of the Firm Sector for this company)\n2. `investment_lead_id` (the user ID of the investment lead)\n\n**Offline or Pending companies** (not onboarded; Pending means there's an active invite):\nThe following fields can be updated:\n1. `firm_sector`\n2. `investment_lead_id`\n3. `city` (the city wh"
+        },
+        {
+          "info": {
+            "name": "Upload company logo",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/companies/:company_id/logo/",
+            "params": [
+              {
+                "name": "company_id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "file",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Upload a new logo for an offline company. Replaces any existing logo.\n\n**Notes:**\n- File size limit: 5 MB maximum.\n- Logo is owned by the firm since this action is only available for offline companies.\n- Accepted file types:\n    - JPEG images (.jpg, .jpeg)\n    - PNG images (.png)\n    - GIF images (.gif)\n    - WEBP images (.webp)\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

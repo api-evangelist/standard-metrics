@@ -1,0 +1,168 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets cap_table API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "cap_table",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get financing events",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/financing-events/get/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Retrieve financing events for companies in the portfolio. Returns all financing rounds if no filters are applied. Can be filtered by company ID or financing ID to get specific rounds. Each financing event includes stage, pre-money valuation, round size, fully diluted shares, closing date, and co-investor information.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    "
+        },
+        {
+          "info": {
+            "name": "Get share classes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/share-classes/get/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Retrieve share classes for a firm or a specific company. If no filters are provided, the endpoint returns all share classes across the firm. If company IDs or share class IDs are provided, it returns share classes specific to those companies or share classes.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    "
+        },
+        {
+          "info": {
+            "name": "Get transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/transactions/get/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Retrieve transactions for a firm or a specific company. If no filters are provided, the endpoint returns all transactions across the firm. If company IDs or transaction IDs are provided, it returns transactions specific to those companies or transactions.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    "
+        },
+        {
+          "info": {
+            "name": "Get securities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/securities/get/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Retrieve securities for a firm or a specific company. If no filters are provided, the endpoint returns all securities across the firm. If company IDs or holding IDs are provided, it returns securities specific to those companies or holdings.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    "
+        },
+        {
+          "info": {
+            "name": "Add share classes",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/share-classes/add/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Add share classes to a company's cap table. Creates new share classes with specified pricing, type, and purchase information.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    "
+        },
+        {
+          "info": {
+            "name": "Add financing rounds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/financing-rounds/add/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Add financing rounds across your cap tables. Creates new financing events with stage information, valuations, and co-investor details.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n        - User must have permission to add data to the cap tables.\n    "
+        },
+        {
+          "info": {
+            "name": "Upsert overrides",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api.standardmetrics.io/beta/investment/overrides/upsert/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Upsert overrides for ownership percentages, post-money valuations, and fair values. Creates or updates override data for companies and funds.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies and funds.\n        - User must have permission to modify data in the portco.\n    "
+        },
+        {
+          "info": {
+            "name": "Add transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/transactions/add/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Add a list of transactions to a company's cap table. Supports sales, conversions, and exercises of securities.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    "
+        },
+        {
+          "info": {
+            "name": "Add securities",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/securities/add/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        Add a list of securities, across different types, to a company's cap table. Supports certificates, warrants, convertibles, and token-based securities.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the company.\n        - User must have permission to add data to the portco.\n    "
+        },
+        {
+          "info": {
+            "name": "Get investment performance metrics (Alpha)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.standardmetrics.io/beta/investment/metrics/get/",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "\n        **Unstable:** This endpoint is in alpha and may change without notice.\n\n        Retrieve investment metrics for portfolio companies.\n\n        If `fund_ids` is omitted, metrics are aggregated across all funds.\n        If `fund_ids` is provided, metrics reflect only those funds' positions.\n\n        **Permissions:**\n        - User must be authenticated via OAuth.\n        - User must have access to the companies.\n    "
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

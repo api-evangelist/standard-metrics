@@ -1,0 +1,49 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OAuth Token budgets information-requests API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "information-requests",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get information requests",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.standardmetrics.io/information-requests/",
+            "params": [
+              {
+                "name": "page",
+                "value": "",
+                "type": "query",
+                "description": "A page number within the paginated result set."
+              },
+              {
+                "name": "page_size",
+                "value": "",
+                "type": "query",
+                "description": "Number of results to return per page."
+              },
+              {
+                "name": "name",
+                "value": "",
+                "type": "query",
+                "description": "An optional name of the information request to filter by."
+              }
+            ]
+          },
+          "docs": "Retrieve all information requests associated with the firm. Includes company associations and submission status.\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the information requests."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,154 @@
+{
+  "item": [
+    {
+      "id": "fc7671c2-fc91-4fba-8f8c-54563654563c",
+      "name": "O",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "227f7768-100d-46a3-b3af-d9f76e18fac6",
+          "name": "Get API Access Token",
+          "request": {
+            "name": "Get API Access Token",
+            "description": {
+              "content": "This endpoint allows you to retrieve an API access token using your `client_id` and `client_secret`.\n\nTo authenticate:\n\n- Click `Try it ▶`\n- Enter your **client_id** as the `Authorization.username`\n- Enter your **client_secret** as the `Authorization.password`\n\nThe request must include the following body parameter:\n\n- `grant_type`: This is always set to `client_credentials`\n\nHit `Send ▶` and the response will contain an `access_token`, which you can use as a Bearer token to authenticate requests to other endpoints.\n\n```json\n{\n  \"access_token\": \"ACCESS_TOKEN\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\",\n  \"scope\": \"read write\"\n}\n```",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "o",
+                "token",
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "client_credentials",
+                  "description": "(Required) Always set to 'client_credentials'"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d82dce94-149c-4704-aef6-90152fadfc4d",
+              "name": "Access token retrieved successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "o",
+                    "token",
+                    ""
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Always set to 'client_credentials'",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "client_credentials"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"ACCESS_TOKEN\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\",\n  \"scope\": \"all read write\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.standardmetrics.io",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f5b05193-64f2-4a91-9005-7b393c733e7f",
+    "name": "OAuth Token budgets O API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Token endpoint using client credentials flow.",
+      "type": "text/plain"
+    }
+  }
+}
