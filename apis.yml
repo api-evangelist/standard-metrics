@@ -34,6 +34,17 @@ tags:
 - Company
 - Venture Capital
 - Private Equity
+- Portfolio-Management
+- Financial Data
+- Investment Data
+- Cap Table
+- Metrics
+- Reporting
+- MCP
+tags_raw:
+- Company
+- Venture Capital
+- Private Equity
 - Portfolio Management
 - Financial Data
 - Investment Data
@@ -48,6 +59,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Budgets
+  tags_raw:
   - budgets
   properties:
   - type: OpenAPI
@@ -58,6 +71,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Cap Table
+  tags_raw:
   - cap_table
   properties:
   - type: OpenAPI
@@ -68,6 +83,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Companies
+  tags_raw:
   - companies
   properties:
   - type: OpenAPI
@@ -88,6 +105,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Documents
+  tags_raw:
   - documents
   properties:
   - type: OpenAPI
@@ -108,6 +127,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Funds
+  tags_raw:
   - funds
   properties:
   - type: OpenAPI
@@ -140,6 +161,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Metrics
+  tags_raw:
   - metrics
   properties:
   - type: OpenAPI
@@ -150,6 +173,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Notes
+  tags_raw:
   - notes
   properties:
   - type: OpenAPI
@@ -170,6 +195,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - User
+  tags_raw:
   - users
   properties:
   - type: OpenAPI
@@ -180,6 +207,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Whoami
+  tags_raw:
   - whoami
   properties:
   - type: OpenAPI
