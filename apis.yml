@@ -82,7 +82,8 @@ apis:
   description: The cap_table API from Standard Metrics — 10 operation(s) for cap_table.
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
-  tags: []
+  tags:
+  - Cap Table
   tags_raw:
   - cap_table
   properties:
@@ -138,7 +139,7 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
-  - funds
+  - Funds
   tags_raw:
   - funds
   properties:
@@ -218,7 +219,7 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
-  - whoami
+  - Whoami
   tags_raw:
   - whoami
   properties:
