@@ -1,14 +1,13 @@
 aid: standard-metrics
 name: Standard Metrics
-description: >-
-  Standard Metrics is an AI-driven portfolio management platform for venture capital and private
-  equity firms. It centralizes portfolio company performance data, financial metrics, documents,
-  cap-table and investment data, and notes so investors can streamline portfolio reviews, audits,
-  and LP reporting while reducing the reporting burden on portfolio companies. Standard Metrics
-  exposes a REST API (OAuth2 client-credentials, Bearer tokens) covering companies, metrics, budgets,
-  documents, funds, information requests, notes, users, and a beta Investment Data API for cap-table
-  financing events, securities, share classes, and transactions. It also publishes two official
-  remote MCP servers that connect Claude, ChatGPT, and other LLM clients directly to firm data.
+description: Standard Metrics is an AI-driven portfolio management platform for venture capital and private
+  equity firms. It centralizes portfolio company performance data, financial metrics, documents, cap-table
+  and investment data, and notes so investors can streamline portfolio reviews, audits, and LP reporting
+  while reducing the reporting burden on portfolio companies. Standard Metrics exposes a REST API (OAuth2
+  client-credentials, Bearer tokens) covering companies, metrics, budgets, documents, funds, information
+  requests, notes, users, and a beta Investment Data API for cap-table financing events, securities, share
+  classes, and transactions. It also publishes two official remote MCP servers that connect Claude, ChatGPT,
+  and other LLM clients directly to firm data.
 url: https://raw.githubusercontent.com/api-evangelist/standard-metrics/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -41,7 +40,7 @@ accessModel:
 image: https://standardmetrics.io/wp-content/uploads/2024/07/Standard-Metrics-Thumbnail.jpg
 specificationVersion: '0.23'
 created: '2026-07-17'
-modified: '2026-07-21'
+modified: '2026-09-16'
 tags:
 - Company
 - Venture Capital
@@ -147,8 +146,7 @@ apis:
     url: openapi/standard-metrics-funds-api-openapi.yml
 - aid: standard-metrics:standard-metrics-information-reports-api
   name: Standard Metrics information-reports API
-  description: >-
-    The information-reports API from Standard Metrics — 1 operation(s) for information-reports.
+  description: The information-reports API from Standard Metrics — 1 operation(s) for information-reports.
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
@@ -158,8 +156,7 @@ apis:
     url: openapi/standard-metrics-information-reports-api-openapi.yml
 - aid: standard-metrics:standard-metrics-information-requests-api
   name: Standard Metrics information-requests API
-  description: >-
-    The information-requests API from Standard Metrics — 1 operation(s) for information-requests.
+  description: The information-requests API from Standard Metrics — 1 operation(s) for information-requests.
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
@@ -168,7 +165,7 @@ apis:
   - type: OpenAPI
     url: openapi/standard-metrics-information-requests-api-openapi.yml
 - aid: standard-metrics:standard-metrics-metrics-api
-  name: Standard Metrics metrics API
+  name: Standard Metrics API
   description: The metrics API from Standard Metrics — 3 operation(s) for metrics.
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
