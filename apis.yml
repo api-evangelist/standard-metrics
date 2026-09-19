@@ -138,7 +138,7 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
-  - Funds
+  - Fund
   tags_raw:
   - funds
   properties:
