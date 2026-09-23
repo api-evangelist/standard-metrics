@@ -1,10 +1,12 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: OAuth Token budgets custom-columns API
-  version: 1.0.0
-  description: Token endpoint using client credentials flow.
+  title: Standard Metrics API Documentation Custom Columns API
+  description: Welcome to Standard Metric's API docs!
+  version: '1.0'
 servers:
-- url: https://api.standardmetrics.io
+- url: https://api.standardmetrics.io/v1
+security:
+- Bearer: []
 tags:
 - name: custom-columns
 paths:
@@ -62,13 +64,15 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
@@ -117,13 +121,15 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
@@ -220,13 +226,30 @@ paths:
       x-codegen-request-body-name: data
 components:
   schemas:
-    TextEntityProperty:
-      type: object
+    PropertyOption:
       required:
-      - company
+      - color
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        value:
+          title: Value
+          minLength: 1
+          type: string
+        color:
+          title: Color
+          minLength: 1
+          type: string
+    Property:
+      required:
       - id
       - name
       - type
+      type: object
       properties:
         id:
           title: Id
@@ -235,57 +258,16 @@ components:
           title: Name
           minLength: 1
           type: string
-        company:
-          required:
-          - id
-          type: object
-          properties:
-            id:
-              title: Id
-              type: string
-            name:
-              title: Name
-              minLength: 1
-              type: string
-              readOnly: true
-            slug:
-              title: Slug
-              minLength: 1
-              pattern: ^[-a-zA-Z0-9_]+$
-              type: string
-              format: slug
-              readOnly: true
         type:
+          title: Type
           type: string
-          enum:
-          - text
-        value:
-          type: string
-          nullable: true
-    EntityProperty:
-      oneOf:
-      - $ref: '#/components/schemas/TextEntityProperty'
-      - $ref: '#/components/schemas/SingleSelectEntityProperty'
-      - $ref: '#/components/schemas/MultiSelectEntityProperty'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/TextEntityProperty'
-          select: '#/components/schemas/SingleSelectEntityProperty'
-          multi_select: '#/components/schemas/MultiSelectEntityProperty'
-    EntityPropertyOption:
-      type: object
-      required:
-      - id
-      - value
-      - color
-      properties:
-        id:
-          type: string
-        value:
-          type: string
-        color:
-          type: string
+        options:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/PropertyOption'
     MultiSelectEntityProperty:
       type: object
       required:
@@ -329,24 +311,60 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EntityPropertyOption'
-    PropertyOption:
-      required:
-      - color
-      - id
-      - value
+    TextEntityProperty:
       type: object
+      required:
+      - company
+      - id
+      - name
+      - type
       properties:
         id:
           title: Id
           type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        company:
+          required:
+          - id
+          type: object
+          properties:
+            id:
+              title: Id
+              type: string
+            name:
+              title: Name
+              minLength: 1
+              type: string
+              readOnly: true
+            slug:
+              title: Slug
+              minLength: 1
+              pattern: ^[-a-zA-Z0-9_]+$
+              type: string
+              format: slug
+              readOnly: true
+        type:
+          type: string
+          enum:
+          - text
         value:
-          title: Value
-          minLength: 1
-          type: string
-        color:
-          title: Color
-          minLength: 1
-          type: string
+          type:
+          - string
+          - 'null'
+    EntityProperty:
+      oneOf:
+      - $ref: '#/components/schemas/TextEntityProperty'
+      - $ref: '#/components/schemas/SingleSelectEntityProperty'
+      - $ref: '#/components/schemas/MultiSelectEntityProperty'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextEntityProperty'
+          select: '#/components/schemas/SingleSelectEntityProperty'
+          multi_select: '#/components/schemas/MultiSelectEntityProperty'
     SingleSelectEntityProperty:
       type: object
       required:
@@ -387,33 +405,25 @@ components:
           enum:
           - select
         value:
-          nullable: true
           allOf:
           - $ref: '#/components/schemas/EntityPropertyOption'
-    Property:
+    EntityPropertyOption:
+      type: object
       required:
       - id
-      - name
-      - type
-      type: object
+      - value
+      - color
       properties:
         id:
-          title: Id
           type: string
-        name:
-          title: Name
-          minLength: 1
+        value:
           type: string
-        type:
-          title: Type
+        color:
           type: string
-        options:
-          type: array
-          nullable: true
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/PropertyOption'
   securitySchemes:
-    basicAuth:
+    Bearer:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+      description: Your valid bearer token. All Auth tokens persist for all requests. Make sure to replace Client Credential `Basic` tokens with `Bearer` tokens after retrieving your bearer token. Go to the API Reference/Setup, User Guides/Initial Setup, or API Reference/Get API Access Token page to get your token.
+x-original-swagger-version: '2.0'

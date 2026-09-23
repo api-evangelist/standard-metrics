@@ -1,17 +1,19 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: OAuth Token budgets whoami API
-  version: 1.0.0
-  description: Token endpoint using client credentials flow.
+  title: Standard Metrics API Documentation Whoami API
+  description: Welcome to Standard Metric's API docs!
+  version: '1.0'
 servers:
-- url: https://api.standardmetrics.io
+- url: https://api.standardmetrics.io/v1
+security:
+- Bearer: []
 tags:
-- name: whoami
+- name: Whoami
 paths:
   /whoami/:
     get:
       tags:
-      - whoami
+      - Whoami
       summary: Get current user information
       description: 'Returns information about the currently authenticated user.
 
@@ -29,6 +31,29 @@ paths:
                 $ref: '#/components/schemas/WhoamiUser'
 components:
   schemas:
+    WhoamiFirm:
+      required:
+      - id
+      - name
+      - slug
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          maxLength: 255
+          minLength: 1
+          type: string
+        slug:
+          title: Slug
+          minLength: 1
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+          format: slug
+          readOnly: true
     WhoamiUser:
       required:
       - email
@@ -64,30 +89,10 @@ components:
           readOnly: true
         firm:
           $ref: '#/components/schemas/WhoamiFirm'
-    WhoamiFirm:
-      required:
-      - id
-      - name
-      - slug
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          readOnly: true
-        name:
-          title: Name
-          maxLength: 255
-          minLength: 1
-          type: string
-        slug:
-          title: Slug
-          minLength: 1
-          pattern: ^[-a-zA-Z0-9_]+$
-          type: string
-          format: slug
-          readOnly: true
   securitySchemes:
-    basicAuth:
+    Bearer:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+      description: Your valid bearer token. All Auth tokens persist for all requests. Make sure to replace Client Credential `Basic` tokens with `Bearer` tokens after retrieving your bearer token. Go to the API Reference/Setup, User Guides/Initial Setup, or API Reference/Get API Access Token page to get your token.
+x-original-swagger-version: '2.0'

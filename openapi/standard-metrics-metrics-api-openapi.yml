@@ -1,17 +1,19 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: OAuth Token budgets metrics API
-  version: 1.0.0
-  description: Token endpoint using client credentials flow.
+  title: Standard API Documentation Metrics API
+  description: Welcome to Standard Metric's API docs!
+  version: '1.0'
 servers:
-- url: https://api.standardmetrics.io
+- url: https://api.standardmetrics.io/v1
+security:
+- Bearer: []
 tags:
-- name: metrics
+- name: Metrics
 paths:
   /metrics/:
     get:
       tags:
-      - metrics
+      - Metrics
       summary: Get metrics
       description: 'Retrieve metrics for a specific company. Supports extensive filtering by category, date range, and cadence.
 
@@ -133,22 +135,66 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
                       $ref: '#/components/schemas/Datum'
     post:
       tags:
-      - metrics
+      - Metrics
       summary: Create metrics
-      description: "Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.\n\n**Notes:**\n- Each request can only be for one company.\n- Supports both standard and custom metrics.\n- Can write to budgets by specifying `budget_id` and `is_budget_metric`.\n- Each request can only target a single budget: all metrics in a request must have the same `budget_id` and `is_budget_metric` values. Budget and non-budget metrics cannot be mixed in one request.\n- Required fields:\n  - `value`\n  - `company_id`\n  - `category`\n  - `metric_cadence`\n  - `date`\n- Optional fields:\n  - `currency` (only for money-type metrics)\n  - `is_budget_metric` (defaults to False)\n- Query parameters:\n  - `on_conflict` ('overwrite' | 'skip', default: 'overwrite')\n\n**Permissions:**\n- User must be authenticated via OAuth.\n- User must have access to the company.\n- User must have ADMIN or EDITOR role."
+      description: 'Create/upload new metrics data for a company. Supports both standard and custom metrics, including budget data.
+
+
+        **Notes:**
+
+        - Each request can only be for one company.
+
+        - Supports both standard and custom metrics.
+
+        - Can write to budgets by specifying `budget_id` and `is_budget_metric`.
+
+        - Each request can only target a single budget: all metrics in a request must have the same `budget_id` and `is_budget_metric` values. Budget and non-budget metrics cannot be mixed in one request.
+
+        - Required fields:
+
+        - `value`
+
+        - `company_id`
+
+        - `category`
+
+        - `metric_cadence`
+
+        - `date`
+
+        - Optional fields:
+
+        - `currency` (only for money-type metrics)
+
+        - `is_budget_metric` (defaults to False)
+
+        - Query parameters:
+
+        - `on_conflict` (''overwrite'' | ''skip'', default: ''overwrite'')
+
+
+        **Permissions:**
+
+        - User must be authenticated via OAuth.
+
+        - User must have access to the company.
+
+        - User must have ADMIN or EDITOR role.'
       operationId: metrics_create
       parameters:
       - name: on_conflict
@@ -453,7 +499,7 @@ paths:
   /metrics/options/:
     get:
       tags:
-      - metrics
+      - Metrics
       summary: Get metrics options
       description: 'Retrieve information about all available metrics for a firm. Includes category names, types, and configuration details.
 
@@ -538,13 +584,15 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
@@ -552,8 +600,8 @@ paths:
   /metrics/{datum_id}/:
     delete:
       tags:
-      - metrics
-      summary: Delete a specific metric.
+      - Metrics
+      summary: Delete a specific metric
       description: '**Permissions:**
 
         - User must be authenticated via OAuth.
@@ -587,101 +635,6 @@ paths:
                     description: A message describing the operation result
 components:
   schemas:
-    Datum:
-      required:
-      - budget_id
-      - category_id
-      - company_id
-      - created_at
-      - currency
-      - date
-      - id
-      - updated_at
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-        value:
-          title: Value
-          type: string
-          readOnly: true
-        currency:
-          title: Currency
-          minLength: 1
-          type: string
-          nullable: true
-        converted_value:
-          title: Converted value
-          type: string
-          readOnly: true
-        preferred_currency:
-          title: Preferred currency
-          type: string
-          readOnly: true
-        date:
-          title: Date
-          type: string
-          format: date
-        category:
-          title: Category
-          type: string
-          readOnly: true
-        category_type:
-          title: Category type
-          type: string
-          readOnly: true
-        category_id:
-          title: Category id
-          type: string
-        cadence:
-          title: Cadence
-          type: string
-          readOnly: true
-        is_budget_metric:
-          title: Is budget metric
-          type: boolean
-          readOnly: true
-        budget_id:
-          title: Budget id
-          type: string
-          nullable: true
-        custom_metric:
-          title: Custom metric
-          minLength: 1
-          type: string
-          nullable: true
-          readOnly: true
-        fx_rate:
-          title: Fx rate
-          type: number
-          nullable: true
-          readOnly: true
-        detailed_source:
-          title: Detailed source
-          type: string
-          readOnly: true
-        updated_at:
-          title: Updated at
-          type: string
-          format: date-time
-        created_at:
-          title: Created at
-          type: string
-          format: date-time
-        company_id:
-          title: Company id
-          type: string
-        deleted_at:
-          title: Deleted at
-          type: string
-          format: date-time
-          nullable: true
-          readOnly: true
-        archived:
-          title: Archived
-          type: boolean
-          readOnly: true
     MetricsOptions:
       required:
       - category_id
@@ -723,7 +676,110 @@ components:
         is_multiple:
           title: Is multiple
           type: boolean
+    Datum:
+      required:
+      - budget_id
+      - category_id
+      - company_id
+      - created_at
+      - currency
+      - date
+      - id
+      - updated_at
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        value:
+          title: Value
+          type: string
+          readOnly: true
+        currency:
+          title: Currency
+          minLength: 1
+          type:
+          - string
+          - 'null'
+        converted_value:
+          title: Converted value
+          type: string
+          readOnly: true
+        preferred_currency:
+          title: Preferred currency
+          type: string
+          readOnly: true
+        date:
+          title: Date
+          type: string
+          format: date
+        category:
+          title: Category
+          type: string
+          readOnly: true
+        category_type:
+          title: Category type
+          type: string
+          readOnly: true
+        category_id:
+          title: Category id
+          type: string
+        cadence:
+          title: Cadence
+          type: string
+          readOnly: true
+        is_budget_metric:
+          title: Is budget metric
+          type: boolean
+          readOnly: true
+        budget_id:
+          title: Budget id
+          type:
+          - string
+          - 'null'
+        custom_metric:
+          title: Custom metric
+          minLength: 1
+          type:
+          - string
+          - 'null'
+          readOnly: true
+        fx_rate:
+          title: Fx rate
+          type:
+          - number
+          - 'null'
+          readOnly: true
+        detailed_source:
+          title: Detailed source
+          type: string
+          readOnly: true
+        updated_at:
+          title: Updated at
+          type: string
+          format: date-time
+        created_at:
+          title: Created at
+          type: string
+          format: date-time
+        company_id:
+          title: Company id
+          type: string
+        deleted_at:
+          title: Deleted at
+          type:
+          - string
+          - 'null'
+          format: date-time
+          readOnly: true
+        archived:
+          title: Archived
+          type: boolean
+          readOnly: true
   securitySchemes:
-    basicAuth:
+    Bearer:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+      description: Your valid bearer token. All Auth tokens persist for all requests. Make sure to replace Client Credential `Basic` tokens with `Bearer` tokens after retrieving your bearer token. Go to the API Reference/Setup, User Guides/Initial Setup, or API Reference/Get API Access Token page to get your token.
+x-original-swagger-version: '2.0'

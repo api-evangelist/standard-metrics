@@ -1,17 +1,19 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: OAuth Token budgets notes API
-  version: 1.0.0
-  description: Token endpoint using client credentials flow.
+  title: Standard Metrics API Documentation Notes API
+  description: Welcome to Standard Metric's API docs!
+  version: '1.0'
 servers:
-- url: https://api.standardmetrics.io
+- url: https://api.standardmetrics.io/v1
+security:
+- Bearer: []
 tags:
-- name: notes
+- name: Notes
 paths:
   /notes/:
     get:
       tags:
-      - notes
+      - Notes
       summary: Get notes
       description: 'Retrieve all notes for a specific company. Notes are returned in markdown format.
 
@@ -62,20 +64,22 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
                       $ref: '#/components/schemas/PortfolioCompanyNoteAPI'
     post:
       tags:
-      - notes
+      - Notes
       summary: Create notes
       description: 'Create new notes for a company. Supports creating multiple notes in a single request.
 
@@ -167,6 +171,9 @@ components:
           title: Company id
           type: string
   securitySchemes:
-    basicAuth:
+    Bearer:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+      description: Your valid bearer token. All Auth tokens persist for all requests. Make sure to replace Client Credential `Basic` tokens with `Bearer` tokens after retrieving your bearer token. Go to the API Reference/Setup, User Guides/Initial Setup, or API Reference/Get API Access Token page to get your token.
+x-original-swagger-version: '2.0'

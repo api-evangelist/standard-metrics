@@ -1,6 +1,6 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: OAuth Token budgets O API
+  title: OAuth Token O API
   version: 1.0.0
   description: Token endpoint using client credentials flow.
 servers:
@@ -11,7 +11,43 @@ paths:
   /o/token/:
     post:
       summary: Get API Access Token
-      description: "This endpoint allows you to retrieve an API access token using your `client_id` and `client_secret`.\n\nTo authenticate:\n\n- Click `Try it ▶`\n- Enter your **client_id** as the `Authorization.username`\n- Enter your **client_secret** as the `Authorization.password`\n\nThe request must include the following body parameter:\n\n- `grant_type`: This is always set to `client_credentials`\n\nHit `Send ▶` and the response will contain an `access_token`, which you can use as a Bearer token to authenticate requests to other endpoints.\n\n```json\n{\n  \"access_token\": \"ACCESS_TOKEN\",\n  \"expires_in\": 3600,\n  \"token_type\": \"Bearer\",\n  \"scope\": \"read write\"\n}\n```"
+      description: 'This endpoint allows you to retrieve an API access token using your `client_id` and `client_secret`.
+
+
+        To authenticate:
+
+
+        - Click `Try it ▶`
+
+        - Enter your **client_id** as the `Authorization.username`
+
+        - Enter your **client_secret** as the `Authorization.password`
+
+
+        The request must include the following body parameter:
+
+
+        - `grant_type`: This is always set to `client_credentials`
+
+
+        Hit `Send ▶` and the response will contain an `access_token`, which you can use as a Bearer token to authenticate requests to other endpoints.
+
+
+        ```json
+
+        {
+
+        "access_token": "ACCESS_TOKEN",
+
+        "expires_in": 3600,
+
+        "token_type": "Bearer",
+
+        "scope": "read write"
+
+        }
+
+        ```'
       requestBody:
         required: true
         content:
@@ -57,6 +93,8 @@ paths:
                 - token_type
       tags:
       - O
+      operationId: postOToken
+      x-operation-id-source: derived
 components:
   securitySchemes:
     basicAuth:

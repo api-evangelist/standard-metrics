@@ -1,17 +1,19 @@
-openapi: 3.0.3
+openapi: 3.2.0
 info:
-  title: OAuth Token budgets funds API
-  version: 1.0.0
-  description: Token endpoint using client credentials flow.
+  title: Standard Metrics API Documentation Funds API
+  description: Welcome to Standard Metric's API docs!
+  version: '1.0'
 servers:
-- url: https://api.standardmetrics.io
+- url: https://api.standardmetrics.io/v1
+security:
+- Bearer: []
 tags:
-- name: funds
+- name: Funds
 paths:
   /funds/:
     get:
       tags:
-      - funds
+      - Funds
       summary: Get funds
       description: 'Retrieve all funds associated with the firm. Provides fund details and status information.
 
@@ -45,13 +47,15 @@ paths:
                   count:
                     type: integer
                   next:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   previous:
-                    type: string
+                    type:
+                    - string
+                    - 'null'
                     format: uri
-                    nullable: true
                   results:
                     type: array
                     items:
@@ -86,6 +90,9 @@ components:
           minLength: 1
           type: string
   securitySchemes:
-    basicAuth:
+    Bearer:
       type: http
-      scheme: basic
+      scheme: bearer
+      bearerFormat: JWT
+      description: Your valid bearer token. All Auth tokens persist for all requests. Make sure to replace Client Credential `Basic` tokens with `Bearer` tokens after retrieving your bearer token. Go to the API Reference/Setup, User Guides/Initial Setup, or API Reference/Get API Access Token page to get your token.
+x-original-swagger-version: '2.0'
