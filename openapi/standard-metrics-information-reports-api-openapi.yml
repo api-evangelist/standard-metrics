@@ -95,6 +95,23 @@ components:
           title: Time period
           type: string
           readOnly: true
+    Document:
+      required:
+      - requested_document
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        requested_document:
+          title: Requested document
+          minLength: 1
+          type: string
     InformationReport:
       required:
       - company_id
@@ -147,23 +164,6 @@ components:
           title: Status
           type: string
           readOnly: true
-    Document:
-      required:
-      - requested_document
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          readOnly: true
-        status:
-          title: Status
-          type: string
-          readOnly: true
-        requested_document:
-          title: Requested document
-          minLength: 1
-          type: string
   securitySchemes:
     Bearer:
       type: http

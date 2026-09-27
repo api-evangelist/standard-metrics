@@ -635,47 +635,6 @@ paths:
                     description: A message describing the operation result
 components:
   schemas:
-    MetricsOptions:
-      required:
-      - category_id
-      - category_name
-      - is_standard
-      type: object
-      properties:
-        category_name:
-          title: Category name
-          minLength: 1
-          type: string
-        category_id:
-          title: Category id
-          type: string
-        is_standard:
-          title: Is standard
-          type: boolean
-        is_archived:
-          title: Is archived
-          type: boolean
-        type:
-          title: Type
-          type: string
-          readOnly: true
-        is_point_in_time:
-          title: Is point in time
-          type: boolean
-        description:
-          title: Description
-          type: string
-        choices:
-          type: array
-          description: Choices for categories with a select type
-          items:
-            title: Choices
-            maxLength: 255
-            minLength: 1
-            type: string
-        is_multiple:
-          title: Is multiple
-          type: boolean
     Datum:
       required:
       - budget_id
@@ -776,6 +735,47 @@ components:
           title: Archived
           type: boolean
           readOnly: true
+    MetricsOptions:
+      required:
+      - category_id
+      - category_name
+      - is_standard
+      type: object
+      properties:
+        category_name:
+          title: Category name
+          minLength: 1
+          type: string
+        category_id:
+          title: Category id
+          type: string
+        is_standard:
+          title: Is standard
+          type: boolean
+        is_archived:
+          title: Is archived
+          type: boolean
+        type:
+          title: Type
+          type: string
+          readOnly: true
+        is_point_in_time:
+          title: Is point in time
+          type: boolean
+        description:
+          title: Description
+          type: string
+        choices:
+          type: array
+          description: Choices for categories with a select type
+          items:
+            title: Choices
+            maxLength: 255
+            minLength: 1
+            type: string
+        is_multiple:
+          title: Is multiple
+          type: boolean
   securitySchemes:
     Bearer:
       type: http

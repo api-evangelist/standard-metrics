@@ -226,91 +226,6 @@ paths:
       x-codegen-request-body-name: data
 components:
   schemas:
-    PropertyOption:
-      required:
-      - color
-      - id
-      - value
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-        value:
-          title: Value
-          minLength: 1
-          type: string
-        color:
-          title: Color
-          minLength: 1
-          type: string
-    Property:
-      required:
-      - id
-      - name
-      - type
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-        name:
-          title: Name
-          minLength: 1
-          type: string
-        type:
-          title: Type
-          type: string
-        options:
-          type:
-          - array
-          - 'null'
-          readOnly: true
-          items:
-            $ref: '#/components/schemas/PropertyOption'
-    MultiSelectEntityProperty:
-      type: object
-      required:
-      - company
-      - id
-      - name
-      - type
-      properties:
-        id:
-          title: Id
-          type: string
-        name:
-          title: Name
-          minLength: 1
-          type: string
-        company:
-          required:
-          - id
-          type: object
-          properties:
-            id:
-              title: Id
-              type: string
-            name:
-              title: Name
-              minLength: 1
-              type: string
-              readOnly: true
-            slug:
-              title: Slug
-              minLength: 1
-              pattern: ^[-a-zA-Z0-9_]+$
-              type: string
-              format: slug
-              readOnly: true
-        type:
-          type: string
-          enum:
-          - multi_select
-        value:
-          type: array
-          items:
-            $ref: '#/components/schemas/EntityPropertyOption'
     TextEntityProperty:
       type: object
       required:
@@ -354,17 +269,6 @@ components:
           type:
           - string
           - 'null'
-    EntityProperty:
-      oneOf:
-      - $ref: '#/components/schemas/TextEntityProperty'
-      - $ref: '#/components/schemas/SingleSelectEntityProperty'
-      - $ref: '#/components/schemas/MultiSelectEntityProperty'
-      discriminator:
-        propertyName: type
-        mapping:
-          text: '#/components/schemas/TextEntityProperty'
-          select: '#/components/schemas/SingleSelectEntityProperty'
-          multi_select: '#/components/schemas/MultiSelectEntityProperty'
     SingleSelectEntityProperty:
       type: object
       required:
@@ -407,6 +311,60 @@ components:
         value:
           allOf:
           - $ref: '#/components/schemas/EntityPropertyOption'
+    EntityProperty:
+      oneOf:
+      - $ref: '#/components/schemas/TextEntityProperty'
+      - $ref: '#/components/schemas/SingleSelectEntityProperty'
+      - $ref: '#/components/schemas/MultiSelectEntityProperty'
+      discriminator:
+        propertyName: type
+        mapping:
+          text: '#/components/schemas/TextEntityProperty'
+          select: '#/components/schemas/SingleSelectEntityProperty'
+          multi_select: '#/components/schemas/MultiSelectEntityProperty'
+    MultiSelectEntityProperty:
+      type: object
+      required:
+      - company
+      - id
+      - name
+      - type
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        company:
+          required:
+          - id
+          type: object
+          properties:
+            id:
+              title: Id
+              type: string
+            name:
+              title: Name
+              minLength: 1
+              type: string
+              readOnly: true
+            slug:
+              title: Slug
+              minLength: 1
+              pattern: ^[-a-zA-Z0-9_]+$
+              type: string
+              format: slug
+              readOnly: true
+        type:
+          type: string
+          enum:
+          - multi_select
+        value:
+          type: array
+          items:
+            $ref: '#/components/schemas/EntityPropertyOption'
     EntityPropertyOption:
       type: object
       required:
@@ -420,6 +378,48 @@ components:
           type: string
         color:
           type: string
+    PropertyOption:
+      required:
+      - color
+      - id
+      - value
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        value:
+          title: Value
+          minLength: 1
+          type: string
+        color:
+          title: Color
+          minLength: 1
+          type: string
+    Property:
+      required:
+      - id
+      - name
+      - type
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+        name:
+          title: Name
+          minLength: 1
+          type: string
+        type:
+          title: Type
+          type: string
+        options:
+          type:
+          - array
+          - 'null'
+          readOnly: true
+          items:
+            $ref: '#/components/schemas/PropertyOption'
   securitySchemes:
     Bearer:
       type: http
