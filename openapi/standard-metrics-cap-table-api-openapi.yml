@@ -374,168 +374,52 @@ paths:
       - BearerAuth: []
 components:
   schemas:
-    TokenInvestment:
-      description: A token investment for a company.
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the security.
-          examples:
-          - a2Ne
-          readOnly: true
-          title: Id
-        issue_date:
-          description: The date the security was issued.
-          examples:
-          - '2020-01-01'
-          format: date
-          title: Issue Date
-          type: string
-        fund_id:
-          description: The ID of the fund that holds this security.
-          examples:
-          - a2Ne
-          title: Fund Id
-          type: string
-        company_id:
-          description: The ID of the company this security belongs to.
-          examples:
-          - pvYe
-          title: Company Id
-          type: string
-        type:
-          const: token_investment
-          default: token_investment
-          title: Type
-          type: string
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The token symbol or name.
-          examples:
-          - SMX
-          title: Token
-        investment_amount:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The total investment amount.
-          examples:
-          - currency: USD
-            value: '500000'
-        quantity:
-          anyOf:
-          - type: number
-          - type: string
-          description: The number of tokens held.
-          examples:
-          - '1000'
-          title: Quantity
-        price_per_token:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The price per token at purchase.
-          examples:
-          - currency: USD
-            value: '500'
-        financing_id:
-          description: The ID of the financing round this token investment belongs to.
-          examples:
-          - a2Ne
-          title: Financing Id
-          type: string
-      required:
-      - issue_date
-      - fund_id
-      - company_id
-      - token
-      - investment_amount
-      - quantity
-      - price_per_token
-      - financing_id
-      title: TokenInvestment
-      type: object
-    TokenConvertibleOut:
-      description: A token convertible being returned from our API.
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the security.
-          examples:
-          - a2Ne
-          readOnly: true
-          title: Id
-        issue_date:
-          description: The date the security was issued.
-          examples:
-          - '2020-01-01'
-          format: date
-          title: Issue Date
-          type: string
-        fund_id:
-          description: The ID of the fund that holds this security.
-          examples:
-          - a2Ne
-          title: Fund Id
-          type: string
-        company_id:
-          description: The ID of the company this security belongs to.
-          examples:
-          - pvYe
-          title: Company Id
-          type: string
-        type:
-          const: token_convertible
-          default: token_convertible
-          title: Type
-          type: string
-        fund_name:
-          description: The name of the fund that holds this security.
-          examples:
-          - Fund I
-          title: Fund Name
-          type: string
-        company_name:
-          description: The name of the company this security belongs to.
-          examples:
-          - Acme Corp
-          title: Company Name
-          type: string
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The token symbol or name.
-          examples:
-          - SMX
-          title: Token
-        purchase_amount:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The purchase amount of the token convertible.
-          examples:
-          - currency: USD
-            value: '250000'
-        financing_id:
-          description: The ID of the financing round this token convertible belongs to.
-          examples:
-          - a2Ne
-          title: Financing Id
-          type: string
-      required:
-      - issue_date
-      - fund_id
-      - company_id
-      - fund_name
-      - company_name
-      - token
-      - purchase_amount
-      - financing_id
-      title: TokenConvertibleOut
-      type: object
-    CertificateOut:
-      description: A certificate being returned from our API.
+    CurrencyCode:
+      description: Supported currency codes.
+      enum:
+      - AED
+      - AUD
+      - BDT
+      - BRL
+      - CAD
+      - CHF
+      - CNY
+      - COP
+      - CZK
+      - DKK
+      - EUR
+      - GBP
+      - GHS
+      - HKD
+      - IDR
+      - ILS
+      - INR
+      - JPY
+      - JOD
+      - KES
+      - KRW
+      - MXN
+      - NGN
+      - NOK
+      - NZD
+      - PEN
+      - PHP
+      - SAR
+      - SGD
+      - USD
+      - PKR
+      - THB
+      - TRY
+      - TWD
+      - TZS
+      - VND
+      - SEK
+      - ISK
+      - ZAR
+      title: CurrencyCode
+      type: string
+    Certificate:
+      description: A private equity investment in a company.
       properties:
         id:
           anyOf:
@@ -570,18 +454,6 @@ components:
           default: certificate
           title: Type
           type: string
-        fund_name:
-          description: The name of the fund that holds this security.
-          examples:
-          - Fund I
-          title: Fund Name
-          type: string
-        company_name:
-          description: The name of the company this security belongs to.
-          examples:
-          - Acme Corp
-          title: Company Name
-          type: string
         investment_amount:
           $ref: '#/components/schemas/MoneyAmount'
           description: The total investment amount for this certificate.
@@ -610,266 +482,38 @@ components:
           examples:
           - a2Ne
           title: Financing Id
-        share_class_name:
-          description: The name of the share class for this certificate.
-          examples:
-          - Series A
-          title: Share Class Name
-          type: string
       required:
       - issue_date
       - fund_id
       - company_id
-      - fund_name
-      - company_name
       - investment_amount
       - shares
       - share_class_id
       - financing_id
-      - share_class_name
-      title: CertificateOut
+      title: Certificate
       type: object
-    ConvertibleType:
-      enum:
-      - convertible_note
-      - basic_note
-      - safe
-      - kiss
-      type: string
-    TransactionEvent:
-      description: A transaction event.
-      enum:
-      - exercise
-      - conversion
-      - sale
-      title: TransactionEvent
-      type: string
-    AddShareClasses:
-      description: A list of share classes to add to a company's cap table.
+    AddTransactions:
+      description: A list of transactions to add to a company's cap table.
       properties:
-        share_classes:
+        sales:
+          default: []
           items:
-            $ref: '#/components/schemas/ShareClass'
-          title: Share Classes
+            $ref: '#/components/schemas/Sale'
+          title: Sales
           type: array
-      required:
-      - share_classes
-      title: AddShareClasses
-      type: object
-    Sale:
-      description: A sale transaction.
-      properties:
-        company_id:
-          title: Company Id
-          type: string
-        date:
-          format: date
-          title: Date
-          type: string
-        security_id:
-          title: Security Id
-          type: string
-        cash_received:
-          $ref: '#/components/schemas/MoneyAmount'
-        shares_sold:
-          anyOf:
-          - type: number
-          - type: string
-          title: Shares Sold
-      required:
-      - company_id
-      - date
-      - security_id
-      - cash_received
-      - shares_sold
-      title: Sale
-      type: object
-    FairValue:
-      description: A fair value override to add to a company's cap table.
-      properties:
-        date:
-          format: date
-          title: Date
-          type: string
-        company_id:
-          title: Company Id
-          type: string
-        fair_value:
-          $ref: '#/components/schemas/MoneyAmount'
-        fund_id:
-          title: Fund Id
-          type: string
-      required:
-      - date
-      - company_id
-      - fair_value
-      - fund_id
-      title: FairValue
-      type: object
-    PostMoneyValuation:
-      description: A post-money valuation to add to a company's cap table.
-      properties:
-        date:
-          format: date
-          title: Date
-          type: string
-        company_id:
-          title: Company Id
-          type: string
-        post_money_valuation:
-          $ref: '#/components/schemas/MoneyAmount'
-      required:
-      - date
-      - company_id
-      - post_money_valuation
-      title: PostMoneyValuation
-      type: object
-    ShareClass:
-      description: A share class within a financing round.
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the share class.
-          examples:
-          - a2Ne
-          readOnly: true
-          title: Id
-        company_id:
-          description: The ID of the company this share class belongs to.
-          examples:
-          - pvYe
-          title: Company Id
-          type: string
-        financing_id:
-          description: The ID of the financing round this share class belongs to.
-          examples:
-          - a2Ne
-          title: Financing Id
-          type: string
-        purchase_type:
-          description: Whether the purchase is a primary or secondary transaction.
-          enum:
-          - primary
-          - secondary
-          examples:
-          - primary
-          title: Purchase Type
-          type: string
-        type:
-          description: The type of shares in this share class.
-          enum:
-          - common
-          - preferred
-          examples:
-          - preferred
-          title: Type
-          type: string
-        name:
-          description: The name of the share class.
-          examples:
-          - Series A
-          title: Name
-          type: string
-        price_per_share:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The price per share for this share class.
-          examples:
-          - currency: USD
-            value: '10.00'
-        include_in_fair_value:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Whether the share class is included in the fair value calculation. Defaults to `True` when the `purchase_type` is `primary`, otherwise `False`.
-          examples:
-          - true
-          title: Include In Fair Value
-      required:
-      - company_id
-      - financing_id
-      - purchase_type
-      - type
-      - name
-      - price_per_share
-      title: ShareClass
-      type: object
-    MessagesResponse:
-      description: A response with messages.
-      properties:
-        message:
-          title: Message
-          type: string
-      required:
-      - message
-      title: MessagesResponse
-      type: object
-    CoInvestorRole:
-      description: Role filter for co-investor matching.
-      enum:
-      - lead
-      - co
-      - any
-      title: CoInvestorRole
-      type: string
-    MetricsFilters:
-      description: Filters for metrics endpoint.
-      properties:
-        company_ids:
+        conversions:
+          default: []
           items:
-            type: string
-          title: Company Ids
+            $ref: '#/components/schemas/Conversion'
+          title: Conversions
           type: array
-        fund_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: Fund Ids
-        as_of_date:
-          format: date
-          title: As Of Date
-          type: string
-      required:
-      - company_ids
-      title: MetricsFilters
-      type: object
-    ShareClassFilters:
-      additionalProperties: false
-      description: Options for fetching share classes.
-      properties:
-        company_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Filter by company IDs.
-          examples:
-          - - pvYe
-            - a2Ne
-          title: Company Ids
-        share_class_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Filter by share class IDs.
-          examples:
-          - - pvYe
-            - a2Ne
-          title: Share Class Ids
-        purchase_type:
-          anyOf:
-          - $ref: '#/components/schemas/ShareClassPurchaseType'
-          - type: 'null'
-          description: 'Filter by purchase type: ''primary'' or ''secondary''.'
-          examples:
-          - primary
-      title: ShareClassFilters
+        exercises:
+          default: []
+          items:
+            $ref: '#/components/schemas/Exercise'
+          title: Exercises
+          type: array
+      title: AddTransactions
       type: object
     FinancingOut:
       description: A financing event being returned from our API.
@@ -1005,167 +649,6 @@ components:
       - company_name
       title: FinancingOut
       type: object
-    MetricsResponse:
-      description: Metrics response.
-      properties:
-        metrics:
-          items:
-            $ref: '#/components/schemas/CompanyMetrics'
-          title: Metrics
-          type: array
-        as_of_date:
-          format: date
-          title: As Of Date
-          type: string
-      required:
-      - metrics
-      - as_of_date
-      title: MetricsResponse
-      type: object
-    PublicEquityOut:
-      description: A public equity holding being returned from our API.
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the security.
-          examples:
-          - a2Ne
-          readOnly: true
-          title: Id
-        issue_date:
-          description: The date the security was issued.
-          examples:
-          - '2020-01-01'
-          format: date
-          title: Issue Date
-          type: string
-        fund_id:
-          description: The ID of the fund that holds this security.
-          examples:
-          - a2Ne
-          title: Fund Id
-          type: string
-        company_id:
-          description: The ID of the company this security belongs to.
-          examples:
-          - pvYe
-          title: Company Id
-          type: string
-        type:
-          const: public_equity
-          default: public_equity
-          title: Type
-          type: string
-        fund_name:
-          description: The name of the fund that holds this security.
-          examples:
-          - Fund I
-          title: Fund Name
-          type: string
-        company_name:
-          description: The name of the company this security belongs to.
-          examples:
-          - Acme Corp
-          title: Company Name
-          type: string
-        price_per_share:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The price per share at purchase.
-          examples:
-          - currency: USD
-            value: '25.00'
-        shares:
-          anyOf:
-          - type: number
-          - type: string
-          description: The number of shares held.
-          examples:
-          - '50000'
-          title: Shares
-        investment_amount:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The total investment amount.
-          examples:
-          - currency: USD
-            value: '1250000'
-      required:
-      - issue_date
-      - fund_id
-      - company_id
-      - fund_name
-      - company_name
-      - price_per_share
-      - shares
-      - investment_amount
-      title: PublicEquityOut
-      type: object
-    TokenConvertible:
-      description: A token convertible for a company.
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the security.
-          examples:
-          - a2Ne
-          readOnly: true
-          title: Id
-        issue_date:
-          description: The date the security was issued.
-          examples:
-          - '2020-01-01'
-          format: date
-          title: Issue Date
-          type: string
-        fund_id:
-          description: The ID of the fund that holds this security.
-          examples:
-          - a2Ne
-          title: Fund Id
-          type: string
-        company_id:
-          description: The ID of the company this security belongs to.
-          examples:
-          - pvYe
-          title: Company Id
-          type: string
-        type:
-          const: token_convertible
-          default: token_convertible
-          title: Type
-          type: string
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The token symbol or name.
-          examples:
-          - SMX
-          title: Token
-        purchase_amount:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The purchase amount of the token convertible.
-          examples:
-          - currency: USD
-            value: '250000'
-        financing_id:
-          description: The ID of the financing round this token convertible belongs to.
-          examples:
-          - a2Ne
-          title: Financing Id
-          type: string
-      required:
-      - issue_date
-      - fund_id
-      - company_id
-      - token
-      - purchase_amount
-      - financing_id
-      title: TokenConvertible
-      type: object
     Financing:
       description: A financing event in a given cap table, this could be a financing round or a crypto financing event.
       properties:
@@ -1293,31 +776,85 @@ components:
       - co_investors
       title: Financing
       type: object
-    Exercise:
-      description: An exercise transaction.
+    AddSecurities:
+      description: A list of securities, across different types, to add.
       properties:
-        company_id:
-          title: Company Id
-          type: string
-        date:
-          format: date
-          title: Date
-          type: string
-        security_id:
-          title: Security Id
-          type: string
-        converted_to_share_class_id:
-          title: Converted To Share Class Id
-          type: string
-      required:
-      - company_id
-      - date
-      - security_id
-      - converted_to_share_class_id
-      title: Exercise
+        certificates:
+          default: []
+          items:
+            $ref: '#/components/schemas/Certificate'
+          title: Certificates
+          type: array
+        warrants:
+          default: []
+          items:
+            $ref: '#/components/schemas/Warrant'
+          title: Warrants
+          type: array
+        convertibles:
+          default: []
+          items:
+            $ref: '#/components/schemas/Convertible'
+          title: Convertibles
+          type: array
+        token_investments:
+          default: []
+          items:
+            $ref: '#/components/schemas/TokenInvestment'
+          title: Token Investments
+          type: array
+        token_warrants:
+          default: []
+          items:
+            $ref: '#/components/schemas/TokenWarrant'
+          title: Token Warrants
+          type: array
+        token_convertibles:
+          default: []
+          items:
+            $ref: '#/components/schemas/TokenConvertible'
+          title: Token Convertibles
+          type: array
+      title: AddSecurities
       type: object
-    TokenInvestmentOut:
-      description: A token investment being returned from our API.
+    SecuritiesFilters:
+      additionalProperties: false
+      description: Options for fetching securities.
+      properties:
+        company_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Filter by company IDs.
+          examples:
+          - - pvYe
+            - a2Ne
+          title: Company Ids
+        security_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Filter by security IDs.
+          examples:
+          - - pvYe
+            - a2Ne
+          title: Security Ids
+        fund_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter by fund ID.
+          examples:
+          - pvYe
+          title: Fund Id
+      title: SecuritiesFilters
+      type: object
+    WarrantOut:
+      description: A warrant being returned from our API.
       properties:
         id:
           anyOf:
@@ -1348,8 +885,8 @@ components:
           title: Company Id
           type: string
         type:
-          const: token_investment
-          default: token_investment
+          const: warrant
+          default: warrant
           title: Type
           type: string
         fund_name:
@@ -1364,39 +901,38 @@ components:
           - Acme Corp
           title: Company Name
           type: string
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The token symbol or name.
+        due_date:
+          description: The expiration date of the warrant.
           examples:
-          - SMX
-          title: Token
-        investment_amount:
+          - '2030-01-01'
+          format: date
+          title: Due Date
+          type: string
+        exercise_price:
           $ref: '#/components/schemas/MoneyAmount'
-          description: The total investment amount.
+          description: The exercise price per share of the warrant.
           examples:
           - currency: USD
-            value: '500000'
-        quantity:
+            value: '10.50'
+        shares:
           anyOf:
           - type: number
           - type: string
-          description: The number of tokens held.
+          description: The number of shares the warrant can be exercised for.
           examples:
-          - '1000'
-          title: Quantity
-        price_per_token:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The price per token at purchase.
-          examples:
-          - currency: USD
-            value: '500'
+          - '10000'
+          title: Shares
         financing_id:
-          description: The ID of the financing round this token investment belongs to.
+          description: The ID of the financing round this warrant belongs to.
           examples:
           - a2Ne
           title: Financing Id
+          type: string
+        total_cost:
+          description: The total cost of the warrant.
+          format: decimal
+          readOnly: true
+          title: Total Cost
           type: string
       required:
       - issue_date
@@ -1404,109 +940,105 @@ components:
       - company_id
       - fund_name
       - company_name
-      - token
-      - investment_amount
-      - quantity
-      - price_per_token
+      - due_date
+      - exercise_price
+      - shares
       - financing_id
-      title: TokenInvestmentOut
+      title: WarrantOut
       type: object
-    OverridesToUpsert:
-      description: Overrides to add.
+    ParticipationType:
+      enum:
+      - NON_PARTICIPATING
+      - FULLY_PARTICIPATING
+      - CAPPED_PARTICIPATING
+      title: ParticipationType
+      type: string
+      x-enumDescriptions:
+      - Non Participating
+      - Fully Participating
+      - Capped Participating
+      x-enumNames:
+      - NON_PARTICIPATING
+      - FULLY_PARTICIPATING
+      - CAPPED_PARTICIPATING
+    PublicEquityOut:
+      description: A public equity holding being returned from our API.
       properties:
-        ownerships:
-          default: []
-          items:
-            $ref: '#/components/schemas/Ownership'
-          title: Ownerships
-          type: array
-        post_money_valuations:
-          default: []
-          items:
-            $ref: '#/components/schemas/PostMoneyValuation'
-          title: Post Money Valuations
-          type: array
-        fair_values:
-          default: []
-          items:
-            $ref: '#/components/schemas/FairValue'
-          title: Fair Values
-          type: array
-      title: OverridesToUpsert
-      type: object
-    TransactionFilters:
-      additionalProperties: false
-      description: Options for fetching transactions.
-      properties:
-        company_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Filter by company IDs.
-          examples:
-          - - pvYe
-            - a2Ne
-          title: Company Ids
-        transaction_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Filter by transaction IDs.
-          examples:
-          - - pvYe
-            - a2Ne
-          title: Transaction Ids
-        event:
-          anyOf:
-          - $ref: '#/components/schemas/TransactionEvent'
-          - type: 'null'
-          description: Filter by transaction event type.
-          examples:
-          - sale
-        input_security_id:
+        id:
           anyOf:
           - type: string
           - type: 'null'
-          description: Filter by the input security ID of the transaction.
-          examples:
-          - pvYe
-          title: Input Security Id
-        output_security_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Filter by the output security ID of the transaction.
+          description: The ID of the security.
           examples:
           - a2Ne
-          title: Output Security Id
-      title: TransactionFilters
-      type: object
-    Conversion:
-      description: A conversion transaction.
-      properties:
+          readOnly: true
+          title: Id
+        issue_date:
+          description: The date the security was issued.
+          examples:
+          - '2020-01-01'
+          format: date
+          title: Issue Date
+          type: string
+        fund_id:
+          description: The ID of the fund that holds this security.
+          examples:
+          - a2Ne
+          title: Fund Id
+          type: string
         company_id:
+          description: The ID of the company this security belongs to.
+          examples:
+          - pvYe
           title: Company Id
           type: string
-        date:
-          format: date
-          title: Date
+        type:
+          const: public_equity
+          default: public_equity
+          title: Type
           type: string
-        security_id:
-          title: Security Id
+        fund_name:
+          description: The name of the fund that holds this security.
+          examples:
+          - Fund I
+          title: Fund Name
           type: string
-        converted_to_share_class_id:
-          title: Converted To Share Class Id
+        company_name:
+          description: The name of the company this security belongs to.
+          examples:
+          - Acme Corp
+          title: Company Name
           type: string
+        price_per_share:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The price per share at purchase.
+          examples:
+          - currency: USD
+            value: '25.00'
+        shares:
+          anyOf:
+          - type: number
+          - type: string
+          description: The number of shares held.
+          examples:
+          - '50000'
+          title: Shares
+        investment_amount:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The total investment amount.
+          examples:
+          - currency: USD
+            value: '1250000'
       required:
+      - issue_date
+      - fund_id
       - company_id
-      - date
-      - security_id
-      - converted_to_share_class_id
-      title: Conversion
+      - fund_name
+      - company_name
+      - price_per_share
+      - shares
+      - investment_amount
+      title: PublicEquityOut
       type: object
     MoneyAmount:
       description: A monetary amount.
@@ -1568,8 +1100,50 @@ components:
       - currency
       title: MoneyAmount
       type: object
-    Warrant:
-      description: A warrant for a company.
+    Exercise:
+      description: An exercise transaction.
+      properties:
+        company_id:
+          title: Company Id
+          type: string
+        date:
+          format: date
+          title: Date
+          type: string
+        security_id:
+          title: Security Id
+          type: string
+        converted_to_share_class_id:
+          title: Converted To Share Class Id
+          type: string
+      required:
+      - company_id
+      - date
+      - security_id
+      - converted_to_share_class_id
+      title: Exercise
+      type: object
+    AddShareClasses:
+      description: A list of share classes to add to a company's cap table.
+      properties:
+        share_classes:
+          items:
+            $ref: '#/components/schemas/ShareClass'
+          title: Share Classes
+          type: array
+      required:
+      - share_classes
+      title: AddShareClasses
+      type: object
+    ConvertibleType:
+      enum:
+      - convertible_note
+      - basic_note
+      - safe
+      - kiss
+      type: string
+    TokenInvestment:
+      description: A token investment for a company.
       properties:
         id:
           anyOf:
@@ -1600,53 +1174,157 @@ components:
           title: Company Id
           type: string
         type:
-          const: warrant
-          default: warrant
+          const: token_investment
+          default: token_investment
           title: Type
           type: string
-        due_date:
-          description: The expiration date of the warrant.
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The token symbol or name.
           examples:
-          - '2030-01-01'
-          format: date
-          title: Due Date
-          type: string
-        exercise_price:
+          - SMX
+          title: Token
+        investment_amount:
           $ref: '#/components/schemas/MoneyAmount'
-          description: The exercise price per share of the warrant.
+          description: The total investment amount.
           examples:
           - currency: USD
-            value: '10.50'
-        shares:
+            value: '500000'
+        quantity:
           anyOf:
           - type: number
           - type: string
-          description: The number of shares the warrant can be exercised for.
+          description: The number of tokens held.
           examples:
-          - '10000'
-          title: Shares
+          - '1000'
+          title: Quantity
+        price_per_token:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The price per token at purchase.
+          examples:
+          - currency: USD
+            value: '500'
         financing_id:
-          description: The ID of the financing round this warrant belongs to.
+          description: The ID of the financing round this token investment belongs to.
           examples:
           - a2Ne
           title: Financing Id
-          type: string
-        total_cost:
-          description: The total cost of the warrant.
-          format: decimal
-          readOnly: true
-          title: Total Cost
           type: string
       required:
       - issue_date
       - fund_id
       - company_id
-      - due_date
-      - exercise_price
-      - shares
+      - token
+      - investment_amount
+      - quantity
+      - price_per_token
       - financing_id
-      title: Warrant
+      title: TokenInvestment
       type: object
+    CompanyMetrics:
+      description: Investment metrics for a single company.
+      properties:
+        company_id:
+          title: Company Id
+          type: string
+        as_of_date:
+          format: date
+          title: As Of Date
+          type: string
+        currency:
+          $ref: '#/components/schemas/CurrencyCode'
+        irr:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Irr
+        moic:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Moic
+        fair_value:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Fair Value
+        investment_amount:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Investment Amount
+        realized_value:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Realized Value
+        ownership:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Ownership
+        total_shares_owned:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Total Shares Owned
+        pre_money_valuation:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Pre Money Valuation
+        post_money_valuation:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Post Money Valuation
+        fully_diluted_shares:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Fully Diluted Shares
+        latest_price_per_share:
+          anyOf:
+          - type: number
+          - type: string
+          - type: 'null'
+          title: Latest Price Per Share
+      required:
+      - company_id
+      - as_of_date
+      - currency
+      - irr
+      - moic
+      - fair_value
+      - investment_amount
+      - realized_value
+      - ownership
+      - total_shares_owned
+      - pre_money_valuation
+      - post_money_valuation
+      - fully_diluted_shares
+      - latest_price_per_share
+      title: CompanyMetrics
+      type: object
+    ShareClassPurchaseType:
+      description: String enum for share class purchase types.
+      enum:
+      - primary
+      - secondary
+      title: ShareClassPurchaseType
+      type: string
     Convertible:
       description: A convertible note.
       properties:
@@ -1755,106 +1433,9 @@ components:
       - financing_id
       title: Convertible
       type: object
-    AddTransactions:
-      description: A list of transactions to add to a company's cap table.
-      properties:
-        sales:
-          default: []
-          items:
-            $ref: '#/components/schemas/Sale'
-          title: Sales
-          type: array
-        conversions:
-          default: []
-          items:
-            $ref: '#/components/schemas/Conversion'
-          title: Conversions
-          type: array
-        exercises:
-          default: []
-          items:
-            $ref: '#/components/schemas/Exercise'
-          title: Exercises
-          type: array
-      title: AddTransactions
-      type: object
-    Certificate:
-      description: A private equity investment in a company.
-      properties:
-        id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the security.
-          examples:
-          - a2Ne
-          readOnly: true
-          title: Id
-        issue_date:
-          description: The date the security was issued.
-          examples:
-          - '2020-01-01'
-          format: date
-          title: Issue Date
-          type: string
-        fund_id:
-          description: The ID of the fund that holds this security.
-          examples:
-          - a2Ne
-          title: Fund Id
-          type: string
-        company_id:
-          description: The ID of the company this security belongs to.
-          examples:
-          - pvYe
-          title: Company Id
-          type: string
-        type:
-          const: certificate
-          default: certificate
-          title: Type
-          type: string
-        investment_amount:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The total investment amount for this certificate.
-          examples:
-          - currency: USD
-            value: '1000000'
-        shares:
-          anyOf:
-          - type: number
-          - type: string
-          description: The number of shares held.
-          examples:
-          - '50000'
-          title: Shares
-        share_class_id:
-          description: The ID of the share class for this certificate.
-          examples:
-          - a2Ne
-          title: Share Class Id
-          type: string
-        financing_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The ID of the financing round this certificate belongs to.
-          examples:
-          - a2Ne
-          title: Financing Id
-      required:
-      - issue_date
-      - fund_id
-      - company_id
-      - investment_amount
-      - shares
-      - share_class_id
-      - financing_id
-      title: Certificate
-      type: object
-    FinancingFilters:
+    TransactionFilters:
       additionalProperties: false
-      description: Options for fetching financing events.
+      description: Options for fetching transactions.
       properties:
         company_ids:
           anyOf:
@@ -1867,52 +1448,82 @@ components:
           - - pvYe
             - a2Ne
           title: Company Ids
-        financing_ids:
+        transaction_ids:
           anyOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          description: Filter by financing event IDs.
+          description: Filter by transaction IDs.
           examples:
           - - pvYe
             - a2Ne
-          title: Financing Ids
-        sort_by:
+          title: Transaction Ids
+        event:
           anyOf:
-          - enum:
-            - closing_date
-            - +closing_date
-            - -closing_date
-            - round_size
-            - +round_size
-            - -round_size
+          - $ref: '#/components/schemas/TransactionEvent'
+          - type: 'null'
+          description: Filter by transaction event type.
+          examples:
+          - sale
+        input_security_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter by the input security ID of the transaction.
+          examples:
+          - pvYe
+          title: Input Security Id
+        output_security_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: Filter by the output security ID of the transaction.
+          examples:
+          - a2Ne
+          title: Output Security Id
+      title: TransactionFilters
+      type: object
+    SeniorityPosition:
+      enum:
+      - SENIOR_TO_ALL
+      - PARI_PASSU
+      - PARI_PASSU_ALL_PREVIOUS
+      title: SeniorityPosition
+      type: string
+      x-enumDescriptions:
+      - Senior To All
+      - Pari Passu
+      - Pari Passu All Previous
+      x-enumNames:
+      - SENIOR_TO_ALL
+      - PARI_PASSU
+      - PARI_PASSU_ALL_PREVIOUS
+    MetricsFilters:
+      description: Filters for metrics endpoint.
+      properties:
+        company_ids:
+          items:
             type: string
-          - type: 'null'
-          description: Sort results by a field. Prefix with '-' for descending order, '+' or no prefix for ascending.
-          examples:
-          - -closing_date
-          title: Sort By
-        is_crypto:
-          anyOf:
-          - type: boolean
-          - type: 'null'
-          description: Filter by whether the financing event is a crypto financing event.
-          examples:
-          - false
-          title: Is Crypto
-        co_investors:
+          title: Company Ids
+          type: array
+        fund_ids:
           anyOf:
           - items:
-              $ref: '#/components/schemas/CoInvestorFilter'
+              type: string
             type: array
           - type: 'null'
-          description: Filter financing events by co-investor name and role.
-          title: Co Investors
-      title: FinancingFilters
+          title: Fund Ids
+        as_of_date:
+          format: date
+          title: As Of Date
+          type: string
+      required:
+      - company_ids
+      title: MetricsFilters
       type: object
-    TokenWarrant:
-      description: A token warrant for a company.
+    Warrant:
+      description: A warrant for a company.
       properties:
         id:
           anyOf:
@@ -1943,130 +1554,107 @@ components:
           title: Company Id
           type: string
         type:
-          const: token_warrant
-          default: token_warrant
+          const: warrant
+          default: warrant
           title: Type
           type: string
-        token:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: The token symbol or name.
-          examples:
-          - SMX
-          title: Token
         due_date:
-          description: The expiration date of the token warrant.
+          description: The expiration date of the warrant.
           examples:
           - '2030-01-01'
           format: date
           title: Due Date
           type: string
-        total_cost:
-          $ref: '#/components/schemas/MoneyAmount'
-          description: The total cost of the token warrant.
-          examples:
-          - currency: USD
-            value: '100000'
         exercise_price:
           $ref: '#/components/schemas/MoneyAmount'
-          description: The exercise price per token.
+          description: The exercise price per share of the warrant.
           examples:
           - currency: USD
-            value: '100'
-        quantity:
+            value: '10.50'
+        shares:
           anyOf:
           - type: number
           - type: string
-          description: The number of tokens the warrant can be exercised for.
+          description: The number of shares the warrant can be exercised for.
           examples:
-          - '1000'
-          title: Quantity
+          - '10000'
+          title: Shares
         financing_id:
-          description: The ID of the financing round this token warrant belongs to.
+          description: The ID of the financing round this warrant belongs to.
           examples:
           - a2Ne
           title: Financing Id
+          type: string
+        total_cost:
+          description: The total cost of the warrant.
+          format: decimal
+          readOnly: true
+          title: Total Cost
           type: string
       required:
       - issue_date
       - fund_id
       - company_id
-      - token
       - due_date
-      - total_cost
       - exercise_price
-      - quantity
+      - shares
       - financing_id
-      title: TokenWarrant
+      title: Warrant
       type: object
-    AddFinancingRounds:
-      description: A list of financing rounds to add.
+    ShareClassFilters:
+      additionalProperties: false
+      description: Options for fetching share classes.
       properties:
-        financing_rounds:
-          items:
-            $ref: '#/components/schemas/Financing'
-          title: Financing Rounds
-          type: array
+        company_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Filter by company IDs.
+          examples:
+          - - pvYe
+            - a2Ne
+          title: Company Ids
+        share_class_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Filter by share class IDs.
+          examples:
+          - - pvYe
+            - a2Ne
+          title: Share Class Ids
+        purchase_type:
+          anyOf:
+          - $ref: '#/components/schemas/ShareClassPurchaseType'
+          - type: 'null'
+          description: 'Filter by purchase type: ''primary'' or ''secondary''.'
+          examples:
+          - primary
+      title: ShareClassFilters
+      type: object
+    CoInvestorFilter:
+      description: Filter for matching a co-investor by name and role.
+      properties:
+        name:
+          description: Substring match against co-investor names.
+          examples:
+          - SM Capital
+          title: Name
+          type: string
+        role:
+          allOf:
+          - $ref: '#/components/schemas/CoInvestorRole'
+          default: any
+          description: 'Filter co-investors by their role: ''lead'', ''co'', or ''any''.'
+          examples:
+          - lead
       required:
-      - financing_rounds
-      title: AddFinancingRounds
-      type: object
-    ParticipationType:
-      enum:
-      - NON_PARTICIPATING
-      - FULLY_PARTICIPATING
-      - CAPPED_PARTICIPATING
-      title: ParticipationType
-      type: string
-      x-enumDescriptions:
-      - Non Participating
-      - Fully Participating
-      - Capped Participating
-      x-enumNames:
-      - NON_PARTICIPATING
-      - FULLY_PARTICIPATING
-      - CAPPED_PARTICIPATING
-    AddSecurities:
-      description: A list of securities, across different types, to add.
-      properties:
-        certificates:
-          default: []
-          items:
-            $ref: '#/components/schemas/Certificate'
-          title: Certificates
-          type: array
-        warrants:
-          default: []
-          items:
-            $ref: '#/components/schemas/Warrant'
-          title: Warrants
-          type: array
-        convertibles:
-          default: []
-          items:
-            $ref: '#/components/schemas/Convertible'
-          title: Convertibles
-          type: array
-        token_investments:
-          default: []
-          items:
-            $ref: '#/components/schemas/TokenInvestment'
-          title: Token Investments
-          type: array
-        token_warrants:
-          default: []
-          items:
-            $ref: '#/components/schemas/TokenWarrant'
-          title: Token Warrants
-          type: array
-        token_convertibles:
-          default: []
-          items:
-            $ref: '#/components/schemas/TokenConvertible'
-          title: Token Convertibles
-          type: array
-      title: AddSecurities
+      - name
+      title: CoInvestorFilter
       type: object
     ConvertibleOut:
       description: A convertible note being returned from our API.
@@ -2201,28 +1789,99 @@ components:
       - financing_id
       title: ConvertibleOut
       type: object
-    CoInvestorFilter:
-      description: Filter for matching a co-investor by name and role.
+    Conversion:
+      description: A conversion transaction.
       properties:
-        name:
-          description: Substring match against co-investor names.
-          examples:
-          - SM Capital
-          title: Name
+        company_id:
+          title: Company Id
           type: string
-        role:
-          allOf:
-          - $ref: '#/components/schemas/CoInvestorRole'
-          default: any
-          description: 'Filter co-investors by their role: ''lead'', ''co'', or ''any''.'
-          examples:
-          - lead
+        date:
+          format: date
+          title: Date
+          type: string
+        security_id:
+          title: Security Id
+          type: string
+        converted_to_share_class_id:
+          title: Converted To Share Class Id
+          type: string
       required:
-      - name
-      title: CoInvestorFilter
+      - company_id
+      - date
+      - security_id
+      - converted_to_share_class_id
+      title: Conversion
       type: object
-    WarrantOut:
-      description: A warrant being returned from our API.
+    PostMoneyValuation:
+      description: A post-money valuation to add to a company's cap table.
+      properties:
+        date:
+          format: date
+          title: Date
+          type: string
+        company_id:
+          title: Company Id
+          type: string
+        post_money_valuation:
+          $ref: '#/components/schemas/MoneyAmount'
+      required:
+      - date
+      - company_id
+      - post_money_valuation
+      title: PostMoneyValuation
+      type: object
+    Sale:
+      description: A sale transaction.
+      properties:
+        company_id:
+          title: Company Id
+          type: string
+        date:
+          format: date
+          title: Date
+          type: string
+        security_id:
+          title: Security Id
+          type: string
+        cash_received:
+          $ref: '#/components/schemas/MoneyAmount'
+        shares_sold:
+          anyOf:
+          - type: number
+          - type: string
+          title: Shares Sold
+      required:
+      - company_id
+      - date
+      - security_id
+      - cash_received
+      - shares_sold
+      title: Sale
+      type: object
+    FairValue:
+      description: A fair value override to add to a company's cap table.
+      properties:
+        date:
+          format: date
+          title: Date
+          type: string
+        company_id:
+          title: Company Id
+          type: string
+        fair_value:
+          $ref: '#/components/schemas/MoneyAmount'
+        fund_id:
+          title: Fund Id
+          type: string
+      required:
+      - date
+      - company_id
+      - fair_value
+      - fund_id
+      title: FairValue
+      type: object
+    TokenWarrant:
+      description: A token warrant for a company.
       properties:
         id:
           anyOf:
@@ -2253,161 +1912,62 @@ components:
           title: Company Id
           type: string
         type:
-          const: warrant
-          default: warrant
+          const: token_warrant
+          default: token_warrant
           title: Type
           type: string
-        fund_name:
-          description: The name of the fund that holds this security.
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The token symbol or name.
           examples:
-          - Fund I
-          title: Fund Name
-          type: string
-        company_name:
-          description: The name of the company this security belongs to.
-          examples:
-          - Acme Corp
-          title: Company Name
-          type: string
+          - SMX
+          title: Token
         due_date:
-          description: The expiration date of the warrant.
+          description: The expiration date of the token warrant.
           examples:
           - '2030-01-01'
           format: date
           title: Due Date
           type: string
-        exercise_price:
+        total_cost:
           $ref: '#/components/schemas/MoneyAmount'
-          description: The exercise price per share of the warrant.
+          description: The total cost of the token warrant.
           examples:
           - currency: USD
-            value: '10.50'
-        shares:
+            value: '100000'
+        exercise_price:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The exercise price per token.
+          examples:
+          - currency: USD
+            value: '100'
+        quantity:
           anyOf:
           - type: number
           - type: string
-          description: The number of shares the warrant can be exercised for.
+          description: The number of tokens the warrant can be exercised for.
           examples:
-          - '10000'
-          title: Shares
+          - '1000'
+          title: Quantity
         financing_id:
-          description: The ID of the financing round this warrant belongs to.
+          description: The ID of the financing round this token warrant belongs to.
           examples:
           - a2Ne
           title: Financing Id
-          type: string
-        total_cost:
-          description: The total cost of the warrant.
-          format: decimal
-          readOnly: true
-          title: Total Cost
           type: string
       required:
       - issue_date
       - fund_id
       - company_id
-      - fund_name
-      - company_name
+      - token
       - due_date
+      - total_cost
       - exercise_price
-      - shares
+      - quantity
       - financing_id
-      title: WarrantOut
-      type: object
-    CompanyMetrics:
-      description: Investment metrics for a single company.
-      properties:
-        company_id:
-          title: Company Id
-          type: string
-        as_of_date:
-          format: date
-          title: As Of Date
-          type: string
-        currency:
-          $ref: '#/components/schemas/CurrencyCode'
-        irr:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Irr
-        moic:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Moic
-        fair_value:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Fair Value
-        investment_amount:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Investment Amount
-        realized_value:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Realized Value
-        ownership:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Ownership
-        total_shares_owned:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Total Shares Owned
-        pre_money_valuation:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Pre Money Valuation
-        post_money_valuation:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Post Money Valuation
-        fully_diluted_shares:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Fully Diluted Shares
-        latest_price_per_share:
-          anyOf:
-          - type: number
-          - type: string
-          - type: 'null'
-          title: Latest Price Per Share
-      required:
-      - company_id
-      - as_of_date
-      - currency
-      - irr
-      - moic
-      - fair_value
-      - investment_amount
-      - realized_value
-      - ownership
-      - total_shares_owned
-      - pre_money_valuation
-      - post_money_valuation
-      - fully_diluted_shares
-      - latest_price_per_share
-      title: CompanyMetrics
+      title: TokenWarrant
       type: object
     TokenWarrantOut:
       description: A token warrant being returned from our API.
@@ -2512,140 +2072,103 @@ components:
       - financing_id
       title: TokenWarrantOut
       type: object
-    CurrencyCode:
-      description: Supported currency codes.
-      enum:
-      - AED
-      - AUD
-      - BDT
-      - BRL
-      - CAD
-      - CHF
-      - CNY
-      - COP
-      - CZK
-      - DKK
-      - EUR
-      - GBP
-      - GHS
-      - HKD
-      - IDR
-      - ILS
-      - INR
-      - JPY
-      - JOD
-      - KES
-      - KRW
-      - MXN
-      - NGN
-      - NOK
-      - NZD
-      - PEN
-      - PHP
-      - SAR
-      - SGD
-      - USD
-      - PKR
-      - THB
-      - TRY
-      - TWD
-      - TZS
-      - VND
-      - SEK
-      - ISK
-      - ZAR
-      title: CurrencyCode
-      type: string
-    SecuritiesFilters:
-      additionalProperties: false
-      description: Options for fetching securities.
-      properties:
-        company_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Filter by company IDs.
-          examples:
-          - - pvYe
-            - a2Ne
-          title: Company Ids
-        security_ids:
-          anyOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          description: Filter by security IDs.
-          examples:
-          - - pvYe
-            - a2Ne
-          title: Security Ids
-        fund_id:
-          anyOf:
-          - type: string
-          - type: 'null'
-          description: Filter by fund ID.
-          examples:
-          - pvYe
-          title: Fund Id
-      title: SecuritiesFilters
-      type: object
-    Ownership:
-      description: An ownership override to add to a company's cap table.
-      properties:
-        date:
-          format: date
-          title: Date
-          type: string
-        company_id:
-          title: Company Id
-          type: string
-        ownership_percentage:
-          anyOf:
-          - maximum: 1
-            minimum: 0
-            type: number
-          - type: string
-          description: The ownership percentage
-          examples:
-          - '0.1'
-          - '0.5'
-          - '1'
-          title: Ownership Percentage
-        fund_id:
-          title: Fund Id
-          type: string
-      required:
-      - date
-      - company_id
-      - ownership_percentage
-      - fund_id
-      title: Ownership
-      type: object
-    PariPassuRound:
-      description: A financing round in a pari passu group.
+    TokenInvestmentOut:
+      description: A token investment being returned from our API.
       properties:
         id:
-          description: The ID of the financing round.
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the security.
           examples:
           - a2Ne
+          readOnly: true
           title: Id
-          type: string
-        name:
-          description: The name of the financing round.
+        issue_date:
+          description: The date the security was issued.
           examples:
-          - Series A
-          title: Name
+          - '2020-01-01'
+          format: date
+          title: Issue Date
+          type: string
+        fund_id:
+          description: The ID of the fund that holds this security.
+          examples:
+          - a2Ne
+          title: Fund Id
+          type: string
+        company_id:
+          description: The ID of the company this security belongs to.
+          examples:
+          - pvYe
+          title: Company Id
+          type: string
+        type:
+          const: token_investment
+          default: token_investment
+          title: Type
+          type: string
+        fund_name:
+          description: The name of the fund that holds this security.
+          examples:
+          - Fund I
+          title: Fund Name
+          type: string
+        company_name:
+          description: The name of the company this security belongs to.
+          examples:
+          - Acme Corp
+          title: Company Name
+          type: string
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The token symbol or name.
+          examples:
+          - SMX
+          title: Token
+        investment_amount:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The total investment amount.
+          examples:
+          - currency: USD
+            value: '500000'
+        quantity:
+          anyOf:
+          - type: number
+          - type: string
+          description: The number of tokens held.
+          examples:
+          - '1000'
+          title: Quantity
+        price_per_token:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The price per token at purchase.
+          examples:
+          - currency: USD
+            value: '500'
+        financing_id:
+          description: The ID of the financing round this token investment belongs to.
+          examples:
+          - a2Ne
+          title: Financing Id
           type: string
       required:
-      - id
-      - name
-      title: PariPassuRound
+      - issue_date
+      - fund_id
+      - company_id
+      - fund_name
+      - company_name
+      - token
+      - investment_amount
+      - quantity
+      - price_per_token
+      - financing_id
+      title: TokenInvestmentOut
       type: object
-    ShareClassOut:
-      description: A share class being returned from our API.
+    ShareClass:
+      description: A share class within a financing round.
       properties:
         id:
           anyOf:
@@ -2706,12 +2229,6 @@ components:
           examples:
           - true
           title: Include In Fair Value
-        company_name:
-          description: The name of the company this share class belongs to. Output only.
-          examples:
-          - Acme Corp
-          title: Company Name
-          type: string
       required:
       - company_id
       - financing_id
@@ -2719,50 +2236,7 @@ components:
       - type
       - name
       - price_per_share
-      - company_name
-      title: ShareClassOut
-      type: object
-    SeniorityPosition:
-      enum:
-      - SENIOR_TO_ALL
-      - PARI_PASSU
-      - PARI_PASSU_ALL_PREVIOUS
-      title: SeniorityPosition
-      type: string
-      x-enumDescriptions:
-      - Senior To All
-      - Pari Passu
-      - Pari Passu All Previous
-      x-enumNames:
-      - SENIOR_TO_ALL
-      - PARI_PASSU
-      - PARI_PASSU_ALL_PREVIOUS
-    ShareClassPurchaseType:
-      description: String enum for share class purchase types.
-      enum:
-      - primary
-      - secondary
-      title: ShareClassPurchaseType
-      type: string
-    CoInvestor:
-      description: A co-investor in a financing round.
-      properties:
-        name:
-          description: The name of the co-investor.
-          examples:
-          - SM Capital
-          title: Name
-          type: string
-        is_lead:
-          default: false
-          description: Whether this co-investor is the lead investor.
-          examples:
-          - true
-          title: Is Lead
-          type: boolean
-      required:
-      - name
-      title: CoInvestor
+      title: ShareClass
       type: object
     Transaction:
       description: A transaction from one holding to another.
@@ -2848,6 +2322,532 @@ components:
       - investment_amount
       - proceeds
       title: Transaction
+      type: object
+    FinancingFilters:
+      additionalProperties: false
+      description: Options for fetching financing events.
+      properties:
+        company_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Filter by company IDs.
+          examples:
+          - - pvYe
+            - a2Ne
+          title: Company Ids
+        financing_ids:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          description: Filter by financing event IDs.
+          examples:
+          - - pvYe
+            - a2Ne
+          title: Financing Ids
+        sort_by:
+          anyOf:
+          - enum:
+            - closing_date
+            - +closing_date
+            - -closing_date
+            - round_size
+            - +round_size
+            - -round_size
+            type: string
+          - type: 'null'
+          description: Sort results by a field. Prefix with '-' for descending order, '+' or no prefix for ascending.
+          examples:
+          - -closing_date
+          title: Sort By
+        is_crypto:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Filter by whether the financing event is a crypto financing event.
+          examples:
+          - false
+          title: Is Crypto
+        co_investors:
+          anyOf:
+          - items:
+              $ref: '#/components/schemas/CoInvestorFilter'
+            type: array
+          - type: 'null'
+          description: Filter financing events by co-investor name and role.
+          title: Co Investors
+      title: FinancingFilters
+      type: object
+    Ownership:
+      description: An ownership override to add to a company's cap table.
+      properties:
+        date:
+          format: date
+          title: Date
+          type: string
+        company_id:
+          title: Company Id
+          type: string
+        ownership_percentage:
+          anyOf:
+          - maximum: 1
+            minimum: 0
+            type: number
+          - type: string
+          description: The ownership percentage
+          examples:
+          - '0.1'
+          - '0.5'
+          - '1'
+          title: Ownership Percentage
+        fund_id:
+          title: Fund Id
+          type: string
+      required:
+      - date
+      - company_id
+      - ownership_percentage
+      - fund_id
+      title: Ownership
+      type: object
+    AddFinancingRounds:
+      description: A list of financing rounds to add.
+      properties:
+        financing_rounds:
+          items:
+            $ref: '#/components/schemas/Financing'
+          title: Financing Rounds
+          type: array
+      required:
+      - financing_rounds
+      title: AddFinancingRounds
+      type: object
+    MetricsResponse:
+      description: Metrics response.
+      properties:
+        metrics:
+          items:
+            $ref: '#/components/schemas/CompanyMetrics'
+          title: Metrics
+          type: array
+        as_of_date:
+          format: date
+          title: As Of Date
+          type: string
+      required:
+      - metrics
+      - as_of_date
+      title: MetricsResponse
+      type: object
+    ShareClassOut:
+      description: A share class being returned from our API.
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the share class.
+          examples:
+          - a2Ne
+          readOnly: true
+          title: Id
+        company_id:
+          description: The ID of the company this share class belongs to.
+          examples:
+          - pvYe
+          title: Company Id
+          type: string
+        financing_id:
+          description: The ID of the financing round this share class belongs to.
+          examples:
+          - a2Ne
+          title: Financing Id
+          type: string
+        purchase_type:
+          description: Whether the purchase is a primary or secondary transaction.
+          enum:
+          - primary
+          - secondary
+          examples:
+          - primary
+          title: Purchase Type
+          type: string
+        type:
+          description: The type of shares in this share class.
+          enum:
+          - common
+          - preferred
+          examples:
+          - preferred
+          title: Type
+          type: string
+        name:
+          description: The name of the share class.
+          examples:
+          - Series A
+          title: Name
+          type: string
+        price_per_share:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The price per share for this share class.
+          examples:
+          - currency: USD
+            value: '10.00'
+        include_in_fair_value:
+          anyOf:
+          - type: boolean
+          - type: 'null'
+          description: Whether the share class is included in the fair value calculation. Defaults to `True` when the `purchase_type` is `primary`, otherwise `False`.
+          examples:
+          - true
+          title: Include In Fair Value
+        company_name:
+          description: The name of the company this share class belongs to. Output only.
+          examples:
+          - Acme Corp
+          title: Company Name
+          type: string
+      required:
+      - company_id
+      - financing_id
+      - purchase_type
+      - type
+      - name
+      - price_per_share
+      - company_name
+      title: ShareClassOut
+      type: object
+    OverridesToUpsert:
+      description: Overrides to add.
+      properties:
+        ownerships:
+          default: []
+          items:
+            $ref: '#/components/schemas/Ownership'
+          title: Ownerships
+          type: array
+        post_money_valuations:
+          default: []
+          items:
+            $ref: '#/components/schemas/PostMoneyValuation'
+          title: Post Money Valuations
+          type: array
+        fair_values:
+          default: []
+          items:
+            $ref: '#/components/schemas/FairValue'
+          title: Fair Values
+          type: array
+      title: OverridesToUpsert
+      type: object
+    TransactionEvent:
+      description: A transaction event.
+      enum:
+      - exercise
+      - conversion
+      - sale
+      title: TransactionEvent
+      type: string
+    PariPassuRound:
+      description: A financing round in a pari passu group.
+      properties:
+        id:
+          description: The ID of the financing round.
+          examples:
+          - a2Ne
+          title: Id
+          type: string
+        name:
+          description: The name of the financing round.
+          examples:
+          - Series A
+          title: Name
+          type: string
+      required:
+      - id
+      - name
+      title: PariPassuRound
+      type: object
+    CoInvestorRole:
+      description: Role filter for co-investor matching.
+      enum:
+      - lead
+      - co
+      - any
+      title: CoInvestorRole
+      type: string
+    CertificateOut:
+      description: A certificate being returned from our API.
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the security.
+          examples:
+          - a2Ne
+          readOnly: true
+          title: Id
+        issue_date:
+          description: The date the security was issued.
+          examples:
+          - '2020-01-01'
+          format: date
+          title: Issue Date
+          type: string
+        fund_id:
+          description: The ID of the fund that holds this security.
+          examples:
+          - a2Ne
+          title: Fund Id
+          type: string
+        company_id:
+          description: The ID of the company this security belongs to.
+          examples:
+          - pvYe
+          title: Company Id
+          type: string
+        type:
+          const: certificate
+          default: certificate
+          title: Type
+          type: string
+        fund_name:
+          description: The name of the fund that holds this security.
+          examples:
+          - Fund I
+          title: Fund Name
+          type: string
+        company_name:
+          description: The name of the company this security belongs to.
+          examples:
+          - Acme Corp
+          title: Company Name
+          type: string
+        investment_amount:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The total investment amount for this certificate.
+          examples:
+          - currency: USD
+            value: '1000000'
+        shares:
+          anyOf:
+          - type: number
+          - type: string
+          description: The number of shares held.
+          examples:
+          - '50000'
+          title: Shares
+        share_class_id:
+          description: The ID of the share class for this certificate.
+          examples:
+          - a2Ne
+          title: Share Class Id
+          type: string
+        financing_id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the financing round this certificate belongs to.
+          examples:
+          - a2Ne
+          title: Financing Id
+        share_class_name:
+          description: The name of the share class for this certificate.
+          examples:
+          - Series A
+          title: Share Class Name
+          type: string
+      required:
+      - issue_date
+      - fund_id
+      - company_id
+      - fund_name
+      - company_name
+      - investment_amount
+      - shares
+      - share_class_id
+      - financing_id
+      - share_class_name
+      title: CertificateOut
+      type: object
+    MessagesResponse:
+      description: A response with messages.
+      properties:
+        message:
+          title: Message
+          type: string
+      required:
+      - message
+      title: MessagesResponse
+      type: object
+    TokenConvertibleOut:
+      description: A token convertible being returned from our API.
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the security.
+          examples:
+          - a2Ne
+          readOnly: true
+          title: Id
+        issue_date:
+          description: The date the security was issued.
+          examples:
+          - '2020-01-01'
+          format: date
+          title: Issue Date
+          type: string
+        fund_id:
+          description: The ID of the fund that holds this security.
+          examples:
+          - a2Ne
+          title: Fund Id
+          type: string
+        company_id:
+          description: The ID of the company this security belongs to.
+          examples:
+          - pvYe
+          title: Company Id
+          type: string
+        type:
+          const: token_convertible
+          default: token_convertible
+          title: Type
+          type: string
+        fund_name:
+          description: The name of the fund that holds this security.
+          examples:
+          - Fund I
+          title: Fund Name
+          type: string
+        company_name:
+          description: The name of the company this security belongs to.
+          examples:
+          - Acme Corp
+          title: Company Name
+          type: string
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The token symbol or name.
+          examples:
+          - SMX
+          title: Token
+        purchase_amount:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The purchase amount of the token convertible.
+          examples:
+          - currency: USD
+            value: '250000'
+        financing_id:
+          description: The ID of the financing round this token convertible belongs to.
+          examples:
+          - a2Ne
+          title: Financing Id
+          type: string
+      required:
+      - issue_date
+      - fund_id
+      - company_id
+      - fund_name
+      - company_name
+      - token
+      - purchase_amount
+      - financing_id
+      title: TokenConvertibleOut
+      type: object
+    CoInvestor:
+      description: A co-investor in a financing round.
+      properties:
+        name:
+          description: The name of the co-investor.
+          examples:
+          - SM Capital
+          title: Name
+          type: string
+        is_lead:
+          default: false
+          description: Whether this co-investor is the lead investor.
+          examples:
+          - true
+          title: Is Lead
+          type: boolean
+      required:
+      - name
+      title: CoInvestor
+      type: object
+    TokenConvertible:
+      description: A token convertible for a company.
+      properties:
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The ID of the security.
+          examples:
+          - a2Ne
+          readOnly: true
+          title: Id
+        issue_date:
+          description: The date the security was issued.
+          examples:
+          - '2020-01-01'
+          format: date
+          title: Issue Date
+          type: string
+        fund_id:
+          description: The ID of the fund that holds this security.
+          examples:
+          - a2Ne
+          title: Fund Id
+          type: string
+        company_id:
+          description: The ID of the company this security belongs to.
+          examples:
+          - pvYe
+          title: Company Id
+          type: string
+        type:
+          const: token_convertible
+          default: token_convertible
+          title: Type
+          type: string
+        token:
+          anyOf:
+          - type: string
+          - type: 'null'
+          description: The token symbol or name.
+          examples:
+          - SMX
+          title: Token
+        purchase_amount:
+          $ref: '#/components/schemas/MoneyAmount'
+          description: The purchase amount of the token convertible.
+          examples:
+          - currency: USD
+            value: '250000'
+        financing_id:
+          description: The ID of the financing round this token convertible belongs to.
+          examples:
+          - a2Ne
+          title: Financing Id
+          type: string
+      required:
+      - issue_date
+      - fund_id
+      - company_id
+      - token
+      - purchase_amount
+      - financing_id
+      title: TokenConvertible
       type: object
   securitySchemes:
     BearerAuth:

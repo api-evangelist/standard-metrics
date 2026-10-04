@@ -31,29 +31,6 @@ paths:
                 $ref: '#/components/schemas/WhoamiUser'
 components:
   schemas:
-    WhoamiFirm:
-      required:
-      - id
-      - name
-      - slug
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          readOnly: true
-        name:
-          title: Name
-          maxLength: 255
-          minLength: 1
-          type: string
-        slug:
-          title: Slug
-          minLength: 1
-          pattern: ^[-a-zA-Z0-9_]+$
-          type: string
-          format: slug
-          readOnly: true
     WhoamiUser:
       required:
       - email
@@ -89,6 +66,29 @@ components:
           readOnly: true
         firm:
           $ref: '#/components/schemas/WhoamiFirm'
+    WhoamiFirm:
+      required:
+      - id
+      - name
+      - slug
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          maxLength: 255
+          minLength: 1
+          type: string
+        slug:
+          title: Slug
+          minLength: 1
+          pattern: ^[-a-zA-Z0-9_]+$
+          type: string
+          format: slug
+          readOnly: true
   securitySchemes:
     Bearer:
       type: http

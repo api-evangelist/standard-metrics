@@ -72,6 +72,46 @@ paths:
                       $ref: '#/components/schemas/InformationReport'
 components:
   schemas:
+    Document:
+      required:
+      - requested_document
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        requested_document:
+          title: Requested document
+          minLength: 1
+          type: string
+    Metric:
+      type: object
+      properties:
+        id:
+          title: Id
+          type: string
+          readOnly: true
+        date:
+          title: Date
+          type: string
+          readOnly: true
+        name:
+          title: Name
+          type: string
+          readOnly: true
+        status:
+          title: Status
+          type: string
+          readOnly: true
+        time_period:
+          title: Time period
+          type: string
+          readOnly: true
     InformationReport:
       required:
       - company_id
@@ -124,46 +164,6 @@ components:
           title: Status
           type: string
           readOnly: true
-    Metric:
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          readOnly: true
-        date:
-          title: Date
-          type: string
-          readOnly: true
-        name:
-          title: Name
-          type: string
-          readOnly: true
-        status:
-          title: Status
-          type: string
-          readOnly: true
-        time_period:
-          title: Time period
-          type: string
-          readOnly: true
-    Document:
-      required:
-      - requested_document
-      type: object
-      properties:
-        id:
-          title: Id
-          type: string
-          readOnly: true
-        status:
-          title: Status
-          type: string
-          readOnly: true
-        requested_document:
-          title: Requested document
-          minLength: 1
-          type: string
   securitySchemes:
     Bearer:
       type: http
