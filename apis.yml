@@ -161,6 +161,8 @@ apis:
   humanURL: https://docs.standardmetrics.io
   baseURL: https://api.standardmetrics.io/v1
   tags:
+  - Information Requests
+  tags_raw:
   - information-requests
   properties:
   - type: OpenAPI
