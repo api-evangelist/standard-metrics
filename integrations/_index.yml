@@ -40,5 +40,5 @@
     - connectors/applications/standard-metrics
     vendor_link: https://standardmetrics.io/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
