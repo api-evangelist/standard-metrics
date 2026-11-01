@@ -64,6 +64,161 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Standard Metrics is a company surfaced as a portfolio company of 8vc and added to the API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+Standard Metrics is an AI-driven portfolio management platform for venture capital and private equity firms. It centralizes portfolio company performance data, financial metrics, documents, cap-table and investment data, and notes so investors can streamline portfolio reviews, audits, and LP reporting while reducing the reporting burden on portfolio companies. Standard Metrics exposes a REST API (OAuth2 client-credentials, Bearer tokens) covering companies, metrics, budgets, documents, funds, information requests, notes, users, and a beta Investment Data API for cap-table financing events, securities, share classes, and transactions. It also publishes two official remote MCP servers that connect Claude, ChatGPT, and other LLM clients directly to firm data.
 
-Backed by: 8vc — https://standardmetrics.io
+**Areas:** Company · Venture Capital · Private Equity · Portfolio Management · Financial Data · Investment Data · Cap Table · Metrics · Reporting · MCP
+
+## Standard Metrics on APIs.io
+
+Everything profiled for Standard Metrics is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/standard-metrics/](https://apis.io/providers/standard-metrics/)** — or go straight to one of the APIs or properties below.
+
+### APIs (14)
+
+- [Standard Metrics Budgets API](https://apis.io/apis/standard-metrics/standard-metrics-budgets-api/) — The budgets API from Standard Metrics — 1 operation(s) for budgets.
+- [Standard Metrics Cap Table API](https://apis.io/apis/standard-metrics/standard-metrics-cap-table-api/) — The cap_table API from Standard Metrics — 10 operation(s) for cap_table.
+- [Standard Metrics Companies API](https://apis.io/apis/standard-metrics/standard-metrics-companies-api/) — The companies API from Standard Metrics — 3 operation(s) for companies.
+- [Standard Metrics Custom Columns API](https://apis.io/apis/standard-metrics/standard-metrics-custom-columns-api/) — The custom-columns API from Standard Metrics — 3 operation(s) for custom-columns.
+- [Standard Metrics Documents API](https://apis.io/apis/standard-metrics/standard-metrics-documents-api/) — The documents API from Standard Metrics — 2 operation(s) for documents.
+- [Standard Metrics Firm Details API](https://apis.io/apis/standard-metrics/standard-metrics-firm-details-api/) — The firm-details API from Standard Metrics — 1 operation(s) for firm-details.
+- [Standard Metrics Funds API](https://apis.io/apis/standard-metrics/standard-metrics-funds-api/) — The funds API from Standard Metrics — 1 operation(s) for funds.
+- [Standard Metrics Information Reports API](https://apis.io/apis/standard-metrics/standard-metrics-information-reports-api/) — The information-reports API from Standard Metrics — 1 operation(s) for information-reports.
+- [Standard Metrics Information Requests API](https://apis.io/apis/standard-metrics/standard-metrics-information-requests-api/) — The information-requests API from Standard Metrics — 1 operation(s) for information-requests.
+- [Standard Metrics API](https://apis.io/apis/standard-metrics/standard-metrics-metrics-api/) — The metrics API from Standard Metrics — 3 operation(s) for metrics.
+- [Standard Metrics Notes API](https://apis.io/apis/standard-metrics/standard-metrics-notes-api/) — The notes API from Standard Metrics — 1 operation(s) for notes.
+- [Standard Metrics O API](https://apis.io/apis/standard-metrics/standard-metrics-o-api/) — The O API from Standard Metrics — 1 operation(s) for o.
+- [Standard Metrics Users API](https://apis.io/apis/standard-metrics/standard-metrics-users-api/) — The users API from Standard Metrics — 1 operation(s) for users.
+- [Standard Metrics Whoami API](https://apis.io/apis/standard-metrics/standard-metrics-whoami-api/) — The whoami API from Standard Metrics — 1 operation(s) for whoami.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [standard-metrics-mcp.yml](https://apis.io/servers/standard-metrics/standard-metrics-mcp-yml/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Standard Metrics Agentic Access](https://apis.io/agentic-access/standard-metrics/standard-metrics-agentic-access/)
+
+#### Collections (14)
+
+Postman and Open Collection request collections.
+
+- [OAuth Token budgets API](https://apis.io/collections/standard-metrics/open-standard-metrics-budgets-api/)
+- [OAuth Token budgets cap_table API](https://apis.io/collections/standard-metrics/open-standard-metrics-cap-table-api/)
+- [OAuth Token budgets companies API](https://apis.io/collections/standard-metrics/open-standard-metrics-companies-api/)
+- [OAuth Token budgets custom-columns API](https://apis.io/collections/standard-metrics/open-standard-metrics-custom-columns-api/)
+- [OAuth Token budgets documents API](https://apis.io/collections/standard-metrics/open-standard-metrics-documents-api/)
+- [OAuth Token budgets firm-details API](https://apis.io/collections/standard-metrics/open-standard-metrics-firm-details-api/)
+- [OAuth Token budgets funds API](https://apis.io/collections/standard-metrics/open-standard-metrics-funds-api/)
+- [OAuth Token budgets information-reports API](https://apis.io/collections/standard-metrics/open-standard-metrics-information-reports-api/)
+- [OAuth Token budgets information-requests API](https://apis.io/collections/standard-metrics/open-standard-metrics-information-requests-api/)
+- [OAuth Token budgets metrics API](https://apis.io/collections/standard-metrics/open-standard-metrics-metrics-api/)
+- [OAuth Token budgets notes API](https://apis.io/collections/standard-metrics/open-standard-metrics-notes-api/)
+- [OAuth Token budgets O API](https://apis.io/collections/standard-metrics/open-standard-metrics-o-api/)
+- [OAuth Token budgets users API](https://apis.io/collections/standard-metrics/open-standard-metrics-users-api/)
+- [OAuth Token budgets whoami API](https://apis.io/collections/standard-metrics/open-standard-metrics-whoami-api/)
+
+#### Overlays (3)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Standard Metrics Auth Overlay](https://apis.io/overlays/standard-metrics/standard-metrics-auth-overlay/)
+- [Standard Metrics Investment Data Overlay](https://apis.io/overlays/standard-metrics/standard-metrics-investment-data-overlay/)
+- [Standard Metrics Main Overlay](https://apis.io/overlays/standard-metrics/standard-metrics-main-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Standard Metrics Authentication](https://apis.io/security/standard-metrics/standard-metrics-authentication/)
+- [Standard Metrics Domain Security](https://apis.io/security/standard-metrics/standard-metrics-domain-security/)
+- [Standard Metrics Trust Center](https://apis.io/security/standard-metrics/standard-metrics-trust-center/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Standard Metrics Scopes](https://apis.io/scopes/standard-metrics/standard-metrics-scopes/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Standard Metrics Rate Limits](https://apis.io/rate-limits/standard-metrics/standard-metrics-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://standardmetrics.io)
+- [Documentation](https://docs.standardmetrics.io/introduction)
+- [Getting started](https://docs.standardmetrics.io/guides/initialsetup)
+- [API reference](https://docs.standardmetrics.io/api-reference/setting-up)
+- [Sign up](https://standardmetrics.io/request-a-demo/)
+- [Support](https://standardmetrics.io/faq/)
+- [Changelog](https://docs.standardmetrics.io/changelog)
+- [Blog](https://standardmetrics.io/blog-posts/)
+- [Compliance](https://standardmetrics.io/security/)
+- [Terms of service](https://standardmetrics.io/terms-of-service/)
+- [Privacy policy](https://standardmetrics.io/privacy-policy/)
+
+## API Evangelist rating
+
+**Kin Score 59.0** — strong · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 80.0 |
+| Contract quality | 48.8 |
+| Contract governance | 18.2 |
+| Operational transparency | 44.7 |
+| Developer ergonomics | 58.9 |
+| Access clarity | 50.0 |
+
+**Agent readiness 53.6** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 39.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/standard-metrics/](https://apis.io/providers/standard-metrics/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Standard Metrics: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/standard-metrics/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
